@@ -24,53 +24,100 @@ npm run ci            # typecheck + lint + format:check
 
 Pre-commit хук запускает `lint-staged` автоматически через Husky.
 
-## Структура
+## Структура проекта
 
 ```
 src/
 ├── components/
-│   ├── ProjectsCarousel/   — десктоп + мобильная карусель игр
-│   ├── NewsCarousel.tsx    — карусель новостей со свайпом
-│   ├── NewsModal.tsx       — модал с полным текстом новости
-│   ├── Navbar.tsx          — навигация с мобильным меню
-│   ├── Footer.tsx          — футер с социальными ссылками
-│   ├── Hero.astro          — главный экран
-│   ├── About.astro         — секция о студии
-│   └── DisciplineIcon.astro
-├── content/
-│   ├── news/               — JSON файлы новостей (01.json, 02.json...)
-│   └── projects/           — JSON файлы проектов (01.json, 02.json...)
-├── data/
-│   ├── translations.ts     — строки интерфейса (en + ru)
+│   ├── common/
+│   │   ├── DisciplineIcon.astro
+│   │   ├── ErrorBoundary.tsx
+│   │   └── SkeletonCard.tsx
+│   ├── features/
+│   │   ├── ProjectsCarousel/
+│   │   │   ├── DesktopCarousel.tsx
+│   │   │   ├── MobileCarousel.tsx
+│   │   │   └── index.tsx
+│   │   ├── ContactForm.tsx
+│   │   ├── NewsCarousel.tsx
+│   │   └── NewsModal.tsx
+│   ├── layout/
+│   │   ├── Navbar.tsx
+│   │   └── Footer.tsx
+│   └── sections/
+│       ├── Hero.astro
+│       ├── About.astro
+│       └── Contact.astro
+├── config/
+│   ├── animations.ts       — transitions, intersection observer
+│   ├── brand.ts            — константы бренда (название, год основания)
+│   ├── carousel.ts         — настройки каруселей
+│   ├── contact.ts          — email, formspree endpoint
 │   ├── footerSlides.ts     — слайды футера по языкам
+│   ├── icons.ts            — SVG иконки
+│   ├── layout.ts           — отступы, размеры компонентов
 │   ├── socialLinks.ts      — ссылки на соцсети
-│   ├── brand.ts            — константы бренда
-│   └── carousel.config.ts  — конфиг каруселей
+│   ├── theme.ts            — цвета, layout константы
+│   ├── urls.ts             — внешние URL (Steam, YouTube, сайт)
+│   ├── validation.ts       — regex, селекторы
+│   └── index.ts            — централизованный экспорт
+├── content/
+│   ├── config.ts           — схемы коллекций
+│   ├── news/               — JSON файлы новостей
+│   └── projects/           — JSON файлы проектов
 ├── hooks/
-│   └── useReducedMotion.ts
+│   ├── useCarouselKeyboard.ts
+│   ├── useLanguagePreference.ts
+│   ├── useReducedMotion.ts
+│   └── useSwipe.ts
+├── i18n/
+│   └── translations.ts     — строки интерфейса (en + ru)
 ├── layouts/
-│   └── Layout.astro        — базовый layout с SEO-мета
+│   └── Layout.astro        — базовый layout с SEO
+├── lib/
+│   ├── helpers.ts          — утилиты (isMailtoLink)
+│   └── news.ts             — категории новостей
+├── pages/
+│   ├── [lang]/
+│   │   ├── index.astro
+│   │   └── rss.xml.ts
+│   ├── 404.astro
+│   └── index.astro
 ├── styles/
-│   ├── tokens.css          — CSS-переменные (цвета, радиусы, easing)
-│   ├── base.css            — reset + scrollbar + :focus-visible
-│   ├── typography.css      — типографические классы
-│   ├── buttons.css         — кнопки и иконки
-│   ├── components.css      — карточки, бейджи, footer классы
-│   ├── animations.css      — keyframes + reveal классы
-│   └── global.css          — точка входа CSS
+│   ├── animations.css      — keyframes, reveal анимации
+│   ├── base.css            — reset, scrollbar
+│   ├── buttons.css         — стили кнопок
+│   ├── components.css      — карточки, бейджи
+│   ├── skeleton.css        — loading состояния
+│   ├── tokens.css          — CSS переменные
+│   ├── typography.css      — типографика
+│   └── global.css          — точка входа
 ├── utils/
-│   └── images.ts           — handleImageError, SVG placeholder
+│   └── images.ts           — обработка изображений
 └── types.ts                — TypeScript типы
 ```
 
+## Конфигурация
+
+Все настройки централизованы в `src/config/`:
+
+- `theme.ts` — цвета, размеры layout
+- `layout.ts` — отступы, размеры компонентов
+- `animations.ts` — transitions, настройки анимаций
+- `urls.ts` — внешние URL (используют env переменные)
+- `brand.ts` — информация о студии
+- `carousel.ts` — настройки каруселей
+- `contact.ts` — контактная информация
+
 ## Добавление новости
 
-Создать файл `src/content/news/05.json` (следующий по алфавиту):
+Создать файл `src/content/news/05.json`:
 
 ```json
 {
   "isoDate": "2025-06-01",
   "image": "/images/news/news-5.jpg",
+  "type": "announcement",
   "en": {
     "title": "...",
     "date": "Jun 01, 2025",
@@ -85,6 +132,8 @@ src/
   }
 }
 ```
+
+Доступные типы: `announcement`, `dev-diary`, `update`
 
 ## Добавление проекта
 
@@ -101,16 +150,16 @@ src/
 }
 ```
 
-> **Внимание:** `BRAND.teamSize` в `src/data/brand.ts` обновляется вручную при изменении состава команды.
+> **Внимание:** `BRAND.teamSize` в `src/config/brand.ts` обновляется вручную при изменении состава команды.
 
 ## Переменные окружения
 
-Скопировать `.env.example` в `.env` и заполнить при необходимости.
+Скопировать `.env.example` в `.env`:
 
-## Языки
-
-Сайт поддерживает `en` и `ru`. Для добавления нового языка:
-1. Добавить код в `astro.config.mjs` → `i18n.locales`
-2. Добавить переводы в `src/data/translations.ts`
-3. Добавить слайды футера в `src/data/footerSlides.ts`
-4. Добавить поля `en`/`ru`-аналог в JSON файлах контента
+```env
+PUBLIC_SITE_URL=https://sisyphus.studio
+PUBLIC_STEAM_URL=https://store.steampowered.com
+PUBLIC_YOUTUBE_URL=https://youtube.com/@channel
+PUBLIC_DONATE_URL=https://donate.link
+PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_ID
+```
