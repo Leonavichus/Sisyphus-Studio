@@ -1,19 +1,17 @@
 import { type FC } from "react";
 import { ArrowUpRight, ArrowUp } from "lucide-react";
-import type { Language, TranslationStructure, FooterSlide } from "../../types";
-import { BRAND, COLORS, LAYOUT, SPACING } from "../../config";
+import type { Language, TranslationStructure } from "../../types";
+import { BRAND, COLORS, LAYOUT, SPACING, URLS } from "../../config";
 import { ErrorBoundary } from "../common/ErrorBoundary";
-import { isMailtoLink } from "../../lib/helpers";
+import { isMailtoLink } from "../../utils/helpers";
 
 interface FooterProps {
   lang: Language;
-  slides: FooterSlide[];
   t: TranslationStructure["footer"];
   year: number;
 }
 
-const Footer: FC<FooterProps> = ({ slides, t, year }) => {
-  const current = slides[0];
+const Footer: FC<FooterProps> = ({ t, year }) => {
   const copyright = t.copyright.replace("{year}", String(year));
 
   const footerLinks = [
@@ -43,7 +41,13 @@ const Footer: FC<FooterProps> = ({ slides, t, year }) => {
           Footer
         </h2>
 
-        <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `${SPACING.footerPadding}px ${LAYOUT.padding}px 40px` }}>
+        <div
+          style={{
+            maxWidth: LAYOUT.maxWidth,
+            margin: "0 auto",
+            padding: `${SPACING.footerPadding}px ${LAYOUT.padding}px 40px`,
+          }}
+        >
           <div style={{ marginBottom: 48 }}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div>
@@ -51,21 +55,24 @@ const Footer: FC<FooterProps> = ({ slides, t, year }) => {
                   className="t-display-md"
                   style={{ color: COLORS.text.primary, marginBottom: 14, lineHeight: 1 }}
                 >
-                  {current.title} <span style={{ color: COLORS.orange }}>{current.titleSuffix}</span>
+                  {t.cta.title} <span style={{ color: COLORS.orange }}>{t.cta.titleSuffix}</span>
                 </h2>
                 <div className="md-divider-accent" style={{ marginBottom: 16 }} />
                 <p
                   className="t-body-lg"
                   style={{ color: COLORS.text.secondary, lineHeight: 1.75, maxWidth: 400 }}
                 >
-                  {current.description}
+                  {t.cta.description}
                 </p>
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+              <div
+                className="flex-row"
+                style={{ justifyContent: "flex-end", alignItems: "center" }}
+              >
                 <a
-                  href={current.href}
-                  target={isMailtoLink(current.href || "") ? undefined : "_blank"}
-                  rel={isMailtoLink(current.href || "") ? undefined : "noopener noreferrer"}
+                  href={URLS.donate}
+                  target={isMailtoLink(URLS.donate) ? undefined : "_blank"}
+                  rel={isMailtoLink(URLS.donate) ? undefined : "noopener noreferrer"}
                   className="btn-filled"
                   style={{
                     height: 42,
@@ -75,7 +82,7 @@ const Footer: FC<FooterProps> = ({ slides, t, year }) => {
                     gap: 8,
                   }}
                 >
-                  {current.actionText}
+                  {t.cta.actionText}
                   <ArrowUpRight size={16} />
                 </a>
               </div>
@@ -118,7 +125,7 @@ const Footer: FC<FooterProps> = ({ slides, t, year }) => {
                 ))}
               </nav>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div className="flex-row gap-12" style={{ alignItems: "center" }}>
                 <p className="t-body-sm" style={{ color: COLORS.text.tertiary }}>
                   {copyright}
                 </p>

@@ -96,13 +96,13 @@ const NewsModal: FC<NewsModalProps> = ({ item, onClose, closeLabel }) => {
           boxShadow: "0 32px 80px rgba(0,0,0,.8)",
         }}
       >
-        <div style={{ position: "relative", height: 240, flexShrink: 0 }}>
+        <div style={{ position: "relative", height: SIZES.modal.imageHeight, flexShrink: 0 }}>
           <img
             src={item.image}
             alt=""
             aria-hidden="true"
             width={720}
-            height={240}
+            height={SIZES.modal.imageHeight}
             loading="lazy"
             decoding="async"
             style={{
@@ -188,7 +188,7 @@ const NewsModal: FC<NewsModalProps> = ({ item, onClose, closeLabel }) => {
             <p
               key={i}
               style={{
-                color: i === 0 ? "#c8c4c0" : COLORS.text.secondary,
+                color: i === 0 ? COLORS.text.dim : COLORS.text.secondary,
                 fontSize: i === 0 ? 15 : 14,
                 lineHeight: 1.78,
                 fontWeight: i === 0 ? 500 : 400,

@@ -42,7 +42,10 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
   );
 
   return (
-    <div aria-labelledby="projects-heading" style={{ background: COLORS.surface.s2, padding: SPACING.sectionPadding }}>
+    <div
+      aria-labelledby="projects-heading"
+      style={{ background: COLORS.surface.s2, padding: SPACING.sectionPadding }}
+    >
       <div
         aria-live="polite"
         aria-atomic="true"
@@ -58,7 +61,9 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
         {shown.title} — {shown.price}
       </div>
 
-      <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}>
+      <div
+        style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+      >
         <div style={{ marginBottom: 40 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />

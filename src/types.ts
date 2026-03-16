@@ -22,17 +22,6 @@ export interface NewsItem {
   type: NewsCategory;
 }
 
-export interface FooterSlide {
-  id: string;
-  subtitle: string;
-  title: string;
-  titleSuffix: string;
-  description: string;
-  type: "social" | "action";
-  actionText?: string;
-  href?: string;
-}
-
 export interface TranslationStructure {
   nav: {
     home: string;
@@ -112,6 +101,12 @@ export interface TranslationStructure {
   footer: {
     followUs: string;
     copyright: string;
+    cta: {
+      title: string;
+      titleSuffix: string;
+      description: string;
+      actionText: string;
+    };
     links: { about: string; games: string; news: string; contact: string };
   };
   notFound: {

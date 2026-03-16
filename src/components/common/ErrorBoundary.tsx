@@ -72,7 +72,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <p style={{ color: COLORS.text.primary, fontWeight: 600, marginBottom: 6 }}>Something went wrong</p>
+          <p style={{ color: COLORS.text.primary, fontWeight: 600, marginBottom: 6 }}>
+            Something went wrong
+          </p>
           <p style={{ fontSize: 12 }}>Try refreshing the page.</p>
         </div>
       );

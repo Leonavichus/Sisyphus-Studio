@@ -51,7 +51,7 @@ export const useCarouselKeyboard = ({
         }
       }
     },
-    [total, current, onChange, loop, enabled]
+    [total, current, onChange, loop, enabled],
   );
 
   useEffect(() => {

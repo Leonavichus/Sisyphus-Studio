@@ -1,9 +1,8 @@
-import { useCallback, type FC, memo } from "react";
+import { useCallback, useRef, type FC, memo } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Project, TranslationStructure } from "../../../types";
 import { handleImageError } from "../../../utils/images";
-import { useSwipe } from "../../../hooks/useSwipe";
-import { COLORS, LAYOUT } from "../../../config";
+import { COLORS, LAYOUT, SWIPE_THRESHOLD } from "../../../config";
 
 interface MobileCarouselProps {
   projects: Project[];
@@ -14,6 +13,7 @@ interface MobileCarouselProps {
 
 const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSelect, t }) => {
   const p = projects[activeIndex];
+  const touchStartX = useRef<number | null>(null);
 
   const prev = useCallback(
     () => onSelect((activeIndex - 1 + projects.length) % projects.length),
@@ -25,10 +25,34 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
     [activeIndex, projects.length, onSelect],
   );
 
-  const { onTouchStart, onTouchEnd, onTouchCancel } = useSwipe(next, prev);
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX.current;
+      touchStartX.current = null;
+      if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+      if (dx < 0) {
+        next();
+      } else {
+        prev();
+      }
+    },
+    [next, prev],
+  );
+
+  const onTouchCancel = useCallback(() => {
+    touchStartX.current = null;
+  }, []);
 
   return (
-    <div aria-labelledby="projects-heading" style={{ background: COLORS.surface.s2, padding: "72px 0" }}>
+    <div
+      aria-labelledby="projects-heading"
+      style={{ background: COLORS.surface.s2, padding: "72px 0" }}
+    >
       <div
         aria-live="polite"
         aria-atomic="true"
@@ -44,7 +68,9 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         {p.title} — {p.price}
       </div>
 
-      <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}>
+      <div
+        style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+      >
         <div style={{ marginBottom: 32 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
@@ -98,7 +124,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
             </div>
           </div>
 
-          <div style={{ padding: "20px 24px 28px", background: "#151515" }}>
+          <div style={{ padding: "20px 24px 28px", background: COLORS.surface.s3 }}>
             <span className="t-eyebrow-accent" style={{ display: "block", marginBottom: 8 }}>
               {String(activeIndex + 1).padStart(2, "0")} — {t.sectionLabel}
             </span>
@@ -106,11 +132,14 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
               {p.title}
             </h3>
             <div style={{ height: 1, background: "rgba(255,255,255,.08)", marginBottom: 12 }} />
-            <p className="t-body-md" style={{ color: COLORS.text.secondary, lineHeight: 1.7, marginBottom: 20 }}>
+            <p
+              className="t-body-md"
+              style={{ color: COLORS.text.secondary, lineHeight: 1.7, marginBottom: 20 }}
+            >
               {p.description}
             </p>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", gap: 8 }}>
+            <div className="flex-between">
+              <div className="flex-row gap-8">
                 <button
                   onClick={prev}
                   className="icon-btn-outlined"
@@ -143,7 +172,8 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         </div>
 
         <div
-          style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 16 }}
+          className="flex-center gap-6"
+          style={{ marginTop: 16 }}
           role="tablist"
           aria-label={t.heading}
         >
@@ -170,7 +200,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         <p
           style={{
             textAlign: "center",
-            color: "#555",
+            color: COLORS.text.muted,
             fontSize: 11,
             marginTop: 8,
             letterSpacing: 0.5,

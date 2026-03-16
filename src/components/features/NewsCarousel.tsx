@@ -6,14 +6,16 @@ import {
   NEWS_CAROUSEL,
   NEWS_SUMMARY_PREVIEW_CHARS,
   SWIPE_THRESHOLD,
+  COLORS,
+  SPACING,
+  SIZES,
 } from "../../config";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useCarouselKeyboard } from "../../hooks/useCarouselKeyboard";
-import { getNewsCategories, getCategoryLabel, getCategoryColor } from "../../lib/news";
+import { getNewsCategories, getCategoryLabel, getCategoryColor } from "../../utils/news";
 import { ErrorBoundary } from "../common/ErrorBoundary";
 import NewsModal from "./NewsModal";
 import { NewsSkeletonCard } from "../common/SkeletonCard";
-import { COLORS, LAYOUT, SPACING, SIZES } from "../../config";
 
 interface NewsCarouselProps {
   news: NewsItem[];
@@ -37,8 +39,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
     setIsMounted(true);
   }, []);
 
-  const filtered =
-    activeCategory === "all" ? news : news.filter((n) => n.type === activeCategory);
+  const filtered = activeCategory === "all" ? news : news.filter((n) => n.type === activeCategory);
 
   useEffect(() => {
     setCurrent(0);
@@ -92,9 +93,11 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
       const dx = e.changedTouches[0].clientX - touchStartX.current;
       touchStartX.current = null;
       if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-      dx < 0
-        ? goTo((current + 1) % filtered.length)
-        : goTo((current - 1 + filtered.length) % filtered.length);
+      if (dx < 0) {
+        goTo((current + 1) % filtered.length);
+      } else {
+        goTo((current - 1 + filtered.length) % filtered.length);
+      }
     },
     [current, filtered.length, goTo],
   );
@@ -116,9 +119,9 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         id="news"
         aria-labelledby="news-heading"
         style={{
-          background: "#151515",
+          background: COLORS.surface.s3,
           padding: "100px 0",
-          borderTop: "1px solid rgba(255,255,255,.07)",
+          borderTop: `1px solid ${COLORS.border.default}`,
         }}
       >
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
@@ -135,7 +138,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
             <div className="lg:col-span-2">
               <NewsSkeletonCard wide />
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <div className="flex-col gap-4">
               {[0, 1, 2].map((i) => (
                 <NewsSkeletonCard key={i} />
               ))}
@@ -159,9 +162,9 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         id="news"
         aria-labelledby="news-heading"
         style={{
-          background: "#151515",
+          background: COLORS.surface.s3,
           padding: "100px 0",
-          borderTop: "1px solid rgba(255,255,255,.07)",
+          borderTop: `1px solid ${COLORS.border.default}`,
         }}
       >
         <div
@@ -272,9 +275,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                   }}
                 />
 
-                <div
-                  style={{ position: "absolute", top: 18, left: 18, display: "flex", gap: 8 }}
-                >
+                <div style={{ position: "absolute", top: 18, left: 18, display: "flex", gap: 8 }}>
                   <div className="md-badge-surface md-badge" style={{ gap: 6 }}>
                     <Calendar size={9} style={{ color: COLORS.orange }} aria-hidden="true" />
                     <time dateTime={item.isoDate}>{item.date}</time>
@@ -339,7 +340,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                     {item.summary}
                   </p>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <div className="flex-row gap-12" style={{ alignItems: "center" }}>
                     <button
                       className="btn-tonal"
                       style={{ gap: 7, height: 36, fontSize: 13, flexShrink: 0 }}
@@ -363,7 +364,12 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                       {paused || reducedMotion ? (
                         paused ? (
                           <div
-                            style={{ display: "flex", alignItems: "center", gap: 5, color: "#555" }}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 5,
+                              color: COLORS.text.muted,
+                            }}
                           >
                             <PauseCircle size={12} />
                             <span
@@ -400,7 +406,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                 className="lg:hidden"
                 style={{
                   textAlign: "center",
-                  color: "#555",
+                  color: COLORS.text.muted,
                   fontSize: 11,
                   marginTop: 8,
                   letterSpacing: 0.5,
@@ -493,7 +499,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                       </p>
                       <p
                         className="t-body-sm"
-                        style={{ color: "#555", marginTop: 4, lineHeight: 1.4 }}
+                        style={{ color: COLORS.text.muted, marginTop: 4, lineHeight: 1.4 }}
                       >
                         {n.summary.slice(0, NEWS_SUMMARY_PREVIEW_CHARS)}…
                       </p>

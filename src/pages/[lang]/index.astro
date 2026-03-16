@@ -9,7 +9,6 @@ import ProjectsCarousel from "../../components/features/ProjectsCarousel";
 import NewsCarousel from "../../components/features/NewsCarousel";
 import Footer from "../../components/layout/Footer";
 import { TRANSLATIONS } from "../../i18n/translations";
-import { FOOTER_SLIDES } from "../../config";
 import type { Language, Project, NewsItem } from "../../types";
 
 export function getStaticPaths() {
@@ -20,7 +19,6 @@ export const prerender = true;
 
 const { lang } = Astro.params as { lang: Language };
 const t = TRANSLATIONS[lang];
-const footerSlides = FOOTER_SLIDES[lang];
 const currentYear = new Date().getFullYear();
 
 const projectEntries = await getCollection("projects");
@@ -62,11 +60,5 @@ const news: NewsItem[] = newsEntries
     <Contact lang={lang} t={t.contact} />
   </main>
 
-  <Footer
-    lang={lang}
-    slides={footerSlides}
-    t={t.footer}
-    year={currentYear}
-    client:visible
-  />
+  <Footer lang={lang} t={t.footer} year={currentYear} client:visible />
 </Layout>

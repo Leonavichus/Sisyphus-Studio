@@ -8,12 +8,7 @@
 }
 
 .skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--s-3) 25%,
-    rgba(255, 255, 255, 0.05) 50%,
-    var(--s-3) 75%
-  );
+  background: linear-gradient(90deg, var(--s-3) 25%, rgba(255, 255, 255, 0.05) 50%, var(--s-3) 75%);
   background-size: 600px 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }

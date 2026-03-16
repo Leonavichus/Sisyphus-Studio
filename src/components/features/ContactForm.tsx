@@ -1,4 +1,4 @@
-import { useState, useCallback, type ChangeEvent, type FormEvent } from "react";
+import { useState, useCallback, type ChangeEvent, type FormEventHandler } from "react";
 import type { Language } from "../../types";
 import { CONTACT, EMAIL_REGEX, COLORS } from "../../config";
 
@@ -61,7 +61,7 @@ export default function ContactForm({ lang }: Props) {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   }, []);
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) {
@@ -80,7 +80,7 @@ export default function ContactForm({ lang }: Props) {
     } catch {
       setStatus("error");
     }
-  }
+  };
 
   if (status === "success") {
     return (
@@ -127,11 +127,7 @@ export default function ContactForm({ lang }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      noValidate
-      style={{ display: "flex", flexDirection: "column", gap: 16 }}
-    >
+    <form onSubmit={handleSubmit} noValidate className="flex-col gap-16">
       <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
         <Field
           id="cf-name"
@@ -275,7 +271,7 @@ function Field({
 }: FieldProps) {
   const hasError = !!error;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+    <div className="flex-col gap-6">
       <label
         htmlFor={id}
         className="t-label-sm"
@@ -350,7 +346,7 @@ function TextareaField({
 }: TextareaFieldProps) {
   const hasError = !!error;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+    <div className="flex-col gap-6">
       <label
         htmlFor={id}
         className="t-label-sm"

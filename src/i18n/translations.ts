@@ -87,6 +87,13 @@ export const TRANSLATIONS = {
     footer: {
       followUs: "Follow Us",
       copyright: "© {year} Sisyphus Studio",
+      cta: {
+        title: "Support The",
+        titleSuffix: "Journey",
+        description:
+          "If you'd like to become a sponsor or simply support our company financially, you can do so here!",
+        actionText: "Donate",
+      },
       links: {
         about: "About",
         games: "Games",
@@ -188,6 +195,13 @@ export const TRANSLATIONS = {
     footer: {
       followUs: "Свяжитесь",
       copyright: "© {year} Sisyphus Studio",
+      cta: {
+        title: "Поддержи",
+        titleSuffix: "Нас",
+        description:
+          "Если вы хотите стать спонсором или просто поддержать нашу компанию финансово, вы можете это сделать тут!",
+        actionText: "Пожертвовать",
+      },
       links: {
         about: "О нас",
         games: "Игры",

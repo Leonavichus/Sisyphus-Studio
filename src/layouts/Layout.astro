@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { ViewTransitions } from "astro:transitions";
-import { URLS } from "../config";
+import { URLS, SEO, UI, BRAND } from "../config";
 
 interface Props {
   lang: "en" | "ru";
@@ -10,45 +10,31 @@ interface Props {
   year: number;
 }
 
-const {
-  lang,
-  title = "Sisyphus Studio — Independent Game Developers",
-  description = "Sisyphus Studio is an independent game studio creating Frog Frag and Krivda. Small team, big ambitions.",
-  year,
-} = Astro.props;
+const { lang, title = SEO.defaultTitle, description = SEO.defaultDescription } = Astro.props;
 
 const otherLang = lang === "en" ? "ru" : "en";
 const canonicalBase = URLS.site;
-const steamUrl = URLS.steam;
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "name": "Sisyphus Studio",
-      "url": canonicalBase,
-      "logo": `${canonicalBase}/images/og-cover.jpg`,
-      "foundingDate": "2025",
-      "description": "Independent game studio creating Frog Frag and Krivda.",
-      "sameAs": [steamUrl],
+      name: `${BRAND.prefix} ${BRAND.suffix}`,
+      url: canonicalBase,
+      logo: `${canonicalBase}${SEO.ogImagePath}`,
+      foundingDate: String(BRAND.foundedYear),
+      description: SEO.defaultDescription,
+      sameAs: [URLS.steam],
     },
-    {
+    ...SEO.games.map((game) => ({
       "@type": "VideoGame",
-      "name": "Frog Frag",
-      "description": "A cooperative deathmatch shooter with procedurally generated maps.",
-      "author": { "@type": "Organization", "name": "Sisyphus Studio" },
-      "applicationCategory": "Game",
-      "operatingSystem": "Windows",
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Krivda",
-      "description": "A cooperative survival game rooted in Slavic mythology.",
-      "author": { "@type": "Organization", "name": "Sisyphus Studio" },
-      "applicationCategory": "Game",
-      "operatingSystem": "Windows",
-    },
+      name: game.name,
+      description: game.description,
+      author: { "@type": "Organization", name: `${BRAND.prefix} ${BRAND.suffix}` },
+      applicationCategory: "Game",
+      operatingSystem: "Windows",
+    })),
   ],
 };
 ---
@@ -60,8 +46,8 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
-    <meta name="author" content="Sisyphus Studio" />
+    <meta name="theme-color" content={SEO.themeColor} media="(prefers-color-scheme: dark)" />
+    <meta name="author" content={`${BRAND.prefix} ${BRAND.suffix}`} />
     <meta name="robots" content="index, follow" />
 
     <link rel="canonical" href={`${canonicalBase}/${lang}/`} />
@@ -71,19 +57,21 @@ const jsonLd = {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={lang === "ru" ? "Sisyphus Studio — Новости" : "Sisyphus Studio — News"}
+      title={lang === "ru"
+        ? `${BRAND.prefix} ${BRAND.suffix} — Новости`
+        : `${BRAND.prefix} ${BRAND.suffix} — News`}
       href={`${canonicalBase}/${lang}/rss.xml`}
     />
 
-    <link rel="dns-prefetch" href={steamUrl} />
+    <link rel="dns-prefetch" href={URLS.steam} />
     <link rel="dns-prefetch" href="https://www.youtube.com" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={`${canonicalBase}/images/og-cover.jpg`} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content={`${canonicalBase}${SEO.ogImagePath}`} />
+    <meta property="og:image:width" content={String(SEO.ogImageWidth)} />
+    <meta property="og:image:height" content={String(SEO.ogImageHeight)} />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:url" content={`${canonicalBase}/${lang}/`} />
     <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
@@ -92,7 +80,7 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${canonicalBase}/images/og-cover.jpg`} />
+    <meta name="twitter:image" content={`${canonicalBase}${SEO.ogImagePath}`} />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
 
@@ -129,7 +117,9 @@ const jsonLd = {
             parts[0] = stored;
             window.location.replace("/" + parts.join("/") + window.location.search);
           }
-        } catch (_) {}
+        } catch {
+          void 0;
+        }
       })();
     </script>
 
@@ -137,12 +127,29 @@ const jsonLd = {
   </head>
   <body>
     <a href="#main-content" class="skip-link">
-      {lang === "ru" ? "Перейти к содержимому" : "Skip to content"}
+      {UI.skipLink[lang]}
     </a>
     <noscript>
-      <div style="position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#1a1a1a;border-top:1px solid rgba(248,126,15,.3);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Manrope',sans-serif;font-size:13px;color:#999;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87e0f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>{lang === "ru" ? "Для полноценной работы сайта необходим JavaScript." : "JavaScript is required for the full site experience."}</span>
+      <div
+        style="position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#1a1a1a;border-top:1px solid rgba(248,126,15,.3);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Manrope',sans-serif;font-size:13px;color:#999;"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#f87e0f"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line
+            x1="12"
+            y1="16"
+            x2="12.01"
+            y2="16"></line></svg
+        >
+        <span>{UI.noScript[lang]}</span>
       </div>
     </noscript>
 
@@ -157,10 +164,15 @@ const jsonLd = {
         const bar = document.createElement("div");
         bar.className = "scroll-progress";
         document.body.prepend(bar);
-        window.addEventListener("scroll", () => {
-          const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-          bar.style.width = Math.min(pct, 100) + "%";
-        }, { passive: true });
+        window.addEventListener(
+          "scroll",
+          () => {
+            const pct =
+              (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            bar.style.width = Math.min(pct, 100) + "%";
+          },
+          { passive: true },
+        );
 
         document.addEventListener("click", (e) => {
           const btn = (e.target as Element).closest(".btn-filled,.btn-tonal,.btn-outlined");
@@ -174,21 +186,33 @@ const jsonLd = {
           w.addEventListener("animationend", () => w.remove());
         });
 
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) { entry.target.classList.add("in"); obs.unobserve(entry.target); }
-          });
-        }, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
-        document.querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale").forEach((el) => obs.observe(el));
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.05, rootMargin: "0px 0px -40px 0px" },
+        );
+        document
+          .querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale")
+          .forEach((el) => obs.observe(el));
       }
 
       document.addEventListener("astro:page-load", initPage);
 
       let savedScrollY = 0;
-      document.addEventListener("astro:before-swap", () => { savedScrollY = window.scrollY; });
+      document.addEventListener("astro:before-swap", () => {
+        savedScrollY = window.scrollY;
+      });
       document.addEventListener("astro:after-swap", () => {
         history.replaceState(null, "", window.location.pathname);
-        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, behavior: "instant" })));
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, behavior: "instant" })),
+        );
       });
     </script>
   </body>

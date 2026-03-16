@@ -1,9 +1,17 @@
-import { useState, useEffect, useCallback, useRef, type FC } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo, type FC } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import type { Language, TranslationStructure } from "../../types";
-import { BRAND, SOCIAL_LINKS, COLORS, LAYOUT, SPACING, TRANSITIONS, INTERSECTION_OBSERVER } from "../../config";
+import {
+  BRAND,
+  SOCIAL_LINKS,
+  COLORS,
+  LAYOUT,
+  SPACING,
+  TRANSITIONS,
+  INTERSECTION_OBSERVER,
+} from "../../config";
 import { useLanguageSync } from "../../hooks/useLanguagePreference";
-import { isMailtoLink } from "../../lib/helpers";
+import { isMailtoLink } from "../../utils/helpers";
 
 interface NavbarProps {
   lang: Language;
@@ -26,13 +34,16 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
   const otherLangFull = lang === "en" ? "Русский" : "English";
   const langSwitchHref = `/${otherLang}/`;
 
-  const links = [
-    { id: "home", label: t.home, href: "#home" },
-    { id: "projects", label: t.projects, href: "#projects" },
-    { id: "about", label: t.about, href: "#about" },
-    { id: "news", label: t.news, href: "#news" },
-    { id: "contact", label: t.contact, href: "#contact" },
-  ];
+  const links = useMemo(
+    () => [
+      { id: "home", label: t.home, href: "#home" },
+      { id: "projects", label: t.projects, href: "#projects" },
+      { id: "about", label: t.about, href: "#about" },
+      { id: "news", label: t.news, href: "#news" },
+      { id: "contact", label: t.contact, href: "#contact" },
+    ],
+    [t],
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -46,12 +57,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
     links.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !manualNavRef.current) setActive(id);
-        },
-        INTERSECTION_OBSERVER.navbar,
-      );
+      const obs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !manualNavRef.current) setActive(id);
+      }, INTERSECTION_OBSERVER.navbar);
       obs.observe(el);
       observers.push(obs);
     });
@@ -204,7 +212,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           className="hidden md:flex"
           style={{ alignItems: "center", gap: 2, marginLeft: "auto" }}
         >
-          {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+          {SOCIAL_LINKS.map(({ icon: Icon, iconSvg, href, label }) => (
             <a
               key={label}
               href={href}
@@ -213,7 +221,11 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
               rel={isMailtoLink(href) ? undefined : "noopener noreferrer"}
               className="icon-btn"
             >
-              <Icon size={16} strokeWidth={1.8} />
+              {Icon ? (
+                <Icon size={16} strokeWidth={1.8} />
+              ) : (
+                <span dangerouslySetInnerHTML={{ __html: iconSvg || "" }} />
+              )}
             </a>
           ))}
           <div
@@ -294,7 +306,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           ))}
           <div style={{ height: 1, background: COLORS.border.default, margin: "8px 0" }} />
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+            {SOCIAL_LINKS.map(({ icon: Icon, iconSvg, href, label }) => (
               <a
                 key={label}
                 href={href}
@@ -304,7 +316,11 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                 target={isMailtoLink(href) ? undefined : "_blank"}
                 rel={isMailtoLink(href) ? undefined : "noopener noreferrer"}
               >
-                <Icon size={15} strokeWidth={1.8} />
+                {Icon ? (
+                  <Icon size={15} strokeWidth={1.8} />
+                ) : (
+                  <span dangerouslySetInnerHTML={{ __html: iconSvg || "" }} />
+                )}
               </a>
             ))}
             <a

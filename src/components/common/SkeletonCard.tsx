@@ -31,8 +31,14 @@ export const NewsSkeletonCard: FC<NewsSkeletonCardProps> = ({ wide = false }) =>
         border: "1px solid var(--b-subtle)",
       }}
     >
-      <div className="skeleton-shimmer" style={{ height: 10, width: "35%", borderRadius: 4, marginBottom: 10 }} />
-      <div className="skeleton-shimmer" style={{ height: 14, width: "90%", borderRadius: 4, marginBottom: 6 }} />
+      <div
+        className="skeleton-shimmer"
+        style={{ height: 10, width: "35%", borderRadius: 4, marginBottom: 10 }}
+      />
+      <div
+        className="skeleton-shimmer"
+        style={{ height: 14, width: "90%", borderRadius: 4, marginBottom: 6 }}
+      />
       <div className="skeleton-shimmer" style={{ height: 11, width: "70%", borderRadius: 4 }} />
     </div>
   );

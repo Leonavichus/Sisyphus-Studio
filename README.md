@@ -2,6 +2,10 @@
 
 Сайт независимой игровой студии. Astro 5 + React 19 + Tailwind CSS.
 
+## 📚 Документация
+
+- **[DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md)** — Подробное руководство разработчика
+
 ## Запуск
 
 ```bash
@@ -49,17 +53,10 @@ src/
 │       ├── About.astro
 │       └── Contact.astro
 ├── config/
-│   ├── animations.ts       — transitions, intersection observer
-│   ├── brand.ts            — константы бренда (название, год основания)
-│   ├── carousel.ts         — настройки каруселей
-│   ├── contact.ts          — email, formspree endpoint
-│   ├── footerSlides.ts     — слайды футера по языкам
-│   ├── icons.ts            — SVG иконки
-│   ├── layout.ts           — отступы, размеры компонентов
-│   ├── socialLinks.ts      — ссылки на соцсети
-│   ├── theme.ts            — цвета, layout константы
-│   ├── urls.ts             — внешние URL (Steam, YouTube, сайт)
-│   ├── validation.ts       — regex, селекторы
+│   ├── constants.ts        — общие константы (анимации, бренд, карусели, валидация, UI)
+│   ├── design.ts           — дизайн-система (цвета, размеры, отступы)
+│   ├── links.ts            — ссылки, контакты, соцсети, иконки
+│   ├── seo.ts              — SEO константы (meta, og, schema.org)
 │   └── index.ts            — централизованный экспорт
 ├── content/
 │   ├── config.ts           — схемы коллекций
@@ -68,8 +65,7 @@ src/
 ├── hooks/
 │   ├── useCarouselKeyboard.ts
 │   ├── useLanguagePreference.ts
-│   ├── useReducedMotion.ts
-│   └── useSwipe.ts
+│   └── useReducedMotion.ts
 ├── i18n/
 │   └── translations.ts     — строки интерфейса (en + ru)
 ├── layouts/
@@ -101,13 +97,12 @@ src/
 
 Все настройки централизованы в `src/config/`:
 
-- `theme.ts` — цвета, размеры layout
-- `layout.ts` — отступы, размеры компонентов
-- `animations.ts` — transitions, настройки анимаций
-- `urls.ts` — внешние URL (используют env переменные)
-- `brand.ts` — информация о студии
-- `carousel.ts` — настройки каруселей
-- `contact.ts` — контактная информация
+- `constants.ts` — общие константы (анимации, бренд, карусели, валидация, UI строки)
+- `design.ts` — дизайн-система (цвета, размеры, отступы, layout)
+- `links.ts` — все ссылки, контакты, соцсети, иконки
+- `seo.ts` — SEO константы (meta теги, Open Graph, Schema.org)
+
+Все переводы (включая футер) в `src/i18n/translations.ts`
 
 ## Добавление новости
 
@@ -150,7 +145,7 @@ src/
 }
 ```
 
-> **Внимание:** `BRAND.teamSize` в `src/config/brand.ts` обновляется вручную при изменении состава команды.
+> **Внимание:** `BRAND.teamSize` в `src/config/constants.ts` обновляется вручную при изменении состава команды.
 
 ## Переменные окружения
 

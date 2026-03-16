@@ -1,4 +1,5 @@
 import type { Language, NewsCategory } from "../types";
+import { COLORS } from "../config";
 
 const NEWS_CATEGORIES: NewsCategory[] = ["announcement", "dev-diary", "update"];
 
@@ -9,9 +10,9 @@ const categoryLabels: Record<NewsCategory, Record<Language, string>> = {
 };
 
 const categoryColors: Record<NewsCategory, string> = {
-  announcement: "var(--c-orange)",
-  "dev-diary": "#7c9ef8",
-  update: "#7ec87e",
+  announcement: COLORS.news.announcement,
+  "dev-diary": COLORS.news.devDiary,
+  update: COLORS.news.update,
 };
 
 export const getNewsCategories = (): NewsCategory[] => NEWS_CATEGORIES;
