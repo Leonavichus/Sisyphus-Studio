@@ -1,0 +1,207 @@
+import { useEffect, useRef, useCallback, type FC } from "react";
+import { X, Calendar } from "lucide-react";
+import type { NewsItem, TranslationStructure } from "../../types";
+import { handleImageError } from "../../utils/images";
+import { FOCUSABLE_SELECTORS, COLORS, SIZES } from "../../config";
+
+interface NewsModalProps {
+  item: NewsItem;
+  onClose: () => void;
+  closeLabel: TranslationStructure["news"]["closeArticle"];
+}
+
+const NewsModal: FC<NewsModalProps> = ({ item, onClose, closeLabel }) => {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<Element | null>(null);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusables = Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS) ?? [],
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    },
+    [onClose],
+  );
+
+  useEffect(() => {
+    triggerRef.current = document.activeElement;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prev;
+      (triggerRef.current as HTMLElement | null)?.focus();
+    };
+  }, [handleKeyDown]);
+
+  const paragraphs = (item.body || item.summary).split("\n\n").filter(Boolean);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 200,
+        background: "rgba(0,0,0,.72)",
+        backdropFilter: "blur(6px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        animation: "modal-bg-in .22s ease both",
+      }}
+    >
+      <div
+        ref={panelRef}
+        className="news-modal-panel"
+        style={{
+          background: COLORS.surface.s3,
+          border: "1px solid rgba(255,255,255,.09)",
+          borderRadius: 20,
+          width: "100%",
+          maxWidth: SIZES.modal.maxWidth,
+          maxHeight: "90vh",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 32px 80px rgba(0,0,0,.8)",
+        }}
+      >
+        <div style={{ position: "relative", height: 240, flexShrink: 0 }}>
+          <img
+            src={item.image}
+            alt=""
+            aria-hidden="true"
+            width={720}
+            height={240}
+            loading="lazy"
+            decoding="async"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              filter: "brightness(.38) saturate(.45)",
+            }}
+            onError={(e) => handleImageError(e, 900, 400)}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: `linear-gradient(180deg,rgba(0,0,0,.15) 0%,${COLORS.surface.s3} 100%)`,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              padding: "16px 20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className="md-badge-surface md-badge" style={{ gap: 6 }}>
+              <Calendar size={9} style={{ color: COLORS.orange }} aria-hidden="true" />
+              <time dateTime={item.isoDate}>{item.date}</time>
+            </div>
+            <button
+              ref={closeRef}
+              onClick={onClose}
+              aria-label={closeLabel}
+              className="state"
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                border: "1px solid rgba(255,255,255,.15)",
+                background: "rgba(0,0,0,.45)",
+                backdropFilter: "blur(8px)",
+                color: COLORS.text.primary,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <X size={15} strokeWidth={2.2} />
+            </button>
+          </div>
+          <div
+            style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 28px 24px" }}
+          >
+            <div
+              style={{
+                height: 2,
+                width: 28,
+                background: COLORS.orange,
+                borderRadius: 2,
+                marginBottom: 12,
+              }}
+            />
+            <h2
+              id="modal-title"
+              className="t-card-title"
+              style={{ fontSize: "clamp(22px,4vw,32px)", lineHeight: 1.05 }}
+            >
+              {item.title}
+            </h2>
+          </div>
+        </div>
+        <div
+          tabIndex={0}
+          style={{ overflowY: "auto", padding: "28px 28px 36px", flex: 1, outline: "none" }}
+        >
+          {paragraphs.map((para, i) => (
+            <p
+              key={i}
+              style={{
+                color: i === 0 ? "#c8c4c0" : COLORS.text.secondary,
+                fontSize: i === 0 ? 15 : 14,
+                lineHeight: 1.78,
+                fontWeight: i === 0 ? 500 : 400,
+                marginBottom: i < paragraphs.length - 1 ? 18 : 0,
+              }}
+            >
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NewsModal;

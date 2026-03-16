@@ -1,0 +1,187 @@
+import { useCallback, type FC, memo } from "react";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import type { Project, TranslationStructure } from "../../../types";
+import { handleImageError } from "../../../utils/images";
+import { useSwipe } from "../../../hooks/useSwipe";
+import { COLORS, LAYOUT } from "../../../config";
+
+interface MobileCarouselProps {
+  projects: Project[];
+  activeIndex: number;
+  onSelect: (i: number) => void;
+  t: TranslationStructure["projects"];
+}
+
+const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSelect, t }) => {
+  const p = projects[activeIndex];
+
+  const prev = useCallback(
+    () => onSelect((activeIndex - 1 + projects.length) % projects.length),
+    [activeIndex, projects.length, onSelect],
+  );
+
+  const next = useCallback(
+    () => onSelect((activeIndex + 1) % projects.length),
+    [activeIndex, projects.length, onSelect],
+  );
+
+  const { onTouchStart, onTouchEnd, onTouchCancel } = useSwipe(next, prev);
+
+  return (
+    <div aria-labelledby="projects-heading" style={{ background: COLORS.surface.s2, padding: "72px 0" }}>
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {p.title} — {p.price}
+      </div>
+
+      <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}>
+        <div style={{ marginBottom: 32 }}>
+          <div className="section-eyebrow">
+            <div className="section-eyebrow-line" />
+            <span className="section-eyebrow-label">
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(projects.length).padStart(2, "0")}
+            </span>
+          </div>
+          <h2 id="projects-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
+            {t.heading}
+          </h2>
+        </div>
+
+        <div
+          style={{
+            borderRadius: 16,
+            overflow: "hidden",
+            border: "1px solid rgba(255,255,255,.07)",
+            position: "relative",
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchCancel}
+        >
+          <div style={{ position: "relative", height: 220 }}>
+            <img
+              src={p.image}
+              alt={p.title}
+              width={900}
+              height={220}
+              loading="lazy"
+              decoding="async"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                filter: "brightness(.4) saturate(.4)",
+              }}
+              onError={(e) => handleImageError(e, 900, 600)}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.98) 100%)",
+              }}
+            />
+            <div style={{ position: "absolute", top: 14, right: 14 }}>
+              <div className="md-badge-primary md-badge">{p.price}</div>
+            </div>
+          </div>
+
+          <div style={{ padding: "20px 24px 28px", background: "#151515" }}>
+            <span className="t-eyebrow-accent" style={{ display: "block", marginBottom: 8 }}>
+              {String(activeIndex + 1).padStart(2, "0")} — {t.sectionLabel}
+            </span>
+            <h3 className="t-card-title" style={{ fontSize: 32, marginBottom: 12 }}>
+              {p.title}
+            </h3>
+            <div style={{ height: 1, background: "rgba(255,255,255,.08)", marginBottom: 12 }} />
+            <p className="t-body-md" style={{ color: COLORS.text.secondary, lineHeight: 1.7, marginBottom: 20 }}>
+              {p.description}
+            </p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  onClick={prev}
+                  className="icon-btn-outlined"
+                  style={{ width: 40, height: 40 }}
+                  aria-label={t.prevGame}
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={next}
+                  className="icon-btn-outlined"
+                  style={{ width: 40, height: 40 }}
+                  aria-label={t.nextGame}
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+              <a
+                href={p.wishlistUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-filled"
+                style={{ height: 40, fontSize: 13, gap: 7, paddingLeft: 20, paddingRight: 20 }}
+              >
+                <ExternalLink size={14} />
+                {t.wishlist}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 16 }}
+          role="tablist"
+          aria-label={t.heading}
+        >
+          {projects.map((proj, i) => (
+            <button
+              key={i}
+              onClick={() => onSelect(i)}
+              role="tab"
+              aria-selected={i === activeIndex}
+              aria-label={proj.title}
+              style={{
+                width: i === activeIndex ? 20 : 6,
+                height: 6,
+                borderRadius: 3,
+                border: "none",
+                background: i === activeIndex ? COLORS.orange : "rgba(255,255,255,.2)",
+                cursor: "pointer",
+                transition: "width .3s, background .3s",
+                padding: 0,
+              }}
+            />
+          ))}
+        </div>
+        <p
+          style={{
+            textAlign: "center",
+            color: "#555",
+            fontSize: 11,
+            marginTop: 8,
+            letterSpacing: 0.5,
+          }}
+          aria-hidden="true"
+        >
+          ← {t.swipeHint} →
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default memo(MobileCarousel);

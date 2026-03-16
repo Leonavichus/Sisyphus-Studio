@@ -1,0 +1,17 @@
+{
+  "isoDate": "2025-02-14",
+  "image": "/images/news/news-2.jpg",
+  "type": "update",
+  "en": {
+    "title": "Frog Frag — First Playtest Results",
+    "date": "Feb 14, 2025",
+    "summary": "We ran our first internal playtest of Frog Frag. Here's what worked, what didn't, and what surprised us.",
+    "body": "Fourteen hours of playtesting across two days. Six players, one map prototype, a lot of strong opinions.\n\nThe core loop held up better than expected. Pick up weapons, combine them, fight. The randomly generated maps created genuine moments of surprise — players discovering a sightline that shouldn't exist, or a chokepoint that forced an unexpected standoff.\n\nWhat didn't work: spawn logic. Early versions put players too close together, which compressed the mid-game. We've overhauled the spawn-point validator to enforce minimum distance relative to map size.\n\nBiggest surprise: the crafting bench became the dominant strategic element. Players camped it, fought over it, used it as bait. We didn't design for that — we're leaning into it."
+  },
+  "ru": {
+    "title": "Frog Frag — результаты первого плейтеста",
+    "date": "14 Фев, 2025",
+    "summary": "Мы провели первый внутренний плейтест Frog Frag. Что сработало, что нет, и что нас удивило.",
+    "body": "Четырнадцать часов плейтестов за два дня. Шесть игроков, один прототип карты, много споров.\n\nОсновной цикл продержался лучше, чем ожидали. Подбери оружие, скрести, сражайся. Случайно генерируемые карты создавали подлинные сюрпризы — игроки обнаруживали линии обзора, которых не должно было быть.\n\nЧто не сработало: логика спауна. Ранние версии ставили игроков слишком близко, что сжимало середину игры. Мы переработали валидатор точек спауна.\n\nГлавный сюрприз: верстак стал ключевым стратегическим элементом. Игроки охраняли его, дрались за него, использовали как приманку. Мы не проектировали это — но теперь мы это развиваем."
+  }
+}

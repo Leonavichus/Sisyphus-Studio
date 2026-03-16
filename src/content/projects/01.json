@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "image": "/images/projects/project-1.jpg",
+  "progress": 40,
+  "wishlistUrl": "https://store.steampowered.com/app/frogfrag",
+  "en": {
+    "title": "Frog Frag",
+    "description": "A cooperative shooter, a deathmatch. Each battle is unique thanks to a randomly generated map. Mix and match weapons, creating even the most absurd and ridiculous combinations.",
+    "price": "In Development"
+  },
+  "ru": {
+    "title": "Frog Frag",
+    "description": "Кооперативный шутер, бой на смерть. Каждая схватка будет уникальна за счет случайно созданной карты. Скрещивай оружие, создавая даже самые абсурдные и нелепые сочетания.",
+    "price": "В разработке"
+  }
+}

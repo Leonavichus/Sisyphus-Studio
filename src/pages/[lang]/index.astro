@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/sections/Hero.astro";
+import About from "../../components/sections/About.astro";
+import Contact from "../../components/sections/Contact.astro";
+import Navbar from "../../components/layout/Navbar";
+import ProjectsCarousel from "../../components/features/ProjectsCarousel";
+import NewsCarousel from "../../components/features/NewsCarousel";
+import Footer from "../../components/layout/Footer";
+import { TRANSLATIONS } from "../../i18n/translations";
+import { FOOTER_SLIDES } from "../../config";
+import type { Language, Project, NewsItem } from "../../types";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "ru" } }];
+}
+
+export const prerender = true;
+
+const { lang } = Astro.params as { lang: Language };
+const t = TRANSLATIONS[lang];
+const footerSlides = FOOTER_SLIDES[lang];
+const currentYear = new Date().getFullYear();
+
+const projectEntries = await getCollection("projects");
+const sortedProjects = projectEntries.sort((a, b) => a.data.id - b.data.id);
+const titlesCount = sortedProjects.length;
+
+const projects: Project[] = sortedProjects.map((e) => ({
+  id: e.data.id,
+  title: e.data[lang].title,
+  description: e.data[lang].description,
+  image: e.data.image,
+  price: e.data[lang].price,
+  progress: e.data.progress,
+  wishlistUrl: e.data.wishlistUrl,
+}));
+
+const newsEntries = await getCollection("news");
+const news: NewsItem[] = newsEntries
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((e) => ({
+    isoDate: e.data.isoDate,
+    date: e.data[lang].date,
+    title: e.data[lang].title,
+    image: e.data.image,
+    summary: e.data[lang].summary,
+    body: e.data[lang].body,
+    type: e.data.type,
+  }));
+---
+
+<Layout lang={lang} title={t.meta.title} description={t.meta.description} year={currentYear}>
+  <Navbar lang={lang} t={t.nav} client:load />
+
+  <main>
+    <Hero t={t.hero} projects={projects} titlesCount={titlesCount} />
+    <ProjectsCarousel t={t.projects} projects={projects} client:visible />
+    <About t={t.about} lang={lang} titlesCount={titlesCount} />
+    <NewsCarousel news={news} t={t.news} lang={lang} client:visible />
+    <Contact lang={lang} t={t.contact} />
+  </main>
+
+  <Footer
+    lang={lang}
+    slides={footerSlides}
+    t={t.footer}
+    year={currentYear}
+    client:visible
+  />
+</Layout>

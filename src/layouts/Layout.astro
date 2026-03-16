@@ -1,0 +1,195 @@
+---
+import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
+import { URLS } from "../config";
+
+interface Props {
+  lang: "en" | "ru";
+  title?: string;
+  description?: string;
+  year: number;
+}
+
+const {
+  lang,
+  title = "Sisyphus Studio — Independent Game Developers",
+  description = "Sisyphus Studio is an independent game studio creating Frog Frag and Krivda. Small team, big ambitions.",
+  year,
+} = Astro.props;
+
+const otherLang = lang === "en" ? "ru" : "en";
+const canonicalBase = URLS.site;
+const steamUrl = URLS.steam;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Sisyphus Studio",
+      "url": canonicalBase,
+      "logo": `${canonicalBase}/images/og-cover.jpg`,
+      "foundingDate": "2025",
+      "description": "Independent game studio creating Frog Frag and Krivda.",
+      "sameAs": [steamUrl],
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Frog Frag",
+      "description": "A cooperative deathmatch shooter with procedurally generated maps.",
+      "author": { "@type": "Organization", "name": "Sisyphus Studio" },
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows",
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Krivda",
+      "description": "A cooperative survival game rooted in Slavic mythology.",
+      "author": { "@type": "Organization", "name": "Sisyphus Studio" },
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows",
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <meta name="author" content="Sisyphus Studio" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href={`${canonicalBase}/${lang}/`} />
+    <link rel="alternate" hreflang={lang} href={`${canonicalBase}/${lang}/`} />
+    <link rel="alternate" hreflang={otherLang} href={`${canonicalBase}/${otherLang}/`} />
+    <link rel="alternate" hreflang="x-default" href={`${canonicalBase}/en/`} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={lang === "ru" ? "Sisyphus Studio — Новости" : "Sisyphus Studio — News"}
+      href={`${canonicalBase}/${lang}/rss.xml`}
+    />
+
+    <link rel="dns-prefetch" href={steamUrl} />
+    <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${canonicalBase}/images/og-cover.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:url" content={`${canonicalBase}/${lang}/`} />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
+    <meta property="og:locale:alternate" content={lang === "ru" ? "en_US" : "ru_RU"} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${canonicalBase}/images/og-cover.jpg`} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
+
+    <link rel="preload" as="image" href="/images/hero/hero-main.jpg" fetchpriority="high" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <script is:inline>
+      (function () {
+        var STORAGE_KEY = "ss_lang";
+        var SUPPORTED = ["en", "ru"];
+        try {
+          var stored = localStorage.getItem(STORAGE_KEY);
+          if (!stored || !SUPPORTED.includes(stored)) return;
+          var parts = window.location.pathname.split("/").filter(Boolean);
+          var pathLang = parts[0];
+          if (pathLang === stored) return;
+          if (SUPPORTED.includes(pathLang)) {
+            parts[0] = stored;
+            window.location.replace("/" + parts.join("/") + window.location.search);
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">
+      {lang === "ru" ? "Перейти к содержимому" : "Skip to content"}
+    </a>
+    <noscript>
+      <div style="position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#1a1a1a;border-top:1px solid rgba(248,126,15,.3);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Manrope',sans-serif;font-size:13px;color:#999;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87e0f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>{lang === "ru" ? "Для полноценной работы сайта необходим JavaScript." : "JavaScript is required for the full site experience."}</span>
+      </div>
+    </noscript>
+
+    <div id="main-content">
+      <slot />
+    </div>
+
+    <script>
+      function initPage() {
+        const existing = document.querySelector(".scroll-progress");
+        if (existing) existing.remove();
+        const bar = document.createElement("div");
+        bar.className = "scroll-progress";
+        document.body.prepend(bar);
+        window.addEventListener("scroll", () => {
+          const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+          bar.style.width = Math.min(pct, 100) + "%";
+        }, { passive: true });
+
+        document.addEventListener("click", (e) => {
+          const btn = (e.target as Element).closest(".btn-filled,.btn-tonal,.btn-outlined");
+          if (!btn) return;
+          const r = btn.getBoundingClientRect();
+          const sz = Math.max(r.width, r.height) * 1.4;
+          const w = document.createElement("span");
+          w.className = "ripple-wave";
+          w.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - r.left - sz / 2}px;top:${e.clientY - r.top - sz / 2}px;`;
+          btn.appendChild(w);
+          w.addEventListener("animationend", () => w.remove());
+        });
+
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) { entry.target.classList.add("in"); obs.unobserve(entry.target); }
+          });
+        }, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
+        document.querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale").forEach((el) => obs.observe(el));
+      }
+
+      document.addEventListener("astro:page-load", initPage);
+
+      let savedScrollY = 0;
+      document.addEventListener("astro:before-swap", () => { savedScrollY = window.scrollY; });
+      document.addEventListener("astro:after-swap", () => {
+        history.replaceState(null, "", window.location.pathname);
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, behavior: "instant" })));
+      });
+    </script>
+  </body>
+</html>

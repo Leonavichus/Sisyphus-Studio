@@ -1,0 +1,17 @@
+{
+  "isoDate": "2025-01-10",
+  "image": "/images/news/news-1.jpg",
+  "type": "announcement",
+  "en": {
+    "title": "Sisyphus Studio — We Are Officially Open",
+    "date": "Jan 10, 2025",
+    "summary": "Sisyphus Studio opens its doors. A small team united by one goal: to create games we always wanted to play ourselves.",
+    "body": "In January 2025 a small group of developers, artists, and designers decided to stop dreaming and start building. Every person on the team had spent years playing games — dissecting what made them tick, arguing about design decisions at 2am, filling notebooks with 'what if' ideas. At some point the question shifted from 'what if someone made this' to 'why not us'?\n\nSisyphus Studio was incorporated with zero investors and zero safety net. No publisher backing, no grants, no crowdfunding. Just a shared conviction that if you care enough about something, you find a way.\n\nWe're starting with two titles in active development. Frog Frag — our deathmatch shooter — is already playable internally."
+  },
+  "ru": {
+    "title": "Sisyphus Studio — мы официально открылись",
+    "date": "10 Янв, 2025",
+    "summary": "Sisyphus Studio открывает свои двери. Небольшая команда, объединённая одной целью: создавать игры, в которые мы сами всегда хотели играть.",
+    "body": "В январе 2025 года небольшая группа разработчиков, художников и дизайнеров решила перестать мечтать и начать строить. Каждый в команде провёл годы за играми — разбирая, что делает их особенными, споря о дизайнерских решениях в 2 часа ночи, заполняя блокноты идеями.\n\nSisyphus Studio была основана без инвесторов и страховочной сети. Никаких издателей, грантов, краудфандинга. Только твёрдая убеждённость: если тебе по-настоящему важно что-то — ты найдёшь способ.\n\nНачинаем с двух проектов в активной разработке. Frog Frag — наш шутер-дезматч — уже доступен для внутреннего плейтеста."
+  }
+}

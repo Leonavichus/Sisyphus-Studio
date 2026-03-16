@@ -1,0 +1,17 @@
+{
+  "isoDate": "2025-03-20",
+  "image": "/images/news/news-3.jpg",
+  "type": "dev-diary",
+  "en": {
+    "title": "Dev Diary #01 — Designing Frog Frag",
+    "date": "Mar 20, 2025",
+    "summary": "How do you design a fair yet chaotic shooter with randomly generated maps? We break down our core design decisions and early playtest findings.",
+    "body": "Designing for chaos is harder than it sounds. The goal in Frog Frag is that every match feels fresh without feeling unfair — a fine line when your maps are assembled at runtime.\n\nOur solution is a constraint graph. Each tile type carries metadata about adjacency rules, traversal cost, and sightline length. The generator samples from this graph under hard constraints: every spawn point must have at least two escape routes, the crafting bench must never be visible from more than one spawn simultaneously.\n\nEarly playtests revealed an unexpected finding: players preferred slightly asymmetric maps over perfectly balanced ones. We've leaned into that.\n\nNext diary: weapon balance and the combinatorics problem."
+  },
+  "ru": {
+    "title": "Дневник разработки #01 — Дизайн Frog Frag",
+    "date": "20 Мар, 2025",
+    "summary": "Как разработать честный, но при этом хаотичный шутер со случайно генерируемыми картами? Рассказываем о ключевых дизайнерских решениях.",
+    "body": "Проектировать для хаоса сложнее, чем кажется. Задача Frog Frag — чтобы каждый матч ощущался свежим, но не несправедливым.\n\nНаше решение — граф ограничений. Каждый тип тайла содержит метаданные о правилах смежности, стоимости прохода и длине линий обзора. Генератор работает под жёсткими ограничениями: у каждой точки спауна должно быть не менее двух путей отступления, верстак никогда не должен быть виден более чем с одного спауна одновременно.\n\nРанние плейтесты выявили неожиданное: игроки предпочитали слегка асимметричные карты идеально сбалансированным. Мы взяли это на вооружение.\n\nСледующий дневник: баланс оружия и проблема комбинаторики."
+  }
+}

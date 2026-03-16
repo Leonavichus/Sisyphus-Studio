@@ -1,0 +1,11 @@
+@import "./tokens.css";
+@import "./base.css";
+@import "./typography.css";
+@import "./buttons.css";
+@import "./components.css";
+@import "./animations.css";
+@import "./skeleton.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
