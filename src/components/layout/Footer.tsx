@@ -23,6 +23,7 @@ const Footer: FC<FooterProps> = ({ t, year }) => {
     <ErrorBoundary>
       <footer
         aria-labelledby="footer-heading"
+        className="reveal"
         style={{ background: COLORS.surface.s1, borderTop: `1px solid ${COLORS.border.default}` }}
       >
         <h2

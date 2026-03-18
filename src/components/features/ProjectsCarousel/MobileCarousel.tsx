@@ -71,7 +71,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
       <div
         style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
       >
-        <div style={{ marginBottom: 32 }}>
+        <div className="reveal" style={{ marginBottom: 32 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
             <span className="section-eyebrow-label">
@@ -85,6 +85,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         </div>
 
         <div
+          className="reveal-scale"
           style={{
             borderRadius: 16,
             overflow: "hidden",

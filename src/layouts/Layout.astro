@@ -195,11 +195,24 @@ const jsonLd = {
               }
             });
           },
-          { threshold: 0.05, rootMargin: "0px 0px -40px 0px" },
+          { threshold: 0.08, rootMargin: "0px 0px 0px 0px" },
         );
-        document
-          .querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale")
-          .forEach((el) => obs.observe(el));
+
+        function observeRevealEls() {
+          document
+            .querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale")
+            .forEach((el) => {
+              if (!el.classList.contains("in") && !(el as Element).hasAttribute("data-observed")) {
+                (el as Element).setAttribute("data-observed", "1");
+                obs.observe(el);
+              }
+            });
+        }
+
+        observeRevealEls();
+
+        const mo = new MutationObserver(() => observeRevealEls());
+        mo.observe(document.body, { childList: true, subtree: true });
       }
 
       document.addEventListener("astro:page-load", initPage);

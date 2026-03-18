@@ -184,6 +184,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
 
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
           <div
+            className="reveal"
             style={{
               marginBottom: 32,
               display: "flex",
@@ -207,7 +208,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 24 }}>
+          <div className="reveal" style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 24 }}>
             <button
               className={`chip ${activeCategory === "all" ? "active" : ""}`}
               onClick={() => setActiveCategory("all")}
@@ -231,7 +232,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 reveal-left">
               <div
                 ref={containerRef}
                 tabIndex={0}
@@ -421,6 +422,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
               role="listbox"
               aria-label={t.sectionLabel}
               aria-activedescendant={`news-item-${current}`}
+              className="reveal-right"
               style={{
                 display: "flex",
                 flexDirection: "column",

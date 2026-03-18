@@ -64,7 +64,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
       <div
         style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
       >
-        <div style={{ marginBottom: 40 }}>
+        <div className="reveal" style={{ marginBottom: 40 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
             <span className="section-eyebrow-label">
@@ -79,6 +79,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
 
         <div
           role="listbox"
+          className="reveal-scale"
           aria-label={t.heading}
           aria-activedescendant={`project-panel-${activeIndex}`}
           tabIndex={0}

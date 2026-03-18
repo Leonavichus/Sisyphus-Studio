@@ -48,13 +48,14 @@ const TIER_RELS = [isMailto ? undefined : "noopener noreferrer", undefined, "noo
       </div>
     </div>
 
-    <div class="reveal donate-tiers-grid">
+    <div class="donate-tiers-grid">
       {t.tiers.map((tier, i) => (
         <a
           href={TIER_HREFS[i]}
           target={TIER_TARGETS[i]}
           rel={TIER_RELS[i]}
-          class={`state donate-tier-card${i === 0 ? " donate-tier-card--highlight" : ""}`}
+          class={`reveal-scale state donate-tier-card${i === 0 ? " donate-tier-card--highlight" : ""}`}
+          style={`transition-delay: ${i * 0.1}s`}
         >
           <div class="donate-tier-icon" aria-hidden="true" set:html={TIER_ICONS[i]} />
           <div class="donate-tier-label">{tier.label}</div>
