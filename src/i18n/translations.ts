@@ -95,8 +95,29 @@ export const TRANSLATIONS = {
         titleSuffix: "Journey",
         description:
           "If you'd like to become a sponsor or simply support our company financially, you can do so here!",
-        actionText: "Donate",
         sectionLabel: "Support",
+        note: "100% of donations go directly to development — no middlemen, no investors.",
+        badge: "Independent · No investors",
+        tiers: [
+          {
+            label: "One-time",
+            title: "Buy Us a Coffee",
+            description: "A small donation goes a long way for an indie team.",
+            cta: "Donate",
+          },
+          {
+            label: "Sponsor",
+            title: "Become a Sponsor",
+            description: "Get your name in the credits and support the studio long-term.",
+            cta: "Contact Us",
+          },
+          {
+            label: "Free",
+            title: "Wishlist on Steam",
+            description: "No money needed — just add Frog Frag to your wishlist.",
+            cta: "Wishlist",
+          },
+        ],
       },
       links: {
         about: "About",
@@ -208,8 +229,29 @@ export const TRANSLATIONS = {
         titleSuffix: "Нас",
         description:
           "Если вы хотите стать спонсором или просто поддержать нашу компанию финансово, вы можете это сделать тут!",
-        actionText: "Пожертвовать",
         sectionLabel: "Поддержка",
+        note: "100% пожертвований идут напрямую в разработку — без посредников и инвесторов.",
+        badge: "Независимые · Без инвесторов",
+        tiers: [
+          {
+            label: "Разово",
+            title: "Угостить кофе",
+            description: "Небольшой донат — большая помощь для инди-команды.",
+            cta: "Задонатить",
+          },
+          {
+            label: "Спонсор",
+            title: "Стать спонсором",
+            description: "Ваше имя в титрах и долгосрочная поддержка студии.",
+            cta: "Написать нам",
+          },
+          {
+            label: "Бесплатно",
+            title: "Вишлист в Steam",
+            description: "Без денег — просто добавьте Frog Frag в вишлист.",
+            cta: "Вишлист",
+          },
+        ],
       },
       links: {
         about: "О нас",

@@ -108,8 +108,15 @@ export interface TranslationStructure {
       title: string;
       titleSuffix: string;
       description: string;
-      actionText: string;
       sectionLabel: string;
+      note: string;
+      badge: string;
+      tiers: Array<{
+        label: string;
+        title: string;
+        description: string;
+        cta: string;
+      }>;
     };
     links: { about: string; games: string; news: string; contact: string };
     backToTop: string;
