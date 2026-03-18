@@ -168,9 +168,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           <img
             src="/favicon.png"
             alt="Sisyphus Studio"
-            width={28}
-            height={28}
-            style={{ borderRadius: 7, objectFit: "cover", flexShrink: 0 }}
+            width={32}
+            height={32}
+            style={{ borderRadius: 8, objectFit: "cover", flexShrink: 0 }}
           />
           <span className="hidden sm:block t-brand-lg">
             {BRAND.prefix}
@@ -246,7 +246,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           className="md:hidden icon-btn-outlined"
           style={{ marginLeft: "auto", width: 36, height: 36 }}
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation"
+          aria-label={t.toggleNav}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
         >
@@ -259,7 +259,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
         ref={mobileMenuRef}
         onKeyDown={handleMenuKeyDown}
         {...(mobileOpen
-          ? { role: "dialog", "aria-modal": "true", "aria-label": "Navigation menu" }
+          ? { role: "dialog", "aria-modal": "true", "aria-label": t.navMenu }
           : {})}
         style={{
           maxHeight: mobileOpen ? "400px" : 0,

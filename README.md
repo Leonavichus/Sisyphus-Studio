@@ -2,7 +2,7 @@
 
 Сайт независимой игровой студии. Astro 5 + React 19 + Tailwind CSS.
 
-## 📚 Документация
+## Документация
 
 - **[DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md)** — Подробное руководство разработчика
 
@@ -51,28 +51,26 @@ src/
 │   └── sections/
 │       ├── Hero.astro
 │       ├── About.astro
-│       └── Contact.astro
+│       ├── Contact.astro
+│       └── Donate.astro
 ├── config/
-│   ├── constants.ts        — общие константы (анимации, бренд, карусели, валидация, UI)
-│   ├── design.ts           — дизайн-система (цвета, размеры, отступы)
-│   ├── links.ts            — ссылки, контакты, соцсети, иконки
-│   ├── seo.ts              — SEO константы (meta, og, schema.org)
-│   └── index.ts            — централизованный экспорт
+│   ├── constants.ts   — общие константы (анимации, бренд, карусели, валидация, UI)
+│   ├── design.ts      — дизайн-система (цвета, размеры, отступы)
+│   ├── links.ts       — ссылки, контакты, соцсети, иконки
+│   ├── seo.ts         — SEO константы (meta, og, schema.org)
+│   └── index.ts       — централизованный экспорт
 ├── content/
-│   ├── config.ts           — схемы коллекций
-│   ├── news/               — JSON файлы новостей
-│   └── projects/           — JSON файлы проектов
+│   ├── config.ts      — схемы коллекций
+│   ├── news/          — JSON файлы новостей
+│   └── projects/      — JSON файлы проектов
 ├── hooks/
 │   ├── useCarouselKeyboard.ts
 │   ├── useLanguagePreference.ts
 │   └── useReducedMotion.ts
 ├── i18n/
-│   └── translations.ts     — строки интерфейса (en + ru)
+│   └── translations.ts  — строки интерфейса (en + ru)
 ├── layouts/
-│   └── Layout.astro        — базовый layout с SEO
-├── lib/
-│   ├── helpers.ts          — утилиты (isMailtoLink)
-│   └── news.ts             — категории новостей
+│   └── Layout.astro     — базовый layout с SEO
 ├── pages/
 │   ├── [lang]/
 │   │   ├── index.astro
@@ -80,17 +78,19 @@ src/
 │   ├── 404.astro
 │   └── index.astro
 ├── styles/
-│   ├── animations.css      — keyframes, reveal анимации
-│   ├── base.css            — reset, scrollbar
-│   ├── buttons.css         — стили кнопок
-│   ├── components.css      — карточки, бейджи
-│   ├── skeleton.css        — loading состояния
-│   ├── tokens.css          — CSS переменные
-│   ├── typography.css      — типографика
-│   └── global.css          — точка входа
+│   ├── animations.css   — keyframes, reveal анимации
+│   ├── base.css         — reset, scrollbar
+│   ├── buttons.css      — стили кнопок
+│   ├── components.css   — карточки, бейджи
+│   ├── skeleton.css     — loading состояния
+│   ├── tokens.css       — CSS переменные
+│   ├── typography.css   — типографика
+│   └── global.css       — точка входа
 ├── utils/
-│   └── images.ts           — обработка изображений
-└── types.ts                — TypeScript типы
+│   ├── helpers.ts       — утилиты (isMailtoLink)
+│   ├── images.ts        — обработка изображений
+│   └── news.ts          — категории новостей
+└── types.ts             — TypeScript типы
 ```
 
 ## Конфигурация
@@ -98,11 +98,11 @@ src/
 Все настройки централизованы в `src/config/`:
 
 - `constants.ts` — общие константы (анимации, бренд, карусели, валидация, UI строки)
-- `design.ts` — дизайн-система (цвета, размеры, отступы, layout)
+- `design.ts` — дизайн-система (цвета, размеры, layout)
 - `links.ts` — все ссылки, контакты, соцсети, иконки
 - `seo.ts` — SEO константы (meta теги, Open Graph, Schema.org)
 
-Все переводы (включая футер) в `src/i18n/translations.ts`
+Все переводы в `src/i18n/translations.ts`.
 
 ## Добавление новости
 
@@ -145,7 +145,7 @@ src/
 }
 ```
 
-> **Внимание:** `BRAND.teamSize` в `src/config/constants.ts` обновляется вручную при изменении состава команды.
+> `BRAND.teamSize` в `src/config/constants.ts` обновляется вручную при изменении состава команды.
 
 ## Переменные окружения
 
@@ -153,8 +153,8 @@ src/
 
 ```env
 PUBLIC_SITE_URL=https://sisyphus.studio
-PUBLIC_STEAM_URL=https://store.steampowered.com
-PUBLIC_YOUTUBE_URL=https://youtube.com/@channel
-PUBLIC_DONATE_URL=https://donate.link
+PUBLIC_STEAM_URL=https://store.steampowered.com/app/YOUR_APP_ID
+PUBLIC_YOUTUBE_URL=https://www.youtube.com/@YourChannel
+PUBLIC_DONATE_URL=https://your-donation-link.com
 PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_ID
 ```

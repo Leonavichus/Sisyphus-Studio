@@ -13,6 +13,8 @@ export const TRANSLATIONS = {
       projects: "Games",
       news: "News",
       contact: "Contact",
+      toggleNav: "Toggle navigation",
+      navMenu: "Navigation menu",
     },
     hero: {
       title: "CREATING A NEW REALITY",
@@ -77,6 +79,7 @@ export const TRANSLATIONS = {
       closeArticle: "Close article",
       paused: "paused",
       swipeHint: "swipe",
+      allCategories: "All",
     },
     contact: {
       heading: "Get in Touch",
@@ -93,6 +96,7 @@ export const TRANSLATIONS = {
         description:
           "If you'd like to become a sponsor or simply support our company financially, you can do so here!",
         actionText: "Donate",
+        sectionLabel: "Support",
       },
       links: {
         about: "About",
@@ -100,6 +104,7 @@ export const TRANSLATIONS = {
         news: "News",
         contact: "Contact",
       },
+      backToTop: "Back to top",
     },
     notFound: {
       badge: "Error 404",
@@ -120,6 +125,8 @@ export const TRANSLATIONS = {
       projects: "Игры",
       news: "Новости",
       contact: "Контакты",
+      toggleNav: "Открыть меню",
+      navMenu: "Меню навигации",
     },
     hero: {
       title: "СОЗДАЕМ НОВУЮ РЕАЛЬНОСТЬ",
@@ -185,6 +192,7 @@ export const TRANSLATIONS = {
       closeArticle: "Закрыть статью",
       paused: "пауза",
       swipeHint: "свайп",
+      allCategories: "Все",
     },
     contact: {
       heading: "Написать нам",
@@ -201,6 +209,7 @@ export const TRANSLATIONS = {
         description:
           "Если вы хотите стать спонсором или просто поддержать нашу компанию финансово, вы можете это сделать тут!",
         actionText: "Пожертвовать",
+        sectionLabel: "Поддержка",
       },
       links: {
         about: "О нас",
@@ -208,6 +217,7 @@ export const TRANSLATIONS = {
         news: "Новости",
         contact: "Контакты",
       },
+      backToTop: "Наверх",
     },
     notFound: {
       badge: "Ошибка 404",

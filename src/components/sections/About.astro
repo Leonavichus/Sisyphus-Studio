@@ -34,7 +34,7 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
 <section
   id="about"
   aria-labelledby="about-heading"
-  style="background:#1a1a1a;padding:100px 0;border-top:1px solid rgba(255,255,255,.07)"
+  style="background:var(--s-4);padding:100px 0;border-top:1px solid var(--b-default)"
 >
   <div style="max-width:1280px;margin:0 auto;padding:0 20px">
     <div class="reveal" style="margin-bottom:56px">
@@ -42,13 +42,13 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
         <div class="section-eyebrow-line"></div>
         <span class="section-eyebrow-label">{t.sectionLabel}</span>
       </div>
-      <h2 id="about-heading" class="t-display-md" style="color:#f0ece8">{t.heading}</h2>
+      <h2 id="about-heading" class="t-display-md" style="color:var(--c-on-surface)">{t.heading}</h2>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
       <div class="reveal-left">
         <div
-          style="border-radius:20px;overflow:hidden;position:relative;height:272px;margin-bottom:28px;border:1px solid rgba(255,255,255,.07)"
+          style="border-radius:20px;overflow:hidden;position:relative;height:272px;margin-bottom:28px;border:1px solid var(--b-default)"
         >
           <img
             src={workspaceImg}
@@ -67,33 +67,33 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
             style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;display:flex;align-items:flex-end;justify-content:space-between"
           >
             <div>
-              <p class="t-label-sm" style="color:#737373">{t.foundedLabel}</p>
-              <p class="t-display-sm" style="color:#f0ece8">{String(BRAND.foundedYear)}</p>
+              <p class="t-label-sm" style="color:var(--c-tertiary)">{t.foundedLabel}</p>
+              <p class="t-display-sm" style="color:var(--c-on-surface)">{String(BRAND.foundedYear)}</p>
             </div>
             <div
-              style="padding:4px 12px;border-radius:9999px;background:rgba(248,126,15,.1);border:1px solid rgba(248,126,15,.2);color:#ffb86b;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase"
+              style="padding:4px 12px;border-radius:var(--r-full);background:var(--c-orange-dim);border:1px solid var(--c-orange-border);color:#ffb86b;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase"
             >
               {t.indieLabel}
             </div>
           </div>
         </div>
 
-        <p class="t-body-lg" style="color:#999;line-height:1.75;margin-bottom:28px">
+        <p class="t-body-lg" style="color:var(--c-secondary);line-height:1.75;margin-bottom:28px">
           {t.description}
         </p>
 
         <div>
-          <p class="t-label-sm" style="color:#737373;margin-bottom:10px">{t.craftLabel}</p>
+          <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:10px">{t.craftLabel}</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" role="list">
             {
               disciplines.map(({ icon, label }) => (
                 <div
                   class="state"
                   role="listitem"
-                  style="height:38px;padding:0 14px;display:flex;align-items:center;gap:10px;background:#202020;border:1px solid rgba(255,255,255,.06);border-radius:8px;cursor:default;overflow:hidden"
+                  style="height:38px;padding:0 14px;display:flex;align-items:center;gap:10px;background:var(--s-5);border:1px solid var(--b-subtle);border-radius:8px;cursor:default;overflow:hidden"
                 >
                   <DisciplineIcon icon={icon} />
-                  <span class="t-label-lg" style="color:#999;font-size:13px">
+                  <span class="t-label-lg" style="color:var(--c-secondary);font-size:13px">
                     {label}
                   </span>
                 </div>
@@ -109,7 +109,7 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
             stats.map((s) => (
               <div
                 class="state"
-                style="padding:20px 18px;cursor:default;background:#202020;border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;position:relative;display:flex;flex-direction:column"
+                style="padding:20px 18px;cursor:default;background:var(--s-5);border:1px solid var(--b-subtle);border-radius:16px;overflow:hidden;position:relative;display:flex;flex-direction:column"
               >
                 <dd
                   class="t-stat-num"
@@ -118,7 +118,7 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
                 >
                   {s.value}
                 </dd>
-                <dt class="t-body-sm" style="color:#737373;margin-top:6px">
+                <dt class="t-body-sm" style="color:var(--c-tertiary);margin-top:6px">
                   {s.label}
                 </dt>
               </div>
@@ -127,30 +127,30 @@ const workspaceImg = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgC
         </dl>
 
         <div
-          style="padding:22px 24px;border-radius:16px;background:#202020;border:1px solid rgba(255,255,255,.06);border-left:2px solid #f87e0f"
+          style="padding:22px 24px;border-radius:16px;background:var(--s-5);border:1px solid var(--b-subtle);border-left:2px solid var(--c-orange)"
         >
-          <p class="t-label-sm" style="color:#f87e0f;margin-bottom:12px">{t.missionLabel}</p>
+          <p class="t-label-sm" style="color:var(--c-orange);margin-bottom:12px">{t.missionLabel}</p>
           <blockquote
             lang={lang}
             class="t-body-lg"
-            style="color:#f0ece8;font-style:italic;line-height:1.65;font-weight:400;margin:0"
+            style="color:var(--c-on-surface);font-style:italic;line-height:1.65;font-weight:400;margin:0"
           >
             {t.missionQuote}
           </blockquote>
         </div>
 
         <div
-          style="padding:14px 18px;display:flex;align-items:center;gap:12px;background:#202020;border:1px solid rgba(255,255,255,.06);border-radius:12px"
+          style="padding:14px 18px;display:flex;align-items:center;gap:12px;background:var(--s-5);border:1px solid var(--b-subtle);border-radius:12px"
         >
           <div
             class="pulse"
-            style="width:8px;height:8px;border-radius:50%;background:#f87e0f;flex-shrink:0"
+            style="width:8px;height:8px;border-radius:50%;background:var(--c-orange);flex-shrink:0"
             aria-hidden="true"
           >
           </div>
           <div>
-            <p class="t-title-sm" style="color:#f0ece8">{t.statusLabel}</p>
-            <p class="t-body-sm" style="color:#737373;margin-top:2px">{t.statusSub}</p>
+            <p class="t-title-sm" style="color:var(--c-on-surface)">{t.statusLabel}</p>
+            <p class="t-body-sm" style="color:var(--c-tertiary);margin-top:2px">{t.statusSub}</p>
           </div>
         </div>
       </div>

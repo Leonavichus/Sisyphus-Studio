@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/sections/Hero.astro";
 import About from "../../components/sections/About.astro";
 import Contact from "../../components/sections/Contact.astro";
+import Donate from "../../components/sections/Donate.astro";
 import Navbar from "../../components/layout/Navbar";
 import ProjectsCarousel from "../../components/features/ProjectsCarousel";
 import NewsCarousel from "../../components/features/NewsCarousel";
@@ -57,8 +58,9 @@ const news: NewsItem[] = newsEntries
     <ProjectsCarousel t={t.projects} projects={projects} client:visible />
     <About t={t.about} lang={lang} titlesCount={titlesCount} />
     <NewsCarousel news={news} t={t.news} lang={lang} client:visible />
+    <Donate t={t.footer.cta} />
     <Contact lang={lang} t={t.contact} />
   </main>
 
-  <Footer lang={lang} t={t.footer} year={currentYear} client:visible />
+  <Footer t={t.footer} year={currentYear} client:visible />
 </Layout>

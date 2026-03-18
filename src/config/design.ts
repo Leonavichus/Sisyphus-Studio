@@ -32,7 +32,7 @@ export const COLORS = {
 export const LAYOUT = {
   maxWidth: 1280,
   padding: 20,
-  navHeight: 60,
+  navHeight: 76,
 } as const;
 
 export const SPACING = {
@@ -42,7 +42,6 @@ export const SPACING = {
     project: "32px 40px 36px",
   },
   navLinkMargin: 20,
-  footerPadding: 72,
 } as const;
 
 export const SIZES = {
@@ -59,12 +58,5 @@ export const SIZES = {
   hero: {
     cardHeight: 264,
     cardImageSize: 48,
-  },
-} as const;
-
-export const GRID = {
-  background: {
-    opacity: 0.022,
-    borderOpacity: 0.06,
   },
 } as const;

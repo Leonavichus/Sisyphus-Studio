@@ -119,7 +119,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         id="news"
         aria-labelledby="news-heading"
         style={{
-          background: COLORS.surface.s3,
+          background: COLORS.surface.s2,
           padding: "100px 0",
           borderTop: `1px solid ${COLORS.border.default}`,
         }}
@@ -162,7 +162,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         id="news"
         aria-labelledby="news-heading"
         style={{
-          background: COLORS.surface.s3,
+          background: COLORS.surface.s2,
           padding: "100px 0",
           borderTop: `1px solid ${COLORS.border.default}`,
         }}
@@ -212,7 +212,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
               className={`chip ${activeCategory === "all" ? "active" : ""}`}
               onClick={() => setActiveCategory("all")}
             >
-              {lang === "ru" ? "Все" : "All"}
+              {t.allCategories}
             </button>
             {newsCategories.map((cat) => (
               <button

@@ -29,6 +29,8 @@ export interface TranslationStructure {
     projects: string;
     news: string;
     contact: string;
+    toggleNav: string;
+    navMenu: string;
   };
   meta: {
     title: string;
@@ -92,6 +94,7 @@ export interface TranslationStructure {
     closeArticle: string;
     paused: string;
     swipeHint: string;
+    allCategories: string;
   };
   contact: {
     heading: string;
@@ -106,8 +109,10 @@ export interface TranslationStructure {
       titleSuffix: string;
       description: string;
       actionText: string;
+      sectionLabel: string;
     };
     links: { about: string; games: string; news: string; contact: string };
+    backToTop: string;
   };
   notFound: {
     badge: string;

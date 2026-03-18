@@ -1,0 +1,55 @@
+---
+import type { TranslationStructure } from "../../types";
+import { URLS } from "../../config";
+import { isMailtoLink } from "../../utils/helpers";
+
+interface Props {
+  t: TranslationStructure["footer"]["cta"];
+}
+
+const { t } = Astro.props;
+const donateUrl = URLS.donate;
+const isMailto = isMailtoLink(donateUrl);
+---
+
+<section
+  id="donate"
+  aria-labelledby="donate-heading"
+  style="padding: var(--spacing-section); background: var(--s-4); border-top: 1px solid var(--b-default)"
+>
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 20px">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center reveal">
+      <div>
+        <div class="section-eyebrow" style="margin-bottom: 16px">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-label">{t.sectionLabel}</span>
+        </div>
+        <h2
+          id="donate-heading"
+          class="t-display-md"
+          style="color: #f0ece8; margin-bottom: 14px; line-height: 1"
+        >
+          {t.title} <span style="color: var(--c-orange)">{t.titleSuffix}</span>
+        </h2>
+        <div class="md-divider-accent" style="margin-bottom: 16px"></div>
+        <p class="t-body-lg" style="color: #999; line-height: 1.75; max-width: 440px">
+          {t.description}
+        </p>
+      </div>
+      <div style="display: flex; justify-content: flex-end; align-items: center">
+        <a
+          href={donateUrl}
+          target={isMailto ? undefined : "_blank"}
+          rel={isMailto ? undefined : "noopener noreferrer"}
+          class="btn-filled"
+          style="height: 44px; padding: 0 32px; font-size: 14px; gap: 8px; display: inline-flex; align-items: center"
+        >
+          {t.actionText}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
