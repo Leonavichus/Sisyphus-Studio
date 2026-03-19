@@ -209,23 +209,23 @@
   border-radius: inherit;
 }
 
-.glitch-word.g-burst { animation: gburst-shake 0.55s steps(1) forwards; }
+.glitch-word.g-burst { animation: gburst-slice 0.55s steps(1) forwards; }
 .glitch-word.g-burst::before { animation: gburst-r 0.55s steps(1) forwards; }
 .glitch-word.g-burst::after  { animation: gburst-b 0.55s steps(1) forwards; }
 .glitch-word.g-burst .glitch-scanline::before { animation: gburst-scan 0.55s linear forwards; }
 .glitch-word.g-burst .glitch-noise { animation: gnoise-show 0.55s steps(1) forwards; }
 
-@keyframes gburst-shake {
-  0%   { transform: translate(0) skewX(0deg); }
-  9%   { transform: translate(-7px, 2px) skewX(-4deg); }
-  18%  { transform: translate(9px, -2px) skewX(3deg); }
-  27%  { transform: translate(-5px, 1px) skewX(-2deg); }
-  36%  { transform: translate(6px, 0) skewX(1.5deg); }
-  45%  { transform: translate(-3px, -1px) skewX(-1deg); }
-  54%  { transform: translate(4px, 1px) skewX(0.5deg); }
-  63%  { transform: translate(-2px, 0); }
-  72%  { transform: translate(2px, 0); }
-  100% { transform: translate(0) skewX(0deg); }
+@keyframes gburst-slice {
+  0%   { transform: translate(0) skewX(0deg); clip-path: none; }
+  9%   { transform: translate(-8px, 0) skewX(-5deg); clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+  18%  { transform: translate(12px, 0) skewX(4deg);  clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); }
+  27%  { transform: translate(-6px, 0) skewX(-3deg); clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+  36%  { transform: translate(9px, 0) skewX(2deg);   clip-path: polygon(0 15%, 100% 15%, 100% 55%, 0 55%); }
+  45%  { transform: translate(-4px, 0) skewX(-1deg); clip-path: polygon(0 45%, 100% 45%, 100% 80%, 0 80%); }
+  54%  { transform: translate(5px, 0);               clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%); }
+  63%  { transform: translate(-3px, 0);              clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); }
+  72%  { transform: translate(2px, 0);               clip-path: none; }
+  100% { transform: translate(0) skewX(0deg);        clip-path: none; }
 }
 @keyframes gburst-r {
   0%   { opacity: 0; }
@@ -258,21 +258,21 @@
   100% { opacity: 0;   top: 100%; }
 }
 
-.glitch-word.g-echo { animation: gecho-shake 0.38s steps(1) forwards; }
+.glitch-word.g-echo { animation: gecho-slice 0.38s steps(1) forwards; }
 .glitch-word.g-echo::before { animation: gecho-r 0.38s steps(1) forwards; }
 .glitch-word.g-echo::after  { animation: gecho-b 0.38s steps(1) forwards; }
 .glitch-word.g-echo .glitch-scanline::before { animation: gecho-scan 0.38s linear forwards; }
 .glitch-word.g-echo .glitch-noise { animation: gnoise-show 0.38s steps(1) forwards; }
 
-@keyframes gecho-shake {
-  0%   { transform: translate(0); }
-  13%  { transform: translate(-5px, 1px) skewX(-2deg); }
-  26%  { transform: translate(6px, -1px) skewX(1.5deg); }
-  39%  { transform: translate(-3px, 0) skewX(-1deg); }
-  52%  { transform: translate(4px, 1px); }
-  65%  { transform: translate(-2px, 0); }
-  78%  { transform: translate(2px, 0); }
-  100% { transform: translate(0); }
+@keyframes gecho-slice {
+  0%   { transform: translate(0);              clip-path: none; }
+  13%  { transform: translate(-6px) skewX(-3deg); clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+  26%  { transform: translate(8px) skewX(2deg);   clip-path: polygon(0 45%, 100% 45%, 100% 100%, 0 100%); }
+  39%  { transform: translate(-4px) skewX(-1deg); clip-path: polygon(0 20%, 100% 20%, 100% 65%, 0 65%); }
+  52%  { transform: translate(5px);               clip-path: polygon(0 60%, 100% 60%, 100% 90%, 0 90%); }
+  65%  { transform: translate(-2px);              clip-path: none; }
+  78%  { transform: translate(2px);               clip-path: none; }
+  100% { transform: translate(0);                 clip-path: none; }
 }
 @keyframes gecho-r {
   0%   { opacity: 0; }
@@ -326,26 +326,26 @@
 
 @keyframes gnoise-show {
   0%, 100% { opacity: 0; }
-  10%, 90%  { opacity: 0.18; }
-  50%       { opacity: 0.12; }
+  10%, 90%  { opacity: 0.45; }
+  50%       { opacity: 0.3; }
 }
 
-.glitch-word.g-drift { animation: gdrift-shake 0.9s steps(1) forwards; }
+.glitch-word.g-drift { animation: gdrift-slice 0.9s steps(1) forwards; }
 .glitch-word.g-drift::before { animation: gdrift-r 0.9s linear forwards; }
 .glitch-word.g-drift::after  { animation: gdrift-b 0.9s linear forwards; }
 .glitch-word.g-drift .glitch-scanline::before { animation: gdrift-scan 0.9s linear forwards; }
 
-@keyframes gdrift-shake {
-  0%   { transform: translate(0); }
-  11%  { transform: translate(-2px, 0); }
-  22%  { transform: translate(3px, 1px); }
-  33%  { transform: translate(-1px, 0); }
-  44%  { transform: translate(2px, -1px); }
-  55%  { transform: translate(-3px, 0); }
-  66%  { transform: translate(1px, 1px); }
-  77%  { transform: translate(-1px, 0); }
-  88%  { transform: translate(1px, 0); }
-  100% { transform: translate(0); }
+@keyframes gdrift-slice {
+  0%   { transform: translate(0);   clip-path: none; }
+  11%  { transform: translate(-3px); clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
+  22%  { transform: translate(5px);  clip-path: polygon(0 30%, 100% 30%, 100% 60%, 0 60%); }
+  33%  { transform: translate(-2px); clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%); }
+  44%  { transform: translate(4px);  clip-path: polygon(0 10%, 100% 10%, 100% 45%, 0 45%); }
+  55%  { transform: translate(-4px); clip-path: polygon(0 50%, 100% 50%, 100% 85%, 0 85%); }
+  66%  { transform: translate(2px);  clip-path: none; }
+  77%  { transform: translate(-1px); clip-path: none; }
+  88%  { transform: translate(1px);  clip-path: none; }
+  100% { transform: translate(0);   clip-path: none; }
 }
 @keyframes gdrift-r {
   0%   { opacity: 0; transform: translate(0); }
@@ -371,16 +371,16 @@
   100% { opacity: 0; top: 100%; }
 }
 
-.glitch-word.g-stutter { animation: gstutter-shake 0.14s steps(1) forwards; }
+.glitch-word.g-stutter { animation: gstutter-slice 0.14s steps(1) forwards; }
 .glitch-word.g-stutter::before { animation: gstutter-r 0.14s steps(1) forwards; }
 .glitch-word.g-stutter::after  { animation: gstutter-b 0.14s steps(1) forwards; }
 .glitch-word.g-stutter .glitch-noise { animation: gnoise-show 0.14s steps(1) forwards; }
 
-@keyframes gstutter-shake {
-  0%   { transform: translate(0); }
-  33%  { transform: translate(-4px, 1px); }
-  66%  { transform: translate(5px, -1px); }
-  100% { transform: translate(0); }
+@keyframes gstutter-slice {
+  0%   { transform: translate(0);    clip-path: none; }
+  33%  { transform: translate(-10px); clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+  66%  { transform: translate(12px);  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
+  100% { transform: translate(0);    clip-path: none; }
 }
 @keyframes gstutter-r {
   0%   { opacity: 0; }
