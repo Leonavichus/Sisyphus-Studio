@@ -42,21 +42,34 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
   );
 
   return (
-    <div aria-labelledby="projects-heading" style={{ background: COLORS.surface.s2, padding: SPACING.sectionPadding }}>
+    <div
+      aria-labelledby="projects-heading"
+      style={{ background: COLORS.surface.s2, padding: SPACING.sectionPadding }}
+    >
       <div
         aria-live="polite"
         aria-atomic="true"
-        style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}
+        style={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+        }}
       >
         {shown.title} — {shown.price}
       </div>
 
-      <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}>
+      <div
+        style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+      >
         <div className="reveal" suppressHydrationWarning style={{ marginBottom: 40 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
             <span className="section-eyebrow-label">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(projects.length).padStart(2, "0")}
             </span>
           </div>
           <h2 id="projects-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
@@ -121,7 +134,9 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    filter: isActive ? "brightness(.45) saturate(.55)" : "brightness(.2) saturate(.25)",
+                    filter: isActive
+                      ? "brightness(.45) saturate(.55)"
+                      : "brightness(.2) saturate(.25)",
                     transition: `filter ${PROJECTS_EXPAND_MS}ms ${easing}`,
                   }}
                   onError={(e) => handleImageError(e, 900, 600)}
@@ -161,7 +176,16 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                     pointerEvents: "none",
                   }}
                 >
-                  <div style={{ transform: "rotate(-90deg)", whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                  <div
+                    style={{
+                      transform: "rotate(-90deg)",
+                      whiteSpace: "nowrap",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
                     <span className="t-eyebrow-accent">{String(i + 1).padStart(2, "0")}</span>
                     <span className="t-eyebrow-muted">{project.title}</span>
                   </div>
@@ -176,20 +200,31 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                     padding: SPACING.cardPadding.project,
                     opacity: isActive && isDisplayed ? 1 : 0,
                     transform: isActive && isDisplayed ? "translateY(0)" : "translateY(14px)",
-                    transition: isActive && isDisplayed
-                      ? `opacity 320ms ${easing}, transform 320ms ${easing}`
-                      : `opacity 150ms cubic-bezier(0.4,0,1,1), transform 150ms cubic-bezier(0.4,0,1,1)`,
+                    transition:
+                      isActive && isDisplayed
+                        ? `opacity 320ms ${easing}, transform 320ms ${easing}`
+                        : `opacity 150ms cubic-bezier(0.4,0,1,1), transform 150ms cubic-bezier(0.4,0,1,1)`,
                     pointerEvents: isActive ? "auto" : "none",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: 12,
+                    }}
+                  >
                     <span className="t-eyebrow-accent">
                       {String(displayedIndex + 1).padStart(2, "0")} — {t.sectionLabel}
                     </span>
                     <div className="md-badge-primary md-badge">{shown.price}</div>
                   </div>
 
-                  <h3 className="t-card-title" style={{ fontSize: "clamp(28px,3.5vw,44px)", marginBottom: 12 }}>
+                  <h3
+                    className="t-card-title"
+                    style={{ fontSize: "clamp(28px,3.5vw,44px)", marginBottom: 12 }}
+                  >
                     {shown.title}
                   </h3>
 
@@ -198,7 +233,14 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                       {shown.tags.map((tag) => {
                         const Icon = getTagIcon(tag);
                         return (
-                          <span key={tag} style={{ ...TAG_STYLE.base, ...TAG_STYLE.desktop, color: COLORS.text.secondary }}>
+                          <span
+                            key={tag}
+                            style={{
+                              ...TAG_STYLE.base,
+                              ...TAG_STYLE.desktop,
+                              color: COLORS.text.secondary,
+                            }}
+                          >
                             <Icon size={10} color={COLORS.orange} />
                             {tag}
                           </span>
@@ -209,8 +251,24 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
 
                   <div style={{ height: 1, background: COLORS.border.strong, marginBottom: 14 }} />
 
-                  <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 32 }}>
-                    <p className="t-body-md" style={{ color: COLORS.text.secondary, lineHeight: 1.68, maxWidth: 620, flex: 1, minWidth: 180 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "space-between",
+                      gap: 32,
+                    }}
+                  >
+                    <p
+                      className="t-body-md"
+                      style={{
+                        color: COLORS.text.secondary,
+                        lineHeight: 1.68,
+                        maxWidth: 620,
+                        flex: 1,
+                        minWidth: 180,
+                      }}
+                    >
                       {shown.description}
                     </p>
                     <a
@@ -218,7 +276,14 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-filled"
-                      style={{ flexShrink: 0, height: 40, fontSize: 13, gap: 7, paddingLeft: 22, paddingRight: 22 }}
+                      style={{
+                        flexShrink: 0,
+                        height: 40,
+                        fontSize: 13,
+                        gap: 7,
+                        paddingLeft: 22,
+                        paddingRight: 22,
+                      }}
                     >
                       <ExternalLink size={14} />
                       {t.wishlist}

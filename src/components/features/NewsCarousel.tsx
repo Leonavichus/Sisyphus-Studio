@@ -209,7 +209,11 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
             </div>
           </div>
 
-          <div className="reveal" suppressHydrationWarning style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 24 }}>
+          <div
+            className="reveal"
+            suppressHydrationWarning
+            style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 24 }}
+          >
             <button
               className={`chip ${activeCategory === "all" ? "active" : ""}`}
               onClick={() => setActiveCategory("all")}

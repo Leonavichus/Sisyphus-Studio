@@ -5,8 +5,10 @@ function animateGridLayers(section: HTMLElement): () => void {
   if (!layers.length) return () => {};
 
   const states = Array.from(layers).map((_, i) => ({
-    x: 0, y: 0,
-    tx: 0, ty: 0,
+    x: 0,
+    y: 0,
+    tx: 0,
+    ty: 0,
     speed: i === 0 ? 0.018 : 0.011,
     amp: i === 0 ? 12 : 20,
     timer: 0,
@@ -14,9 +16,9 @@ function animateGridLayers(section: HTMLElement): () => void {
   }));
 
   let raf = 0;
-  let last = performance.now();
+  let last = globalThis.performance.now();
 
-  function pickTarget(s: typeof states[0]) {
+  function pickTarget(s: (typeof states)[0]) {
     const a = s.amp;
     s.tx = (Math.random() * 2 - 1) * a;
     s.ty = (Math.random() * 2 - 1) * a;
@@ -44,7 +46,7 @@ function animateGridLayers(section: HTMLElement): () => void {
   }
 
   raf = requestAnimationFrame(tick);
-  return () => cancelAnimationFrame(raf);
+  return () => globalThis.cancelAnimationFrame(raf);
 }
 
 export function initInteractiveGrid(section: HTMLElement) {

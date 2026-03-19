@@ -36,7 +36,11 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
       const dx = e.changedTouches[0].clientX - touchStartX.current;
       touchStartX.current = null;
       if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-      dx < 0 ? next() : prev();
+      if (dx < 0) {
+        next();
+      } else {
+        prev();
+      }
     },
     [next, prev],
   );
@@ -46,21 +50,34 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
   }, []);
 
   return (
-    <div aria-labelledby="projects-heading" style={{ background: COLORS.surface.s2, padding: SPACING.sectionPaddingMobile }}>
+    <div
+      aria-labelledby="projects-heading"
+      style={{ background: COLORS.surface.s2, padding: SPACING.sectionPaddingMobile }}
+    >
       <div
         aria-live="polite"
         aria-atomic="true"
-        style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}
+        style={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+        }}
       >
         {p.title} — {p.price}
       </div>
 
-      <div style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}>
+      <div
+        style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+      >
         <div className="reveal" suppressHydrationWarning style={{ marginBottom: 32 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
             <span className="section-eyebrow-label">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(projects.length).padStart(2, "0")}
             </span>
           </div>
           <h2 id="projects-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
@@ -71,7 +88,12 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         <div
           className="reveal-scale"
           suppressHydrationWarning
-          style={{ borderRadius: 16, overflow: "hidden", border: `1px solid ${COLORS.border.default}`, position: "relative" }}
+          style={{
+            borderRadius: 16,
+            overflow: "hidden",
+            border: `1px solid ${COLORS.border.default}`,
+            position: "relative",
+          }}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           onTouchCancel={onTouchCancel}
@@ -84,10 +106,22 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
               height={220}
               loading="lazy"
               decoding="async"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(.4) saturate(.4)" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                filter: "brightness(.4) saturate(.4)",
+              }}
               onError={(e) => handleImageError(e, 900, 600)}
             />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.98) 100%)" }} />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.98) 100%)",
+              }}
+            />
             <div style={{ position: "absolute", top: 14, right: 14 }}>
               <div className="md-badge-primary md-badge">{p.price}</div>
             </div>
@@ -105,7 +139,14 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
                 {p.tags.map((tag) => {
                   const Icon = getTagIcon(tag);
                   return (
-                    <span key={tag} style={{ ...TAG_STYLE.base, ...TAG_STYLE.mobile, color: COLORS.text.secondary }}>
+                    <span
+                      key={tag}
+                      style={{
+                        ...TAG_STYLE.base,
+                        ...TAG_STYLE.mobile,
+                        color: COLORS.text.secondary,
+                      }}
+                    >
                       <Icon size={9} color={COLORS.orange} />
                       {tag}
                     </span>
@@ -114,15 +155,28 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
               </div>
             )}
             <div style={{ height: 1, background: COLORS.border.strong, marginBottom: 12 }} />
-            <p className="t-body-md" style={{ color: COLORS.text.secondary, lineHeight: 1.7, marginBottom: 20 }}>
+            <p
+              className="t-body-md"
+              style={{ color: COLORS.text.secondary, lineHeight: 1.7, marginBottom: 20 }}
+            >
               {p.description}
             </p>
             <div className="flex-between">
               <div className="flex-row gap-4">
-                <button onClick={prev} className="icon-btn-outlined" style={{ width: 40, height: 40 }} aria-label={t.prevGame}>
+                <button
+                  onClick={prev}
+                  className="icon-btn-outlined"
+                  style={{ width: 40, height: 40 }}
+                  aria-label={t.prevGame}
+                >
                   <ChevronLeft size={18} />
                 </button>
-                <button onClick={next} className="icon-btn-outlined" style={{ width: 40, height: 40 }} aria-label={t.nextGame}>
+                <button
+                  onClick={next}
+                  className="icon-btn-outlined"
+                  style={{ width: 40, height: 40 }}
+                  aria-label={t.nextGame}
+                >
                   <ChevronRight size={18} />
                 </button>
               </div>
@@ -140,7 +194,12 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
           </div>
         </div>
 
-        <div className="flex-center gap-6" style={{ marginTop: 16 }} role="tablist" aria-label={t.heading}>
+        <div
+          className="flex-center gap-6"
+          style={{ marginTop: 16 }}
+          role="tablist"
+          aria-label={t.heading}
+        >
           {projects.map((proj, i) => (
             <button
               key={i}
@@ -163,7 +222,13 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
         </div>
         <p
           aria-hidden="true"
-          style={{ textAlign: "center", color: COLORS.text.muted, fontSize: 11, marginTop: 8, letterSpacing: 0.5 }}
+          style={{
+            textAlign: "center",
+            color: COLORS.text.muted,
+            fontSize: 11,
+            marginTop: 8,
+            letterSpacing: 0.5,
+          }}
         >
           ← {t.swipeHint} →
         </p>

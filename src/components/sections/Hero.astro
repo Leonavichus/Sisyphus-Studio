@@ -34,8 +34,6 @@ const progressPct = `${featured.progress ?? 0}%`;
   >
   </div>
 
-
-
   <div
     class="relative max-w-7xl mx-auto w-full px-5 sm:px-8"
     style="padding-top:120px;padding-bottom:96px;z-index:2"
@@ -60,7 +58,8 @@ const progressPct = `${featured.progress ?? 0}%`;
                 data-text={i === titleWords.length - 1 ? word : undefined}
                 style={`display:inline-block;color:${i === titleWords.length - 1 ? "var(--c-orange)" : "var(--c-on-surface)"};margin-right:${i < titleWords.length - 1 ? "0.2em" : "0"}`}
               >
-                {word}{i === titleWords.length - 1 && (
+                {word}
+                {i === titleWords.length - 1 && (
                   <>
                     <span class="glitch-scanline" aria-hidden="true" />
                     <canvas class="glitch-noise" aria-hidden="true" />
@@ -139,7 +138,10 @@ const progressPct = `${featured.progress ?? 0}%`;
                 <div class="t-stat-num" style="font-size:34px">
                   {s.val}
                 </div>
-                <div class="t-label-sm" style="color:var(--c-tertiary);margin-top:5px;letter-spacing:.8px">
+                <div
+                  class="t-label-sm"
+                  style="color:var(--c-tertiary);margin-top:5px;letter-spacing:.8px"
+                >
                   {s.label}
                 </div>
               </div>
@@ -191,16 +193,24 @@ const progressPct = `${featured.progress ?? 0}%`;
             </div>
           </div>
           <div style="padding:16px 20px 22px;position:relative">
-            <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:5px">{t.featuredLabel}</p>
+            <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:5px">
+              {t.featuredLabel}
+            </p>
             <h3 class="t-card-title" style="font-size:26px;margin-bottom:6px">{featured.title}</h3>
-            <p class="t-body-sm" style="color:var(--c-tertiary);margin-bottom:14px">{t.featuredSub}</p>
+            <p class="t-body-sm" style="color:var(--c-tertiary);margin-bottom:14px">
+              {t.featuredSub}
+            </p>
             <div style="display:flex;align-items:center;gap:10px">
               <div class="md-progress-track" style="flex:1">
                 <div class="md-progress-bar" style={`width:${progressPct}`}></div>
               </div>
-              <span class="t-label-md" style="color:var(--c-orange);flex-shrink:0">{progressPct}</span>
+              <span class="t-label-md" style="color:var(--c-orange);flex-shrink:0"
+                >{progressPct}</span
+              >
             </div>
-            <p class="t-label-sm" style="color:var(--c-tertiary);margin-top:5px">{t.progressLabel}</p>
+            <p class="t-label-sm" style="color:var(--c-tertiary);margin-top:5px">
+              {t.progressLabel}
+            </p>
           </div>
         </a>
 
@@ -249,7 +259,9 @@ const progressPct = `${featured.progress ?? 0}%`;
     class="anim d6"
     style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2"
   >
-    <span class="t-label-sm" style="color:var(--c-tertiary);letter-spacing:3px;opacity:.6">{t.scroll}</span>
+    <span class="t-label-sm" style="color:var(--c-tertiary);letter-spacing:3px;opacity:.6"
+      >{t.scroll}</span
+    >
     <div
       style="width:1px;height:24px;background:linear-gradient(180deg,var(--c-tertiary) 0%,transparent 100%);opacity:.35"
     >
@@ -283,7 +295,7 @@ const progressPct = `${featured.progress ?? 0}%`;
 
     if (canvas && ctx) {
       const resize = () => {
-        canvas.width  = el.offsetWidth  || 200;
+        canvas.width = el.offsetWidth || 200;
         canvas.height = el.offsetHeight || 60;
       };
       resize();
@@ -295,8 +307,8 @@ const progressPct = `${featured.progress ?? 0}%`;
       const img = ctx.createImageData(canvas.width, canvas.height);
       for (let i = 0; i < img.data.length; i += 4) {
         const on = Math.random() > 0.52;
-        img.data[i] = img.data[i+1] = img.data[i+2] = on ? 255 : 0;
-        img.data[i+3] = on ? Math.floor(Math.random() * 160 + 60) : 0;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = on ? 255 : 0;
+        img.data[i + 3] = on ? Math.floor(Math.random() * 160 + 60) : 0;
       }
       ctx.putImageData(img, 0, 0);
     }
@@ -304,7 +316,10 @@ const progressPct = `${featured.progress ?? 0}%`;
     function startNoise(ms: number) {
       cancelAnimationFrame(noiseRaf);
       clearTimeout(noiseStop);
-      function loop() { drawNoise(); noiseRaf = requestAnimationFrame(loop); }
+      function loop() {
+        drawNoise();
+        noiseRaf = requestAnimationFrame(loop);
+      }
       loop();
       noiseStop = setTimeout(() => {
         cancelAnimationFrame(noiseRaf);
@@ -313,10 +328,10 @@ const progressPct = `${featured.progress ?? 0}%`;
     }
 
     const dur = {
-      "g-burst":   550,
-      "g-echo":    380,
-      "g-tick":    200,
-      "g-drift":   900,
+      "g-burst": 550,
+      "g-echo": 380,
+      "g-tick": 200,
+      "g-drift": 900,
       "g-stutter": 140,
     } as const;
     type G = keyof typeof dur;
@@ -330,7 +345,9 @@ const progressPct = `${featured.progress ?? 0}%`;
     }
 
     function delay(ms: number): Promise<void> {
-      return new Promise(r => { timer = setTimeout(r, ms); });
+      return new Promise((r) => {
+        timer = setTimeout(r, ms);
+      });
     }
 
     async function seqClassic() {
@@ -370,7 +387,9 @@ const progressPct = `${featured.progress ?? 0}%`;
 
     async function run() {
       let idx: number;
-      do { idx = Math.floor(Math.random() * sequences.length); } while (idx === lastSeq);
+      do {
+        idx = Math.floor(Math.random() * sequences.length);
+      } while (idx === lastSeq);
       lastSeq = idx;
       await sequences[idx]();
       timer = setTimeout(run, 2200 + Math.random() * 2800);
@@ -378,11 +397,15 @@ const progressPct = `${featured.progress ?? 0}%`;
 
     timer = setTimeout(run, 1400 + Math.random() * 600);
 
-    document.addEventListener("astro:before-swap", () => {
-      clearTimeout(timer);
-      clearTimeout(noiseStop);
-      cancelAnimationFrame(noiseRaf);
-    }, { once: true });
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        clearTimeout(timer);
+        clearTimeout(noiseStop);
+        cancelAnimationFrame(noiseRaf);
+      },
+      { once: true },
+    );
   }
 
   document.addEventListener("astro:page-load", initGlitch);

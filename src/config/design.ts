@@ -58,7 +58,7 @@ export const TAG_STYLE = {
     borderRadius: 4,
   },
   desktop: { fontSize: 11, padding: "4px 10px" },
-  mobile:  { fontSize: 10, padding: "3px 8px" },
+  mobile: { fontSize: 10, padding: "3px 8px" },
 } as const;
 
 export const SIZES = {

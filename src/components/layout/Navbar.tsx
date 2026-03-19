@@ -258,9 +258,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
         id="mobile-menu"
         ref={mobileMenuRef}
         onKeyDown={handleMenuKeyDown}
-        {...(mobileOpen
-          ? { role: "dialog", "aria-modal": "true", "aria-label": t.navMenu }
-          : {})}
+        {...(mobileOpen ? { role: "dialog", "aria-modal": "true", "aria-label": t.navMenu } : {})}
         style={{
           maxHeight: mobileOpen ? "400px" : 0,
           opacity: mobileOpen ? 1 : 0,
