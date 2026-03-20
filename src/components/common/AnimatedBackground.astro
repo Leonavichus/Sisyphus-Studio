@@ -1,8 +1,7 @@
 ---
-// Полноэкранный анимированный фон с двумя слоями сетки
 ---
 
-<div id="animated-bg" class="animated-background">
+<div id="animated-bg" class="animated-background" transition:persist>
   <div class="grid-layer grid-layer-fine"></div>
   <div class="grid-layer grid-layer-coarse"></div>
 </div>
@@ -111,5 +110,4 @@
   }
 
   document.addEventListener("astro:page-load", startAnimation);
-  document.addEventListener("astro:after-swap", startAnimation);
 </script>
