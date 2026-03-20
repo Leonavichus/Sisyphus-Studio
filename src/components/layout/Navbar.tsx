@@ -168,9 +168,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           <img
             src="/favicon.png"
             alt="Sisyphus Studio"
-            width={32}
-            height={32}
-            style={{ borderRadius: 8, objectFit: "cover", flexShrink: 0 }}
+            width={56}
+            height={56}
+            style={{ borderRadius: 12, objectFit: "cover", flexShrink: 0 }}
           />
           <span className="t-brand-lg">
             {BRAND.prefix}
