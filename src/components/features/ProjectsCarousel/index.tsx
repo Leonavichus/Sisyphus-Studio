@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef, useCallback, type FC } from "react";
 import type { Project, TranslationStructure } from "../../../types";
-import { PROJECTS_EXPAND_MS, PROJECTS_CONTENT_REVEAL_RATIO, SPACING } from "../../../config";
+import {
+  PROJECTS_EXPAND_MS,
+  PROJECTS_CONTENT_REVEAL_RATIO,
+  SPACING,
+  COLORS,
+} from "../../../config";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ErrorBoundary } from "../../common/ErrorBoundary";
 import MobileCarousel from "./MobileCarousel";
 import DesktopCarousel from "./DesktopCarousel";
-import { COLORS } from "../../../config";
 
 interface ProjectsCarouselProps {
   projects: Project[];

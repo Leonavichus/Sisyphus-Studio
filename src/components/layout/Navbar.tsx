@@ -23,7 +23,6 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
 
   const otherLang: Language = lang === "en" ? "ru" : "en";
   const otherLangLabel = lang === "en" ? "RU" : "EN";
-  const otherLangFull = lang === "en" ? "Русский" : "English";
   const langSwitchHref = `/${otherLang}/`;
 
   const links = useMemo(
@@ -329,7 +328,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
               onClick={() => setMobileOpen(false)}
             >
               <Globe size={12} />
-              {otherLangFull}
+              {lang === "en" ? "Русский" : "English"}
             </a>
           </div>
         </div>

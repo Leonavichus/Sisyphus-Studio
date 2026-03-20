@@ -61,6 +61,7 @@ export interface TranslationStructure {
     prevGame: string;
     nextGame: string;
     swipeHint: string;
+    progressLabel: string;
   };
   about: {
     heading: string;

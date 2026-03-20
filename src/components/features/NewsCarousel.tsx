@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type FC } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Calendar, ArrowUpRight, PauseCircle } from "lucide-react";
 import type { NewsItem, NewsCategory, TranslationStructure } from "../../types";
 import { handleImageError } from "../../utils/images";
@@ -7,8 +7,10 @@ import {
   NEWS_SUMMARY_PREVIEW_CHARS,
   SWIPE_THRESHOLD,
   COLORS,
+  LAYOUT,
   SPACING,
   SIZES,
+  GRADIENTS,
 } from "../../config";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useCarouselKeyboard } from "../../hooks/useCarouselKeyboard";
@@ -23,7 +25,7 @@ interface NewsCarouselProps {
   lang: "en" | "ru";
 }
 
-const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
+const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -120,11 +122,13 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         aria-labelledby="news-heading"
         style={{
           background: COLORS.surface.s2,
-          padding: "100px 0",
+          padding: SPACING.sectionPadding,
           borderTop: `1px solid ${COLORS.border.default}`,
         }}
       >
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
+        <div
+          style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+        >
           <div style={{ marginBottom: 40 }}>
             <div className="section-eyebrow">
               <div className="section-eyebrow-line" />
@@ -163,7 +167,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
         aria-labelledby="news-heading"
         style={{
           background: COLORS.surface.s2,
-          padding: "100px 0",
+          padding: SPACING.sectionPadding,
           borderTop: `1px solid ${COLORS.border.default}`,
         }}
       >
@@ -182,7 +186,9 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
           {item.title}
         </div>
 
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
+        <div
+          style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
+        >
           <div
             className="reveal"
             suppressHydrationWarning
@@ -276,8 +282,7 @@ const NewsCarousel: FC<NewsCarouselProps> = ({ news, t, lang }) => {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(21,21,21,.6) 40%, rgba(21,21,21,.97) 72%)",
+                    background: GRADIENTS.newsCard,
                   }}
                 />
 

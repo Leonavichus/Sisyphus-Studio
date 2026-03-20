@@ -44,6 +44,7 @@ export const TRANSLATIONS = {
       prevGame: "Previous game",
       nextGame: "Next game",
       swipeHint: "swipe",
+      progressLabel: "Development",
     },
     about: {
       heading: "About Sisyphus studio",
@@ -177,6 +178,7 @@ export const TRANSLATIONS = {
       prevGame: "Предыдущая игра",
       nextGame: "Следующая игра",
       swipeHint: "свайп",
+      progressLabel: "Разработка",
     },
     about: {
       heading: "О Sisyphus studio",

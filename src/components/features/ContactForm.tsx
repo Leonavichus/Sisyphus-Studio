@@ -1,4 +1,4 @@
-import { useState, useCallback, type ChangeEvent, type SubmitEventHandler } from "react";
+import { useState, useCallback, type ChangeEvent } from "react";
 import type { Language } from "../../types";
 import { CONTACT, EMAIL_REGEX, COLORS } from "../../config";
 
@@ -61,7 +61,7 @@ export default function ContactForm({ lang }: Props) {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   }, []);
 
-  const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) {

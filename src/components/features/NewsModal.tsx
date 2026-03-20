@@ -1,8 +1,8 @@
-import { useEffect, useRef, useCallback, type FC } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { X, Calendar } from "lucide-react";
 import type { NewsItem, TranslationStructure } from "../../types";
 import { handleImageError } from "../../utils/images";
-import { FOCUSABLE_SELECTORS, COLORS, SIZES } from "../../config";
+import { FOCUSABLE_SELECTORS, COLORS, SIZES, IMAGE_FILTERS } from "../../config";
 
 interface NewsModalProps {
   item: NewsItem;
@@ -10,7 +10,7 @@ interface NewsModalProps {
   closeLabel: TranslationStructure["news"]["closeArticle"];
 }
 
-const NewsModal: FC<NewsModalProps> = ({ item, onClose, closeLabel }) => {
+const NewsModal = ({ item, onClose, closeLabel }: NewsModalProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<Element | null>(null);
@@ -110,7 +110,7 @@ const NewsModal: FC<NewsModalProps> = ({ item, onClose, closeLabel }) => {
               height: "100%",
               objectFit: "cover",
               display: "block",
-              filter: "brightness(.38) saturate(.45)",
+              filter: IMAGE_FILTERS.modal,
             }}
             onError={(e) => handleImageError(e, 900, 400)}
           />

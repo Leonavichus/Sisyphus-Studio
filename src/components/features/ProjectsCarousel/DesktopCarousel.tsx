@@ -2,7 +2,16 @@ import { useCallback, type FC, memo } from "react";
 import { ExternalLink } from "lucide-react";
 import type { Project, TranslationStructure } from "../../../types";
 import { handleImageError } from "../../../utils/images";
-import { PROJECTS_EXPAND_MS, COLORS, LAYOUT, SPACING, TAG_STYLE } from "../../../config";
+import {
+  PROJECTS_EXPAND_MS,
+  COLORS,
+  LAYOUT,
+  SPACING,
+  TAG_STYLE,
+  EASING,
+  IMAGE_FILTERS,
+  GRADIENTS,
+} from "../../../config";
 import { getTagIcon } from "./tagIcons";
 
 interface DesktopCarouselProps {
@@ -64,249 +73,317 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
       <div
         style={{ maxWidth: LAYOUT.maxWidth, margin: "0 auto", padding: `0 ${LAYOUT.padding}px` }}
       >
-        <div className="reveal" suppressHydrationWarning style={{ marginBottom: 40 }}>
+        <div className="reveal" suppressHydrationWarning style={{ marginBottom: 48 }}>
           <div className="section-eyebrow">
             <div className="section-eyebrow-line" />
-            <span className="section-eyebrow-label">
-              {String(activeIndex + 1).padStart(2, "0")} /{" "}
-              {String(projects.length).padStart(2, "0")}
-            </span>
+            <span className="section-eyebrow-label">{t.sectionLabel}</span>
           </div>
           <h2 id="projects-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
             {t.heading}
           </h2>
         </div>
 
-        <div
-          role="listbox"
-          className="reveal-scale"
-          suppressHydrationWarning
-          aria-label={t.heading}
-          aria-activedescendant={`project-panel-${activeIndex}`}
-          tabIndex={0}
-          onKeyDown={handleContainerKeyDown}
-          style={{
-            display: "flex",
-            height: 520,
-            borderRadius: 20,
-            overflow: "hidden",
-            border: `1px solid ${COLORS.border.default}`,
-            outline: "none",
-          }}
-        >
-          {projects.map((project, i) => {
-            const isActive = i === activeIndex;
-            const isDisplayed = i === displayedIndex;
-            const isAnimating = isActive || isDisplayed;
-            const easing = `cubic-bezier(0.4,0,0.2,1)`;
-
-            return (
+        <div style={{ display: "flex", gap: 48, alignItems: "stretch" }}>
+          <div
+            className="reveal-left"
+            suppressHydrationWarning
+            style={{
+              width: 380,
+              flexShrink: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
               <div
-                key={project.id}
-                id={`project-panel-${i}`}
-                role="option"
-                aria-selected={isActive}
-                aria-label={project.title}
-                tabIndex={-1}
-                onClick={() => !isActive && onSelect(i)}
                 style={{
-                  position: "relative",
-                  flexGrow: isActive ? 1 : 0,
-                  flexShrink: 0,
-                  flexBasis: "56px",
-                  cursor: isActive ? "default" : "pointer",
-                  overflow: "hidden",
-                  willChange: isAnimating ? "flex-grow" : "auto",
-                  transition: `flex-grow ${PROJECTS_EXPAND_MS}ms ${easing}`,
-                  background: COLORS.surface.s4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 20,
                 }}
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  width={900}
-                  height={520}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    filter: isActive
-                      ? "brightness(.45) saturate(.55)"
-                      : "brightness(.2) saturate(.25)",
-                    transition: `filter ${PROJECTS_EXPAND_MS}ms ${easing}`,
-                  }}
-                  onError={(e) => handleImageError(e, 900, 600)}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(180deg,transparent 20%,rgba(17,17,17,.97) 100%)",
-                    opacity: isActive ? 1 : 0.6,
-                    transition: `opacity ${PROJECTS_EXPAND_MS}ms ${easing}`,
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(135deg,rgba(248,126,15,.05) 0%,transparent 55%)",
-                    opacity: isActive ? 1 : 0,
-                    transition: `opacity ${PROJECTS_EXPAND_MS}ms ${easing}`,
-                    pointerEvents: "none",
-                  }}
-                />
-
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: isActive ? 0 : 1,
-                    transition: isActive
-                      ? `opacity 180ms ${easing}`
-                      : `opacity 260ms ${easing} ${PROJECTS_EXPAND_MS * 0.5}ms`,
-                    pointerEvents: "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      transform: "rotate(-90deg)",
-                      whiteSpace: "nowrap",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
-                  >
-                    <span className="t-eyebrow-accent">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="t-eyebrow-muted">{project.title}</span>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: SPACING.cardPadding.project,
-                    opacity: isActive && isDisplayed ? 1 : 0,
-                    transform: isActive && isDisplayed ? "translateY(0)" : "translateY(14px)",
-                    transition:
-                      isActive && isDisplayed
-                        ? `opacity 320ms ${easing}, transform 320ms ${easing}`
-                        : `opacity 150ms cubic-bezier(0.4,0,1,1), transform 150ms cubic-bezier(0.4,0,1,1)`,
-                    pointerEvents: isActive ? "auto" : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 12,
-                    }}
-                  >
-                    <span className="t-eyebrow-accent">
-                      {String(displayedIndex + 1).padStart(2, "0")} — {t.sectionLabel}
-                    </span>
-                    <div className="md-badge-primary md-badge">{shown.price}</div>
-                  </div>
-
-                  <h3
-                    className="t-card-title"
-                    style={{ fontSize: "clamp(28px,3.5vw,44px)", marginBottom: 12 }}
-                  >
-                    {shown.title}
-                  </h3>
-
-                  {shown.tags && shown.tags.length > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
-                      {shown.tags.map((tag) => {
-                        const Icon = getTagIcon(tag);
-                        return (
-                          <span
-                            key={tag}
-                            style={{
-                              ...TAG_STYLE.base,
-                              ...TAG_STYLE.desktop,
-                              color: COLORS.text.secondary,
-                            }}
-                          >
-                            <Icon size={10} color={COLORS.orange} />
-                            {tag}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  <div style={{ height: 1, background: COLORS.border.strong, marginBottom: 14 }} />
-
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "space-between",
-                      gap: 32,
-                    }}
-                  >
-                    <p
-                      className="t-body-md"
-                      style={{
-                        color: COLORS.text.secondary,
-                        lineHeight: 1.68,
-                        maxWidth: 620,
-                        flex: 1,
-                        minWidth: 180,
-                      }}
-                    >
-                      {shown.description}
-                    </p>
-                    <a
-                      href={shown.wishlistUrl || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-filled"
-                      style={{
-                        flexShrink: 0,
-                        height: 40,
-                        fontSize: 13,
-                        gap: 7,
-                        paddingLeft: 22,
-                        paddingRight: 22,
-                      }}
-                    >
-                      <ExternalLink size={14} />
-                      {t.wishlist}
-                    </a>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 2,
-                    background: COLORS.orangeBorder,
-                    opacity: isActive ? 0 : 1,
-                    transition: `opacity ${PROJECTS_EXPAND_MS}ms ${easing}`,
-                    pointerEvents: "none",
-                  }}
-                />
+                <span className="t-eyebrow-accent">
+                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                  {String(projects.length).padStart(2, "0")}
+                </span>
+                <div className="md-badge-primary md-badge">{shown.price}</div>
               </div>
-            );
-          })}
+
+              <h3
+                className="t-card-title"
+                style={{
+                  fontSize: "clamp(32px,3.8vw,52px)",
+                  lineHeight: 1.05,
+                  marginBottom: 16,
+                  color: COLORS.text.primary,
+                  transition: `opacity 280ms ${EASING.standard}`,
+                }}
+              >
+                {shown.title}
+              </h3>
+
+              {shown.tags && shown.tags.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
+                  {shown.tags.map((tag) => {
+                    const Icon = getTagIcon(tag);
+                    return (
+                      <span
+                        key={tag}
+                        style={{
+                          ...TAG_STYLE.base,
+                          ...TAG_STYLE.desktop,
+                          color: COLORS.text.secondary,
+                        }}
+                      >
+                        <Icon size={10} color={COLORS.orange} />
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div style={{ height: 1, background: COLORS.border.strong, marginBottom: 20 }} />
+
+              <p
+                className="t-body-md"
+                style={{ color: COLORS.text.secondary, lineHeight: 1.72, marginBottom: 28 }}
+              >
+                {shown.description}
+              </p>
+
+              {shown.progress !== undefined && (
+                <div style={{ marginBottom: 28 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: 8,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: COLORS.text.tertiary,
+                      }}
+                    >
+                      {t.progressLabel}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 700,
+                        color: COLORS.orange,
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      {shown.progress}%
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      height: 4,
+                      borderRadius: 2,
+                      background: "rgba(255,255,255,.07)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${shown.progress}%`,
+                        borderRadius: 2,
+                        background: `linear-gradient(90deg, ${COLORS.orange}, ${COLORS.orangeLight})`,
+                        transition: `width 600ms ${EASING.standard}`,
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <a
+              href={shown.wishlistUrl || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-filled"
+              style={{
+                alignSelf: "flex-start",
+                height: 44,
+                fontSize: 13,
+                gap: 8,
+                paddingLeft: 24,
+                paddingRight: 24,
+              }}
+            >
+              <ExternalLink size={14} />
+              {t.wishlist}
+            </a>
+          </div>
+
+          <div
+            role="listbox"
+            className="reveal-scale"
+            suppressHydrationWarning
+            aria-label={t.heading}
+            aria-activedescendant={`project-panel-${activeIndex}`}
+            tabIndex={0}
+            onKeyDown={handleContainerKeyDown}
+            style={{
+              flex: 1,
+              display: "flex",
+              height: 520,
+              borderRadius: 20,
+              overflow: "hidden",
+              border: `1px solid ${COLORS.border.default}`,
+              outline: "none",
+            }}
+          >
+            {projects.map((project, i) => {
+              const isActive = i === activeIndex;
+              const isDisplayed = i === displayedIndex;
+
+              return (
+                <div
+                  key={project.id}
+                  id={`project-panel-${i}`}
+                  role="option"
+                  aria-selected={isActive}
+                  aria-label={project.title}
+                  tabIndex={-1}
+                  onClick={() => !isActive && onSelect(i)}
+                  style={{
+                    position: "relative",
+                    flexGrow: isActive ? 1 : 0,
+                    flexShrink: 0,
+                    flexBasis: "56px",
+                    cursor: isActive ? "default" : "pointer",
+                    overflow: "hidden",
+                    willChange: isActive || isDisplayed ? "flex-grow" : "auto",
+                    transition: `flex-grow ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
+                    background: COLORS.surface.s4,
+                  }}
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    width={900}
+                    height={520}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      filter: isActive
+                        ? IMAGE_FILTERS.activeProject
+                        : IMAGE_FILTERS.inactiveProject,
+                      transition: `filter ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
+                    }}
+                    onError={(e) => handleImageError(e, 900, 600)}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: GRADIENTS.cardOverlay,
+                      opacity: isActive ? 1 : 0.5,
+                      transition: `opacity ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: GRADIENTS.orangeTint,
+                      opacity: isActive ? 1 : 0,
+                      transition: `opacity ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
+                      pointerEvents: "none",
+                    }}
+                  />
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      opacity: isActive ? 0 : 1,
+                      transition: isActive
+                        ? `opacity 180ms ${EASING.standard}`
+                        : `opacity 260ms ${EASING.standard} ${PROJECTS_EXPAND_MS * 0.5}ms`,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <div
+                      style={{
+                        transform: "rotate(-90deg)",
+                        whiteSpace: "nowrap",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <span className="t-eyebrow-accent">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="t-eyebrow-muted">{project.title}</span>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      padding: "20px 28px",
+                      opacity: isActive && isDisplayed ? 1 : 0,
+                      transform: isActive && isDisplayed ? "translateY(0)" : "translateY(10px)",
+                      transition:
+                        isActive && isDisplayed
+                          ? `opacity 320ms ${EASING.standard}, transform 320ms ${EASING.standard}`
+                          : `opacity 150ms ${EASING.accelerate}`,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: COLORS.orange,
+                        opacity: 0.8,
+                      }}
+                    >
+                      {project.title}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: 2,
+                      background: COLORS.orangeBorder,
+                      opacity: isActive ? 0 : 1,
+                      transition: `opacity ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
+                      pointerEvents: "none",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

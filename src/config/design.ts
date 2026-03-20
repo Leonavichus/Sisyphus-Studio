@@ -1,3 +1,24 @@
+export const EASING = {
+  standard: "cubic-bezier(0.4,0,0.2,1)",
+  decelerate: "cubic-bezier(0.2,0,0,1)",
+  accelerate: "cubic-bezier(0.4,0,1,1)",
+} as const;
+
+export const IMAGE_FILTERS = {
+  activeProject: "brightness(.55) saturate(.65)",
+  inactiveProject: "brightness(.18) saturate(.2)",
+  mobileProject: "brightness(.4) saturate(.4)",
+  modal: "brightness(.38) saturate(.45)",
+} as const;
+
+export const GRADIENTS = {
+  cardOverlay: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.85) 100%)",
+  cardOverlayStrong: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.98) 100%)",
+  orangeTint: "linear-gradient(135deg,rgba(248,126,15,.07) 0%,transparent 55%)",
+  newsCard:
+    "linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(21,21,21,.6) 40%, rgba(21,21,21,.97) 72%)",
+} as const;
+
 export const COLORS = {
   orange: "#f87e0f",
   orangeLight: "#ff9d5c",

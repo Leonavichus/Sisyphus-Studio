@@ -2,7 +2,15 @@ import { useCallback, useRef, type FC, memo } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Project, TranslationStructure } from "../../../types";
 import { handleImageError } from "../../../utils/images";
-import { COLORS, LAYOUT, SPACING, SWIPE_THRESHOLD, TAG_STYLE } from "../../../config";
+import {
+  COLORS,
+  LAYOUT,
+  SPACING,
+  SWIPE_THRESHOLD,
+  TAG_STYLE,
+  IMAGE_FILTERS,
+  GRADIENTS,
+} from "../../../config";
 import { getTagIcon } from "./tagIcons";
 
 interface MobileCarouselProps {
@@ -111,7 +119,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
                 height: "100%",
                 objectFit: "cover",
                 display: "block",
-                filter: "brightness(.4) saturate(.4)",
+                filter: IMAGE_FILTERS.mobileProject,
               }}
               onError={(e) => handleImageError(e, 900, 600)}
             />
@@ -119,7 +127,7 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(180deg,transparent 30%,rgba(17,17,17,.98) 100%)",
+                background: GRADIENTS.cardOverlayStrong,
               }}
             />
             <div style={{ position: "absolute", top: 14, right: 14 }}>
