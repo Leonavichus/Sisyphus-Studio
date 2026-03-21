@@ -1,17 +1,17 @@
 {
-  "isoDate": "2025-02-14",
+  "isoDate": "2025-02-01",
   "image": "/images/news/news-2.jpg",
-  "type": "update",
+  "type": "announcement",
   "en": {
-    "title": "Frog Frag — First Playtest Results",
-    "date": "Feb 14, 2025",
-    "summary": "We ran our first internal playtest of Frog Frag. Here's what worked, what didn't, and what surprised us.",
-    "body": "Fourteen hours of playtesting across two days. Six players, one map prototype, a lot of strong opinions.\n\nThe core loop held up better than expected. Pick up weapons, combine them, fight. The randomly generated maps created genuine moments of surprise — players discovering a sightline that shouldn't exist, or a chokepoint that forced an unexpected standoff.\n\nWhat didn't work: spawn logic. Early versions put players too close together, which compressed the mid-game. We've overhauled the spawn-point validator to enforce minimum distance relative to map size.\n\nBiggest surprise: the crafting bench became the dominant strategic element. Players camped it, fought over it, used it as bait. We didn't design for that — we're leaning into it."
+    "title": "Frag Frog — Officially Announced",
+    "date": "Feb 1, 2025",
+    "summary": "Our first title is officially announced. Frag Frog is a chaotic deathmatch shooter with randomly generated maps and weapon crafting.",
+    "body": "We're ready to talk about our first game: Frag Frog.\n\nFrag Frog is a fast-paced deathmatch shooter where no two matches are the same. Maps are procedurally generated at runtime, weapons can be combined at a crafting bench, and the only rule is to be the last one standing.\n\nThe game is currently in active development and already playable internally. We're targeting an early access release later this year.\n\nStay tuned — more details, dev diaries, and playtest announcements are coming soon."
   },
   "ru": {
-    "title": "Frog Frag — результаты первого плейтеста",
-    "date": "14 Фев, 2025",
-    "summary": "Мы провели первый внутренний плейтест Frog Frag. Что сработало, что нет, и что нас удивило.",
-    "body": "Четырнадцать часов плейтестов за два дня. Шесть игроков, один прототип карты, много споров.\n\nОсновной цикл продержался лучше, чем ожидали. Подбери оружие, скрести, сражайся. Случайно генерируемые карты создавали подлинные сюрпризы — игроки обнаруживали линии обзора, которых не должно было быть.\n\nЧто не сработало: логика спауна. Ранние версии ставили игроков слишком близко, что сжимало середину игры. Мы переработали валидатор точек спауна.\n\nГлавный сюрприз: верстак стал ключевым стратегическим элементом. Игроки охраняли его, дрались за него, использовали как приманку. Мы не проектировали это — но теперь мы это развиваем."
+    "title": "Frag Frog — официальный анонс",
+    "date": "1 Фев, 2025",
+    "summary": "Наш первый проект официально анонсирован. Frag Frog — хаотичный шутер-дезматч со случайно генерируемыми картами и крафтом оружия.",
+    "body": "Мы готовы рассказать о нашей первой игре: Frag Frog.\n\nFrag Frog — динамичный шутер-дезматч, в котором каждый матч уникален. Карты генерируются процедурно, оружие можно комбинировать на верстаке, а единственное правило — остаться последним.\n\nИгра находится в активной разработке и уже доступна для внутреннего плейтеста. Мы планируем выпуск в ранний доступ в этом году.\n\nСледите за обновлениями — скоро будут дневники разработки и анонсы плейтестов."
   }
 }
