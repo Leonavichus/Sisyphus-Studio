@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef, useCallback, type FC } from "react";
 import type { Project, TranslationStructure } from "../../../types";
-import {
-  PROJECTS_EXPAND_MS,
-  PROJECTS_CONTENT_REVEAL_RATIO,
-} from "../../../config";
+import { PROJECTS_EXPAND_MS, PROJECTS_CONTENT_REVEAL_RATIO } from "../../../config";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ErrorBoundary } from "../../common/ErrorBoundary";
 import MobileCarousel from "./MobileCarousel";

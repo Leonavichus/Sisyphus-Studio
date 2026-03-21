@@ -5,10 +5,10 @@ export const EASING = {
 } as const;
 
 export const IMAGE_FILTERS = {
-  activeProject: "brightness(.55) saturate(.65)",
-  inactiveProject: "brightness(.18) saturate(.2)",
-  mobileProject: "brightness(.4) saturate(.4)",
-  modal: "brightness(.38) saturate(.45)",
+  activeProject: "brightness(.85) saturate(.9)",
+  inactiveProject: "brightness(.45) saturate(.6)",
+  mobileProject: "brightness(.75) saturate(.85)",
+  modal: "brightness(.65) saturate(.75)",
 } as const;
 
 export const GRADIENTS = {

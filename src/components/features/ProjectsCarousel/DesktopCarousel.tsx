@@ -334,8 +334,21 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                         gap: 8,
                       }}
                     >
-                      <span className="t-eyebrow-accent">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="t-eyebrow-muted">{project.title}</span>
+                      <span
+                        className="t-eyebrow-accent"
+                        style={{ textShadow: "0 1px 6px rgba(0,0,0,.8)" }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        className="t-eyebrow-accent"
+                        style={{
+                          color: "#e8e4e0",
+                          textShadow: "0 1px 8px rgba(0,0,0,.9), 0 0 20px rgba(0,0,0,.6)",
+                        }}
+                      >
+                        {project.title}
+                      </span>
                     </div>
                   </div>
                   <div

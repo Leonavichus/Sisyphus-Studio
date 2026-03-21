@@ -160,7 +160,7 @@ const progressPct = `${featured.progress ?? 0}%`;
             height={String(SIZES.hero.cardHeight)}
             loading="eager"
             decoding="async"
-            style={`width:100%;height:${SIZES.hero.cardHeight}px;object-fit:cover;display:block;filter:brightness(.4) saturate(.5)`}
+            style={`width:100%;height:${SIZES.hero.cardHeight}px;object-fit:cover;display:block;filter:brightness(.75) saturate(.85)`}
             onerror={nativeImageFallback(720, 480)}
           />
           <div
@@ -225,7 +225,7 @@ const progressPct = `${featured.progress ?? 0}%`;
                 height={String(SIZES.hero.cardImageSize)}
                 loading="eager"
                 decoding="async"
-                style={`width:${SIZES.hero.cardImageSize}px;height:${SIZES.hero.cardImageSize}px;border-radius:10px;object-fit:cover;flex-shrink:0;filter:brightness(.35) saturate(.3)`}
+                style={`width:${SIZES.hero.cardImageSize}px;height:${SIZES.hero.cardImageSize}px;border-radius:10px;object-fit:cover;flex-shrink:0;filter:brightness(.7) saturate(.75)`}
                 onerror={nativeImageFallback(200, 200)}
               />
               <div style="flex:1;min-width:0">
