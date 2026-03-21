@@ -3,8 +3,6 @@ import type { Project, TranslationStructure } from "../../../types";
 import {
   PROJECTS_EXPAND_MS,
   PROJECTS_CONTENT_REVEAL_RATIO,
-  SPACING,
-  COLORS,
 } from "../../../config";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ErrorBoundary } from "../../common/ErrorBoundary";
@@ -19,7 +17,9 @@ interface ProjectsCarouselProps {
 const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayedIndex, setDisplayedIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+  );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reducedMotion = useReducedMotion();
 
@@ -36,19 +36,16 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
-    check();
     window.addEventListener("resize", check, { passive: true });
     return () => window.removeEventListener("resize", check);
   }, []);
 
   useEffect(() => {
-    if (isMobile !== null) {
-      setActiveIndex(0);
-      setDisplayedIndex(0);
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
+    setActiveIndex(0);
+    setDisplayedIndex(0);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
   }, [isMobile]);
 
@@ -58,34 +55,6 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
     },
     [],
   );
-
-  if (isMobile === null) {
-    return (
-      <section id="projects" aria-label={t.heading}>
-        <div
-          style={{
-            background: COLORS.surface.s2,
-            padding: SPACING.sectionPadding,
-            minHeight: 720,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: "50%",
-              border: `2px solid ${COLORS.orangeBorder}`,
-              borderTopColor: reducedMotion ? "transparent" : COLORS.orange,
-              animation: reducedMotion ? "none" : "spin 0.8s linear infinite",
-            }}
-          />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="projects">
