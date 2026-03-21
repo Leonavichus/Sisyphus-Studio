@@ -47,7 +47,8 @@ const disciplines: { label: string; icon: IconName }[] = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
       <div class="reveal-left">
         <div
-          style="border-radius:20px;overflow:hidden;position:relative;height:272px;margin-bottom:28px;border:1px solid var(--b-default)"
+          class="about-img-wrap"
+          style="border-radius:20px;overflow:hidden;position:relative;margin-bottom:28px;border:1px solid var(--b-default)"
         >
           <img
             src={aboutImg}
@@ -163,3 +164,21 @@ const disciplines: { label: string; icon: IconName }[] = [
     </div>
   </div>
 </section>
+
+<style>
+  .about-img-wrap {
+    height: 220px;
+  }
+
+  @media (min-width: 480px) {
+    .about-img-wrap {
+      height: 272px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-img-wrap {
+      height: 320px;
+    }
+  }
+</style>
