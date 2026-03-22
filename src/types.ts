@@ -97,6 +97,7 @@ export interface TranslationStructure {
     paused: string;
     swipeHint: string;
     allCategories: string;
+    noNews: string;
   };
   contact: {
     heading: string;

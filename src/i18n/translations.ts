@@ -81,6 +81,7 @@ export const TRANSLATIONS = {
       paused: "paused",
       swipeHint: "swipe",
       allCategories: "All",
+      noNews: "No news in this category yet",
     },
     contact: {
       heading: "Get in Touch",
@@ -216,6 +217,7 @@ export const TRANSLATIONS = {
       paused: "пауза",
       swipeHint: "свайп",
       allCategories: "Все",
+      noNews: "В этой категории пока нет новостей",
     },
     contact: {
       heading: "Написать нам",
