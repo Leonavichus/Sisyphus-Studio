@@ -35,7 +35,7 @@ export const SWIPE_THRESHOLD = 40;
 
 export const SCROLL_REVEAL = {
   threshold: 0.08,
-  rootMargin: "0px 0px -20% 0px",
+  rootMargin: "0px 0px -18% 0px",
 } as const;
 
 export const RIPPLE = {
