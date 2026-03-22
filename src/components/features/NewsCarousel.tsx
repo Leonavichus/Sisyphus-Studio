@@ -11,10 +11,13 @@ import {
   SPACING,
   SIZES,
   GRADIENTS,
+  getNewsCategories,
+  getCategoryLabel,
+  getCategoryColor,
+  IMAGE_FALLBACK,
 } from "../../config";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useCarouselKeyboard } from "../../hooks/useCarouselKeyboard";
-import { getNewsCategories, getCategoryLabel, getCategoryColor } from "../../utils/news";
 import { ErrorBoundary } from "../common/ErrorBoundary";
 import NewsModal from "./NewsModal";
 import { NewsSkeletonCard } from "../common/SkeletonCard";
@@ -309,7 +312,13 @@ const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
                         objectFit: "cover",
                         transition: reducedMotion ? "none" : "opacity .65s cubic-bezier(0.2,0,0,1)",
                       }}
-                      onError={(e) => handleImageError(e, 900, 600)}
+                      onError={(e) =>
+                        handleImageError(
+                          e,
+                          IMAGE_FALLBACK.newsCard.width,
+                          IMAGE_FALLBACK.newsCard.height,
+                        )
+                      }
                     />
 
                     <div

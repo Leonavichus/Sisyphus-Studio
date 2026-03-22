@@ -1,46 +1,15 @@
 import { useState, useCallback, type ChangeEvent } from "react";
-import type { Language } from "../../types";
+import type { TranslationStructure } from "../../types";
 import { CONTACT, EMAIL_REGEX, COLORS } from "../../config";
 
 interface Props {
-  lang: Language;
+  t: TranslationStructure["contact"];
 }
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const copy = {
-  en: {
-    name: "Your name",
-    namePlaceholder: "John Doe",
-    email: "Email",
-    emailPlaceholder: "hello@example.com",
-    message: "Message",
-    messagePlaceholder: "Tell us about your project, idea, or just say hi.",
-    submit: "Send Message",
-    submitting: "Sending…",
-    success: "Message sent. We'll get back to you soon.",
-    error: "Something went wrong. Please try again.",
-    required: "Required field",
-    invalidEmail: "Enter a valid email",
-  },
-  ru: {
-    name: "Ваше имя",
-    namePlaceholder: "Иван Иванов",
-    email: "Email",
-    emailPlaceholder: "hello@example.com",
-    message: "Сообщение",
-    messagePlaceholder: "Расскажите о проекте, идее или просто поздоровайтесь.",
-    submit: "Отправить",
-    submitting: "Отправка…",
-    success: "Сообщение отправлено. Мы ответим в ближайшее время.",
-    error: "Что-то пошло не так. Попробуйте ещё раз.",
-    required: "Обязательное поле",
-    invalidEmail: "Введите корректный email",
-  },
-};
-
-export default function ContactForm({ lang }: Props) {
-  const t = copy[lang];
+export default function ContactForm({ t }: Props) {
+  const f = t.form;
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [fields, setFields] = useState({ name: "", email: "", message: "" });
@@ -48,10 +17,10 @@ export default function ContactForm({ lang }: Props) {
 
   function validate() {
     const e: Record<string, string> = {};
-    if (!fields.name.trim()) e.name = t.required;
-    if (!fields.email.trim()) e.email = t.required;
-    else if (!EMAIL_REGEX.test(fields.email)) e.email = t.invalidEmail;
-    if (!fields.message.trim()) e.message = t.required;
+    if (!fields.name.trim()) e.name = f.required;
+    if (!fields.email.trim()) e.email = f.required;
+    else if (!EMAIL_REGEX.test(fields.email)) e.email = f.invalidEmail;
+    if (!fields.message.trim()) e.message = f.required;
     return e;
   }
 
@@ -120,7 +89,7 @@ export default function ContactForm({ lang }: Props) {
           </svg>
         </div>
         <p className="t-body-md" style={{ color: "var(--c-on-surface)" }}>
-          {t.success}
+          {f.success}
         </p>
       </div>
     );
@@ -134,8 +103,8 @@ export default function ContactForm({ lang }: Props) {
           name="name"
           type="text"
           autoComplete="name"
-          label={t.name}
-          placeholder={t.namePlaceholder}
+          label={f.name}
+          placeholder={f.namePlaceholder}
           value={fields.name}
           error={errors.name}
           focused={focused === "name"}
@@ -148,8 +117,8 @@ export default function ContactForm({ lang }: Props) {
           name="email"
           type="email"
           autoComplete="email"
-          label={t.email}
-          placeholder={t.emailPlaceholder}
+          label={f.email}
+          placeholder={f.emailPlaceholder}
           value={fields.email}
           error={errors.email}
           focused={focused === "email"}
@@ -162,8 +131,8 @@ export default function ContactForm({ lang }: Props) {
       <TextareaField
         id="cf-message"
         name="message"
-        label={t.message}
-        placeholder={t.messagePlaceholder}
+        label={f.message}
+        placeholder={f.messagePlaceholder}
         value={fields.message}
         error={errors.message}
         focused={focused === "message"}
@@ -174,7 +143,7 @@ export default function ContactForm({ lang }: Props) {
 
       {status === "error" && (
         <p className="t-label-md" style={{ color: COLORS.error, marginTop: -4 }}>
-          {t.error}
+          {f.error}
         </p>
       )}
 
@@ -214,7 +183,7 @@ export default function ContactForm({ lang }: Props) {
               >
                 <path d="M21 12a9 9 0 1 1-6.219-8.56" />
               </svg>
-              {t.submitting}
+              {f.submitting}
             </>
           ) : (
             <>
@@ -231,7 +200,7 @@ export default function ContactForm({ lang }: Props) {
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
-              {t.submit}
+              {f.submit}
             </>
           )}
         </button>

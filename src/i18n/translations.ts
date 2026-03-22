@@ -6,6 +6,9 @@ export const TRANSLATIONS = {
       title: "Sisyphus Studio — Independent Game Developers",
       description:
         "Sisyphus Studio is an independent game studio creating Frog Frag and Krivda. Small team, big ambitions.",
+      rssTitle: "Sisyphus Studio — Studio News",
+      rssDescription:
+        "Independent game studio creating Frog Frag and Krivda. Small team, big ambitions.",
     },
     nav: {
       home: "Home",
@@ -88,6 +91,20 @@ export const TRANSLATIONS = {
       sectionLabel: "Contact",
       description:
         "Have a question, a collaboration idea, or just want to say hi? We read every message.",
+      form: {
+        name: "Your name",
+        namePlaceholder: "John Doe",
+        email: "Email",
+        emailPlaceholder: "hello@example.com",
+        message: "Message",
+        messagePlaceholder: "Tell us about your project, idea, or just say hi.",
+        submit: "Send Message",
+        submitting: "Sending…",
+        success: "Message sent. We'll get back to you soon.",
+        error: "Something went wrong. Please try again.",
+        required: "Required field",
+        invalidEmail: "Enter a valid email",
+      },
     },
     footer: {
       followUs: "Follow Us",
@@ -141,6 +158,9 @@ export const TRANSLATIONS = {
       title: "Sisyphus Studio — Независимая инди-студия",
       description:
         "Sisyphus Studio — независимая игровая студия, создающая Frog Frag и Кривду. Небольшая команда с большими амбициями.",
+      rssTitle: "Sisyphus Studio — Новости студии",
+      rssDescription:
+        "Независимая игровая студия. Разрабатываем Frog Frag и Кривду. Небольшая команда с большими амбициями.",
     },
     nav: {
       home: "Главная",
@@ -224,6 +244,20 @@ export const TRANSLATIONS = {
       sectionLabel: "Контакты",
       description:
         "Есть вопрос, идея для сотрудничества или просто хотите поздороваться? Мы читаем каждое сообщение.",
+      form: {
+        name: "Ваше имя",
+        namePlaceholder: "Иван Иванов",
+        email: "Email",
+        emailPlaceholder: "hello@example.com",
+        message: "Сообщение",
+        messagePlaceholder: "Расскажите о проекте, идее или просто поздоровайтесь.",
+        submit: "Отправить",
+        submitting: "Отправка…",
+        success: "Сообщение отправлено. Мы ответим в ближайшее время.",
+        error: "Что-то пошло не так. Попробуйте ещё раз.",
+        required: "Обязательное поле",
+        invalidEmail: "Введите корректный email",
+      },
     },
     footer: {
       followUs: "Свяжитесь",

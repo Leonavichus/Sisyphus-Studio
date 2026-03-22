@@ -2,6 +2,7 @@ import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
 import type { Language } from "../../types";
+import { TRANSLATIONS } from "../../i18n/translations";
 
 export const prerender = true;
 
@@ -11,15 +12,13 @@ export function getStaticPaths() {
 
 export const GET: APIRoute = async ({ params, site }) => {
   const lang = params.lang as Language;
+  const t = TRANSLATIONS[lang];
   const entries = await getCollection("news");
   const sorted = entries.sort((a, b) => a.id.localeCompare(b.id));
 
   return rss({
-    title: lang === "ru" ? "Sisyphus Studio — Новости студии" : "Sisyphus Studio — Studio News",
-    description:
-      lang === "ru"
-        ? "Независимая игровая студия. Разрабатываем Frog Frag и Кривду."
-        : "Independent game studio creating Frog Frag and Krivda.",
+    title: t.meta.rssTitle,
+    description: t.meta.rssDescription,
     site: site!,
     items: sorted.map((e) => ({
       title: e.data[lang].title,

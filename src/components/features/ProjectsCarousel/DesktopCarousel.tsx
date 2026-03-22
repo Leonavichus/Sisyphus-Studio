@@ -2,6 +2,7 @@ import { useCallback, type FC, memo } from "react";
 import { ExternalLink } from "lucide-react";
 import type { Project, TranslationStructure } from "../../../types";
 import { handleImageError } from "../../../utils/images";
+import { IMAGE_FALLBACK } from "../../../config";
 import {
   PROJECTS_EXPAND_MS,
   COLORS,
@@ -297,7 +298,13 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                         : IMAGE_FILTERS.inactiveProject,
                       transition: `filter ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
                     }}
-                    onError={(e) => handleImageError(e, 900, 600)}
+                    onError={(e) =>
+                      handleImageError(
+                        e,
+                        IMAGE_FALLBACK.projectCard.width,
+                        IMAGE_FALLBACK.projectCard.height,
+                      )
+                    }
                   />
                   <div
                     style={{

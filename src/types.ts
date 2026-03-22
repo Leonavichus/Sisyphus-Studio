@@ -36,6 +36,8 @@ export interface TranslationStructure {
   meta: {
     title: string;
     description: string;
+    rssTitle: string;
+    rssDescription: string;
   };
   hero: {
     title: string;
@@ -103,6 +105,20 @@ export interface TranslationStructure {
     heading: string;
     sectionLabel: string;
     description: string;
+    form: {
+      name: string;
+      namePlaceholder: string;
+      email: string;
+      emailPlaceholder: string;
+      message: string;
+      messagePlaceholder: string;
+      submit: string;
+      submitting: string;
+      success: string;
+      error: string;
+      required: string;
+      invalidEmail: string;
+    };
   };
   footer: {
     followUs: string;

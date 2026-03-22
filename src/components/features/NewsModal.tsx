@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from "react";
 import { X, Calendar } from "lucide-react";
 import type { NewsItem, TranslationStructure } from "../../types";
 import { handleImageError } from "../../utils/images";
-import { FOCUSABLE_SELECTORS, COLORS, SIZES, IMAGE_FILTERS } from "../../config";
+import { FOCUSABLE_SELECTORS, COLORS, SIZES, IMAGE_FILTERS, IMAGE_FALLBACK } from "../../config";
 
 interface NewsModalProps {
   item: NewsItem;
@@ -112,7 +112,9 @@ const NewsModal = ({ item, onClose, closeLabel }: NewsModalProps) => {
               display: "block",
               filter: IMAGE_FILTERS.modal,
             }}
-            onError={(e) => handleImageError(e, 900, 400)}
+            onError={(e) =>
+              handleImageError(e, IMAGE_FALLBACK.newsModal.width, IMAGE_FALLBACK.newsModal.height)
+            }
           />
           <div
             style={{

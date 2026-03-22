@@ -1,7 +1,7 @@
 import type { Language, NewsCategory } from "../types";
-import { COLORS } from "../config";
+import { COLORS } from "./design";
 
-const NEWS_CATEGORIES: NewsCategory[] = ["announcement", "dev-diary", "update"];
+export const NEWS_CATEGORY_ORDER: NewsCategory[] = ["announcement", "dev-diary", "update"];
 
 const categoryLabels: Record<NewsCategory, Record<Language, string>> = {
   announcement: { en: "Announcement", ru: "Анонс" },
@@ -15,7 +15,7 @@ const categoryColors: Record<NewsCategory, string> = {
   update: COLORS.news.update,
 };
 
-export const getNewsCategories = (): NewsCategory[] => NEWS_CATEGORIES;
+export const getNewsCategories = (): NewsCategory[] => NEWS_CATEGORY_ORDER;
 
 export const getCategoryLabel = (category: NewsCategory, lang: Language): string =>
   categoryLabels[category][lang];

@@ -33,6 +33,20 @@ export const PROJECTS_CONTENT_REVEAL_RATIO = 0.38;
 
 export const SWIPE_THRESHOLD = 40;
 
+export const SCROLL_REVEAL = {
+  threshold: 0.08,
+  rootMargin: "0px 0px -20% 0px",
+} as const;
+
+export const RIPPLE = {
+  buttonSelector: ".btn-filled,.btn-tonal,.btn-outlined",
+  sizeMultiplier: 1.4,
+} as const;
+
+export const SCROLL_PROGRESS_BAR_CLASS = "scroll-progress";
+
+export const REVEAL_ANIMATION_SELECTOR = ".reveal,.reveal-left,.reveal-right,.reveal-scale";
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const FOCUSABLE_SELECTORS = [

@@ -2,6 +2,7 @@ import { useCallback, useRef, type FC, memo } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Project, TranslationStructure } from "../../../types";
 import { handleImageError } from "../../../utils/images";
+import { IMAGE_FALLBACK } from "../../../config";
 import {
   COLORS,
   LAYOUT,
@@ -121,7 +122,13 @@ const MobileCarousel: FC<MobileCarouselProps> = ({ projects, activeIndex, onSele
                 display: "block",
                 filter: IMAGE_FILTERS.mobileProject,
               }}
-              onError={(e) => handleImageError(e, 900, 600)}
+              onError={(e) =>
+                handleImageError(
+                  e,
+                  IMAGE_FALLBACK.projectCard.width,
+                  IMAGE_FALLBACK.projectCard.height,
+                )
+              }
             />
             <div
               style={{

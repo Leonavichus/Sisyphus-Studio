@@ -1,7 +1,9 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
-import { URLS, SEO, UI, BRAND } from "../config";
+import { URLS, SEO, UI, BRAND, FONTS, HERO_PRELOAD_IMAGE_SRC } from "../config";
+import { LANGUAGE_STORAGE_KEY, SUPPORTED_LANGUAGES } from "../config/i18n";
+import { TRANSLATIONS } from "../i18n/translations";
 import AnimatedBackground from "../components/common/AnimatedBackground.astro";
 
 interface Props {
@@ -15,6 +17,9 @@ const { lang, title = SEO.defaultTitle, description = SEO.defaultDescription } =
 
 const otherLang = lang === "en" ? "ru" : "en";
 const canonicalBase = URLS.site;
+const t = TRANSLATIONS[lang];
+
+const langRedirectScript = `(function(){var STORAGE_KEY=${JSON.stringify(LANGUAGE_STORAGE_KEY)};var SUPPORTED=${JSON.stringify([...SUPPORTED_LANGUAGES])};try{var stored=localStorage.getItem(STORAGE_KEY);if(!stored||!SUPPORTED.includes(stored))return;var parts=window.location.pathname.split("/").filter(Boolean);var pathLang=parts[0];if(pathLang===stored)return;if(SUPPORTED.includes(pathLang)){parts[0]=stored;window.location.replace("/"+parts.join("/")+window.location.search);}}catch(e){}})();`;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -58,14 +63,12 @@ const jsonLd = {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={lang === "ru"
-        ? `${BRAND.prefix} ${BRAND.suffix} — Новости`
-        : `${BRAND.prefix} ${BRAND.suffix} — News`}
+      title={t.meta.rssTitle}
       href={`${canonicalBase}/${lang}/rss.xml`}
     />
 
     <link rel="dns-prefetch" href={URLS.steam} />
-    <link rel="dns-prefetch" href="https://www.youtube.com" />
+    <link rel="dns-prefetch" href={URLS.youtubeOrigin} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -85,36 +88,15 @@ const jsonLd = {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link href={FONTS.googleCssHref} rel="stylesheet" />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
 
-    <link rel="preload" as="image" href="/images/hero/hero-main.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href={HERO_PRELOAD_IMAGE_SRC} fetchpriority="high" />
 
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <script is:inline>
-      (function () {
-        var STORAGE_KEY = "ss_lang";
-        var SUPPORTED = ["en", "ru"];
-        try {
-          var stored = localStorage.getItem(STORAGE_KEY);
-          if (!stored || !SUPPORTED.includes(stored)) return;
-          var parts = window.location.pathname.split("/").filter(Boolean);
-          var pathLang = parts[0];
-          if (pathLang === stored) return;
-          if (SUPPORTED.includes(pathLang)) {
-            parts[0] = stored;
-            window.location.replace("/" + parts.join("/") + window.location.search);
-          }
-        } catch {
-          void 0;
-        }
-      })();
-    </script>
+    <script is:inline set:html={langRedirectScript} />
 
     <ClientRouter />
   </head>
@@ -152,11 +134,18 @@ const jsonLd = {
     </div>
 
     <script>
+      import {
+        SCROLL_REVEAL,
+        RIPPLE,
+        SCROLL_PROGRESS_BAR_CLASS,
+        REVEAL_ANIMATION_SELECTOR,
+      } from "../config/constants";
+
       function initPage() {
-        const existing = document.querySelector(".scroll-progress");
+        const existing = document.querySelector(`.${SCROLL_PROGRESS_BAR_CLASS}`);
         if (existing) existing.remove();
         const bar = document.createElement("div");
-        bar.className = "scroll-progress";
+        bar.className = SCROLL_PROGRESS_BAR_CLASS;
         document.body.prepend(bar);
         window.addEventListener(
           "scroll",
@@ -169,10 +158,10 @@ const jsonLd = {
         );
 
         document.addEventListener("click", (e) => {
-          const btn = (e.target as Element).closest(".btn-filled,.btn-tonal,.btn-outlined");
+          const btn = (e.target as Element).closest(RIPPLE.buttonSelector);
           if (!btn) return;
           const r = btn.getBoundingClientRect();
-          const sz = Math.max(r.width, r.height) * 1.4;
+          const sz = Math.max(r.width, r.height) * RIPPLE.sizeMultiplier;
           const w = document.createElement("span");
           w.className = "ripple-wave";
           w.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - r.left - sz / 2}px;top:${e.clientY - r.top - sz / 2}px;`;
@@ -189,18 +178,16 @@ const jsonLd = {
               }
             });
           },
-          { threshold: 0.08, rootMargin: "0px 0px -20% 0px" },
+          { threshold: SCROLL_REVEAL.threshold, rootMargin: SCROLL_REVEAL.rootMargin },
         );
 
         function observeRevealEls() {
-          document
-            .querySelectorAll(".reveal,.reveal-left,.reveal-right,.reveal-scale")
-            .forEach((el) => {
-              if (!el.classList.contains("in") && !(el as Element).hasAttribute("data-observed")) {
-                (el as Element).setAttribute("data-observed", "1");
-                obs.observe(el);
-              }
-            });
+          document.querySelectorAll(REVEAL_ANIMATION_SELECTOR).forEach((el) => {
+            if (!el.classList.contains("in") && !(el as Element).hasAttribute("data-observed")) {
+              (el as Element).setAttribute("data-observed", "1");
+              obs.observe(el);
+            }
+          });
         }
 
         observeRevealEls();

@@ -1,9 +1,16 @@
 import { useState, useEffect, useCallback, useRef, useMemo, type FC } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import type { Language, TranslationStructure } from "../../types";
-import { BRAND, SOCIAL_LINKS, COLORS, LAYOUT, SPACING, TRANSITIONS } from "../../config";
-import { useLanguageSync } from "../../hooks/useLanguagePreference";
-import { isMailtoLink } from "../../utils/helpers";
+import {
+  BRAND,
+  SOCIAL_LINKS,
+  COLORS,
+  LAYOUT,
+  SPACING,
+  TRANSITIONS,
+  isMailtoLink,
+} from "../../config";
+import { useLanguageSync } from "../../hooks/useLanguageSync";
 
 interface NavbarProps {
   lang: Language;

@@ -6,6 +6,14 @@ Single-page site with two language routes (`/en/`, `/ru/`). Astro handles static
 
 The root `/` redirects to the default language. A 404 page detects language from the URL and renders the appropriate translation.
 
+**Layers:**
+
+1. **Routes** (`src/pages/`) — load content collections, pick the active language, pass typed props into the layout and sections.
+2. **Sections** (`.astro` under `components/sections/`) — mostly static markup; may embed islands with `client:*`.
+3. **Islands** (`.tsx` under `components/features/` and `components/layout/`) — state, effects, keyboard/touch, forms.
+4. **Config** (`src/config/`) — design tokens, URLs, runtime constants (scroll reveal, ripple, image fallbacks, news categories). Import the barrel `src/config/index.ts` unless you need to avoid pulling the full barrel in a hot path.
+5. **Utils** (`src/utils/`) — cross-cutting helpers that are not “site configuration” (e.g. image error fallbacks).
+
 ---
 
 ## Routing & Pages
@@ -20,13 +28,13 @@ An RSS feed is available at `/{lang}/rss.xml`.
 
 `src/layouts/Layout.astro` is the root HTML shell. It sets up:
 
-- Full `<head>` with meta, Open Graph, Twitter Card, hreflang, canonical, and RSS link
+- Full `<head>` with meta, Open Graph, Twitter Card, hreflang, canonical, and RSS link (RSS link title uses `TRANSLATIONS[lang].meta.rssTitle`)
 - JSON-LD structured data (Organization + VideoGame entries)
-- Font loading and critical image preloads
-- Inline language redirect script (reads persisted language from `localStorage`, redirects if URL doesn't match)
+- Font loading (`FONTS.googleCssHref`) and hero image preload (`HERO_PRELOAD_IMAGE_SRC`)
+- Inline language redirect script built from `LANGUAGE_STORAGE_KEY` and `SUPPORTED_LANGUAGES` (must stay in sync with Astro `i18n.locales`)
 - Astro `<ClientRouter />` for view transitions
 - Skip-to-content link and `<noscript>` warning
-- Client-side scripts: scroll progress bar, button ripple effect, intersection observer for scroll reveal animations
+- Bundled client script that imports `SCROLL_PROGRESS_BAR_CLASS`, `RIPPLE`, `SCROLL_REVEAL`, and `REVEAL_ANIMATION_SELECTOR` from `constants.ts` — scroll progress, ripples, reveal observer, and view-transition scroll restoration
 
 ---
 
@@ -45,7 +53,7 @@ Reusable primitives shared across the site.
 
 Interactive components that handle user input and state.
 
-- **ContactForm** — controlled form with client-side validation and Formspree submission. Manages field values, validation errors, focus state, and submission status.
+- **ContactForm** — controlled form with client-side validation and Formspree submission. Copy comes from `t.contact.form` in translations (no duplicate locale objects in the component).
 - **NewsCarousel** — auto-advancing carousel with category filters, touch swipe, keyboard navigation, and a modal for full articles. Respects `prefers-reduced-motion`.
 - **NewsModal** — full-screen modal with focus trap, Escape to close, click-outside to close, and scroll lock.
 - **ProjectsCarousel** — responsive carousel that renders a desktop accordion or mobile swipe view depending on viewport width.
@@ -68,20 +76,20 @@ Astro components for each page section. They receive translations and data as pr
 
 ## Configuration
 
-All constants are in `src/config/` and re-exported from a single index file.
+All modules under `src/config/` are re-exported from `src/config/index.ts`.
 
-- **constants.ts** — brand info, transition timings, carousel intervals, validation patterns, UI strings
-- **design.ts** — color palette, easing functions, layout dimensions, spacing, image filters, gradients, component sizes
-- **links.ts** — external URLs (from env vars), contact details, social link definitions
-- **seo.ts** — default title/description, OG image path and dimensions, game schema entries
+- **constants.ts** — brand, transitions, carousel timings, swipe threshold, scroll-progress bar class, `IntersectionObserver` options for reveal animations, button ripple selector + size multiplier, validation regex, small UI strings used outside translations
+- **design.ts** — colors, layout, spacing, image filters, gradients, component sizes
+- **fonts.ts** — Google Fonts CSS URL
+- **i18n.ts** — `LANGUAGE_STORAGE_KEY`, `SUPPORTED_LANGUAGES` (shared by the inline redirect script in `Layout.astro` and `useLanguageSync`)
+- **images.ts** — `IMAGE_FALLBACK` dimensions for broken images, `HERO_PRELOAD_IMAGE_SRC`
+- **links.ts** — env-backed URLs, Formspree endpoint, `isMailtoLink`, `SOCIAL_LINKS`, `CONTACT_PAGE_SOCIAL` (icons + hrefs for the contact column)
+- **news.ts** — `getNewsCategories`, `getCategoryLabel`, `getCategoryColor`, category order
+- **seo.ts** — default title/description, OG image, JSON-LD games
 
 Use config constants instead of magic numbers:
 
 ```ts
-// wrong
-const interval = 5500;
-
-// right
 import { NEWS_CAROUSEL } from "@/config";
 const interval = NEWS_CAROUSEL.AUTO_INTERVAL;
 ```
@@ -112,25 +120,25 @@ Defined in `src/content/config.ts` using Astro Content Collections with Zod vali
 
 ## i18n & Translations
 
-`src/i18n/translations.ts` exports a single `TRANSLATIONS` object typed against `TranslationStructure`. It covers all sections: nav, meta, hero, projects, about, news, contact, footer, and 404.
+`src/i18n/translations.ts` exports a single `TRANSLATIONS` object typed against `TranslationStructure`. It covers all sections: nav, meta (including `rssTitle` / `rssDescription` for RSS), hero, projects, about, news, contact (including `contact.form` for the form island), footer, and 404.
 
-Language is persisted to `localStorage`. On page load, the inline script in the layout redirects if the URL language doesn't match the stored preference.
+Language is persisted to `localStorage` under `LANGUAGE_STORAGE_KEY`. On page load, the inline script in the layout redirects if the URL language doesn't match the stored preference.
 
 ---
 
 ## Hooks
 
 - **useCarouselKeyboard** — attaches keyboard navigation (Arrow keys, Home, End) to a container ref. Returns the ref to attach to the carousel element.
-- **useLanguageSync** — writes the current language to `localStorage` on change.
+- **useLanguageSync** (`src/hooks/useLanguageSync.ts`) — writes the current language to `localStorage` using `LANGUAGE_STORAGE_KEY` whenever the route language changes.
 - **useReducedMotion** — returns `true` if `prefers-reduced-motion: reduce` is active. Updates reactively on media query change.
 
 ---
 
 ## Utilities
 
-- **helpers.ts** — `isMailtoLink(href)` checks if a link is a mailto, used to conditionally set `target` and `rel` attributes.
-- **images.ts** — `getHeroImage(name)` builds an image path; `handleImageError` (React) and `nativeImageFallback` (Astro) replace broken images with an inline SVG placeholder.
-- **news.ts** — `getNewsCategories()`, `getCategoryLabel(type, lang)`, `getCategoryColor(type)` for working with news category metadata.
+- **images.ts** — `getHeroImage(name)` builds an image path; `handleImageError` (React) and `nativeImageFallback` (Astro) replace broken images with an inline SVG placeholder. Dimensions for React fallbacks should match `IMAGE_FALLBACK` in config.
+
+`isMailtoLink` lives in `config/links.ts` (re-exported from the config barrel) so URL-related behaviour stays in one place.
 
 ---
 
