@@ -32,8 +32,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
       { id: "about", label: t.about, href: "#about" },
       { id: "projects", label: t.projects, href: "#projects" },
       { id: "news", label: t.news, href: "#news" },
-      { id: "partners", label: t.partners, href: "#partners" },
       { id: "careers", label: t.careers, href: "#careers" },
+      { id: "donate", label: t.donate, href: "#donate" },
+      { id: "partners", label: t.partners, href: "#partners" },
       { id: "contact", label: t.contact, href: "#contact" },
     ],
     [t],
@@ -170,8 +171,8 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           <img
             src="/favicon.png"
             alt="Sisyphus Studio"
-            width={32}
-            height={32}
+            width={56}
+            height={56}
             style={{ borderRadius: 8, objectFit: "cover", flexShrink: 0 }}
           />
           <span className="t-brand-lg" style={{ fontSize: 16 }}>
@@ -189,7 +190,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                 href={href}
                 onClick={() => handleNavClick(id)}
                 className={`nav-desktop-link state ${isActive ? "active" : ""}`}
-                style={{ fontSize: 13 }}
+                style={{ fontSize: 15 }}
               >
                 {label}
                 {isActive && (

@@ -1,6 +1,6 @@
 ---
 import type { TranslationStructure } from "../../types";
-import { CONTACT, LAYOUT } from "../../config";
+import { LAYOUT } from "../../config";
 
 interface Props {
   t: TranslationStructure["careers"];
@@ -9,13 +9,12 @@ interface Props {
 const { t } = Astro.props;
 
 const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
-const mailtoUrl = `mailto:${CONTACT.careerEmail}`;
 ---
 
 <section
   id="careers"
   aria-labelledby="careers-heading"
-  style="padding:var(--spacing-section);background:var(--s-2);border-top:1px solid var(--b-default);position:relative;overflow:hidden"
+  style="padding:var(--spacing-section);background:transparent;border-top:1px solid var(--b-default);position:relative;overflow:hidden"
 >
   <div
     style={`max-width:${LAYOUT.maxWidth}px;margin:0 auto;padding:0 ${LAYOUT.padding}px;position:relative;z-index:1`}
@@ -44,6 +43,20 @@ const mailtoUrl = `mailto:${CONTACT.careerEmail}`;
               </span>
             ))
           }
+        </div>
+
+        <div style="margin-top:40px">
+          <p class="t-eyebrow-accent" style="margin-bottom:12px;display:block">{t.vacanciesTitle}</p>
+          <ul class="careers-vacancies" role="list">
+            {
+              t.vacancies.map((v) => (
+                <li class="careers-vacancy-item" role="listitem">
+                  <span class="vacancy-type">{v.type}</span>
+                  <span class="vacancy-title">{v.title}</span>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
 
@@ -125,29 +138,6 @@ const mailtoUrl = `mailto:${CONTACT.careerEmail}`;
               </svg>
               {t.formBtnLabel}
             </a>
-            <a
-              href={mailtoUrl}
-              class="btn-outlined"
-              style="width:100%;justify-content:center;height:42px;font-size:13px"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                ></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              {t.emailBtnLabel}
-            </a>
           </div>
 
           <div
@@ -227,5 +217,65 @@ const mailtoUrl = `mailto:${CONTACT.careerEmail}`;
       grid-template-columns: 1fr;
       gap: 40px;
     }
+  }
+
+  .careers-vacancies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .careers-vacancy-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 16px;
+    background: var(--s-4);
+    border: 1px solid var(--b-subtle);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s var(--ease-em), box-shadow .25s;
+  }
+
+  .careers-vacancy-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--c-orange), transparent);
+    opacity: 0;
+    transition: opacity .25s;
+  }
+
+  .careers-vacancy-item:hover {
+    border-color: var(--c-orange-border);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  .careers-vacancy-item:hover::before {
+    opacity: 1;
+  }
+
+  .vacancy-type {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--c-orange);
+    opacity: .8;
+  }
+
+  .vacancy-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--c-on-surface);
+    line-height: 1.25;
   }
 </style>

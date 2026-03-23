@@ -31,6 +31,7 @@ export interface TranslationStructure {
     news: string;
     partners: string;
     careers: string;
+    donate: string;
     contact: string;
     toggleNav: string;
     navMenu: string;
@@ -102,8 +103,9 @@ export interface TranslationStructure {
     formCardDesc: string;
     checkItems: [string, string, string, string];
     formBtnLabel: string;
-    emailBtnLabel: string;
     statusLabel: string;
+    vacanciesTitle: string;
+    vacancies: Array<{ title: string; type: string }>;
   };
   partners: {
     sectionLabel: string;

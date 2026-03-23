@@ -61,10 +61,10 @@ const news: NewsItem[] = newsEntries
     <About t={t.about} lang={lang} titlesCount={titlesCount} />
     <ProjectsCarousel t={t.projects} projects={projects} client:visible />
     <NewsCarousel news={news} t={t.news} lang={lang} client:visible />
-    <Partners t={t.partners} lang={lang} />
     <Careers t={t.careers} />
-    <Contact t={t.contact} />
     <Donate t={t.footer.cta} />
+    <Partners t={t.partners} lang={lang} />
+    <Contact t={t.contact} />
   </main>
 
   <Footer t={t.footer} year={currentYear} lang={lang} nav={t.nav} client:visible />
