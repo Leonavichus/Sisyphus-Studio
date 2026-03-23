@@ -1,22 +1,27 @@
 import { type FC } from "react";
 import { ArrowUp } from "lucide-react";
-import type { TranslationStructure } from "../../types";
+import type { Language, TranslationStructure } from "../../types";
 import { BRAND, COLORS, LAYOUT } from "../../config";
 import { ErrorBoundary } from "../common/ErrorBoundary";
 
 interface FooterProps {
   t: TranslationStructure["footer"];
+  nav: TranslationStructure["nav"];
   year: number;
+  lang: Language;
 }
 
-const Footer: FC<FooterProps> = ({ t, year }) => {
+const Footer: FC<FooterProps> = ({ t, nav, year, lang }) => {
   const copyright = t.copyright.replace("{year}", String(year));
+  const base = `/${lang}/`;
 
   const footerLinks = [
-    { label: t.links.games, href: "#projects" },
-    { label: t.links.about, href: "#about" },
-    { label: t.links.news, href: "#news" },
-    { label: t.links.contact, href: "#contact" },
+    { label: nav.about, href: `${base}#about` },
+    { label: nav.projects, href: `${base}#projects` },
+    { label: nav.news, href: `${base}#news` },
+    { label: nav.partners, href: `${base}#partners` },
+    { label: nav.careers, href: `${base}#careers` },
+    { label: nav.contact, href: `${base}#contact` },
   ];
 
   return (
@@ -52,7 +57,7 @@ const Footer: FC<FooterProps> = ({ t, year }) => {
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
             <a
-              href="#home"
+              href={`${base}#home`}
               className="state"
               style={{
                 display: "flex",

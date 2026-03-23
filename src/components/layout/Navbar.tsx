@@ -1,21 +1,16 @@
 import { useState, useEffect, useCallback, useRef, useMemo, type FC } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import type { Language, TranslationStructure } from "../../types";
-import {
-  BRAND,
-  SOCIAL_LINKS,
-  COLORS,
-  LAYOUT,
-  SPACING,
-  TRANSITIONS,
-  isMailtoLink,
-} from "../../config";
+import { BRAND, SOCIAL_LINKS, COLORS, LAYOUT, TRANSITIONS, isMailtoLink } from "../../config";
 import { useLanguageSync } from "../../hooks/useLanguageSync";
 
 interface NavbarProps {
   lang: Language;
   t: TranslationStructure["nav"];
 }
+
+const NAV_BG_SCROLLED = "rgba(13,13,13,0.92)";
+const NAV_HEIGHT = LAYOUT.navHeight;
 
 const Navbar: FC<NavbarProps> = ({ lang, t }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -29,15 +24,16 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
   useLanguageSync(lang);
 
   const otherLang: Language = lang === "en" ? "ru" : "en";
-  const otherLangLabel = lang === "en" ? "RU" : "EN";
   const langSwitchHref = `/${otherLang}/`;
 
   const links = useMemo(
     () => [
       { id: "home", label: t.home, href: "#home" },
-      { id: "projects", label: t.projects, href: "#projects" },
       { id: "about", label: t.about, href: "#about" },
+      { id: "projects", label: t.projects, href: "#projects" },
       { id: "news", label: t.news, href: "#news" },
+      { id: "partners", label: t.partners, href: "#partners" },
+      { id: "careers", label: t.careers, href: "#careers" },
       { id: "contact", label: t.contact, href: "#contact" },
     ],
     [t],
@@ -105,7 +101,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
       const focusables = Array.from(
         mobileMenuRef.current?.querySelectorAll<HTMLElement>("a, button") ?? [],
       );
-      if (focusables.length === 0) return;
+      if (!focusables.length) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
       if (e.shiftKey) {
@@ -139,9 +135,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
         left: 0,
         right: 0,
         zIndex: 50,
-        height: LAYOUT.navHeight,
-        background: scrolled ? "rgba(17,17,17,0.9)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px) saturate(1.4)" : "none",
+        height: NAV_HEIGHT,
+        background: scrolled ? NAV_BG_SCROLLED : "transparent",
+        backdropFilter: scrolled ? "blur(24px) saturate(1.6)" : "none",
         borderBottom: scrolled ? `1px solid ${COLORS.border.default}` : "1px solid transparent",
         transition: `background ${TRANSITIONS.default}, border-color ${TRANSITIONS.default}, backdrop-filter ${TRANSITIONS.default}`,
       }}
@@ -151,10 +147,10 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           maxWidth: LAYOUT.maxWidth,
           margin: "0 auto",
           padding: `0 ${LAYOUT.padding}px`,
-          height: LAYOUT.navHeight,
+          height: NAV_HEIGHT,
           display: "flex",
           alignItems: "center",
-          gap: 6,
+          gap: 4,
         }}
       >
         <a
@@ -166,25 +162,25 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
             alignItems: "center",
             gap: 8,
             textDecoration: "none",
-            marginRight: SPACING.navLinkMargin,
-            padding: "5px 8px",
-            borderRadius: "9999px",
+            marginRight: 16,
+            padding: "5px 10px 5px 5px",
+            borderRadius: "var(--r-full)",
           }}
         >
           <img
             src="/favicon.png"
             alt="Sisyphus Studio"
-            width={56}
-            height={56}
-            style={{ borderRadius: 12, objectFit: "cover", flexShrink: 0 }}
+            width={32}
+            height={32}
+            style={{ borderRadius: 8, objectFit: "cover", flexShrink: 0 }}
           />
-          <span className="t-brand-lg">
+          <span className="t-brand-lg" style={{ fontSize: 16 }}>
             {BRAND.prefix}
             <span style={{ color: COLORS.orange }}>{BRAND.suffix}</span>
           </span>
         </a>
 
-        <div className="hidden md:flex" style={{ flex: 1, alignItems: "center" }}>
+        <div className="hidden md:flex" style={{ flex: 1, alignItems: "center", gap: 2 }}>
           {links.map(({ id, label, href }) => {
             const isActive = active === id;
             return (
@@ -193,6 +189,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                 href={href}
                 onClick={() => handleNavClick(id)}
                 className={`nav-desktop-link state ${isActive ? "active" : ""}`}
+                style={{ fontSize: 13 }}
               >
                 {label}
                 {isActive && (
@@ -204,7 +201,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                       transform: "translateX(-50%)",
                       width: 14,
                       height: 2,
-                      borderRadius: "9999px",
+                      borderRadius: "var(--r-full)",
                       background: COLORS.orange,
                     }}
                   />
@@ -228,35 +225,35 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
               className="icon-btn"
             >
               {Icon ? (
-                <Icon size={16} strokeWidth={1.8} />
+                <Icon size={15} strokeWidth={1.8} />
               ) : (
                 <span dangerouslySetInnerHTML={{ __html: iconSvg || "" }} />
               )}
             </a>
           ))}
           <div
-            style={{ width: 1, height: 18, background: "rgba(255,255,255,.1)", margin: "0 6px" }}
+            style={{ width: 1, height: 16, background: "rgba(255,255,255,.08)", margin: "0 6px" }}
           />
           <a
             href={langSwitchHref}
             className="chip"
-            style={{ height: 28, fontSize: 11, letterSpacing: 1, textDecoration: "none" }}
+            style={{ height: 26, fontSize: 11, letterSpacing: 1, textDecoration: "none", gap: 5 }}
           >
-            <Globe size={12} />
-            {otherLangLabel}
+            <Globe size={11} />
+            {otherLang.toUpperCase()}
           </a>
         </div>
 
         <button
           ref={burgerRef}
           className="md:hidden icon-btn-outlined"
-          style={{ marginLeft: "auto", width: 36, height: 36 }}
+          style={{ marginLeft: "auto", width: 34, height: 34 }}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={t.toggleNav}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
         >
-          {mobileOpen ? <X size={17} /> : <Menu size={17} />}
+          {mobileOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
       </div>
 
@@ -266,11 +263,11 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
         onKeyDown={handleMenuKeyDown}
         {...(mobileOpen ? { role: "dialog", "aria-modal": "true", "aria-label": t.navMenu } : {})}
         style={{
-          maxHeight: mobileOpen ? "400px" : 0,
+          maxHeight: mobileOpen ? "420px" : 0,
           opacity: mobileOpen ? 1 : 0,
           overflow: "hidden",
-          background: "rgba(13,13,13,.96)",
-          backdropFilter: "blur(20px)",
+          background: "rgba(13,13,13,.97)",
+          backdropFilter: "blur(24px)",
           borderTop: mobileOpen ? `1px solid ${COLORS.border.default}` : "1px solid transparent",
           transition: "max-height .3s cubic-bezier(0.2,0,0,1), opacity .22s",
           visibility: mobileOpen ? "visible" : "hidden",
@@ -294,9 +291,9 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
               onClick={() => handleNavClick(id)}
               tabIndex={mobileOpen ? 0 : -1}
               style={{
-                padding: "12px 16px",
-                borderRadius: "12px",
-                fontSize: 15,
+                padding: "11px 16px",
+                borderRadius: 10,
+                fontSize: 14,
                 fontWeight: 600,
                 color: active === id ? COLORS.text.primary : COLORS.text.tertiary,
                 background: active === id ? COLORS.orangeDim : "transparent",
@@ -321,7 +318,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                 rel={isMailtoLink(href) ? undefined : "noopener noreferrer"}
               >
                 {Icon ? (
-                  <Icon size={15} strokeWidth={1.8} />
+                  <Icon size={14} strokeWidth={1.8} />
                 ) : (
                   <span dangerouslySetInnerHTML={{ __html: iconSvg || "" }} />
                 )}
@@ -331,10 +328,10 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
               href={langSwitchHref}
               className="chip"
               tabIndex={mobileOpen ? 0 : -1}
-              style={{ marginLeft: "auto", height: 28, textDecoration: "none" }}
+              style={{ marginLeft: "auto", height: 26, textDecoration: "none", fontSize: 12 }}
               onClick={() => setMobileOpen(false)}
             >
-              <Globe size={12} />
+              <Globe size={11} />
               {lang === "en" ? "Русский" : "English"}
             </a>
           </div>

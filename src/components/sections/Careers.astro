@@ -1,0 +1,237 @@
+---
+import type { TranslationStructure } from "../../types";
+import { CONTACT, LAYOUT } from "../../config";
+
+interface Props {
+  t: TranslationStructure["careers"];
+}
+
+const { t } = Astro.props;
+
+const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
+const mailtoUrl = `mailto:${CONTACT.careerEmail}`;
+---
+
+<section
+  id="careers"
+  aria-labelledby="careers-heading"
+  style="padding:var(--spacing-section);background:var(--s-2);border-top:1px solid var(--b-default);position:relative;overflow:hidden"
+>
+  <div
+    aria-hidden="true"
+    style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 60% at 80% 40%,rgba(248,126,15,.04),transparent 70%)"
+  >
+  </div>
+
+  <div
+    style={`max-width:${LAYOUT.maxWidth}px;margin:0 auto;padding:0 ${LAYOUT.padding}px;position:relative;z-index:1`}
+  >
+    <div class="reveal" style="margin-bottom:56px">
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <span class="section-eyebrow-label">{t.sectionLabel}</span>
+      </div>
+      <h2 id="careers-heading" class="t-display-md" style="color:var(--c-on-surface)">
+        {t.heading}<span style="color:var(--c-orange)"> {t.headingSuffix}</span>
+      </h2>
+    </div>
+
+    <div class="careers-layout">
+      <div class="reveal-left">
+        <p class="t-body-lg" style="color:var(--c-secondary);line-height:1.78;margin-bottom:32px">
+          {t.description}
+        </p>
+
+        <div role="list" aria-label={t.sectionLabel} class="careers-chips">
+          {
+            t.chips.map((chip) => (
+              <span role="listitem" class="careers-chip">
+                {chip}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="reveal-right">
+        <div
+          style="padding:32px;background:var(--s-4);border:1px solid var(--b-subtle);border-radius:var(--r-2xl);position:relative;overflow:hidden"
+        >
+          <div
+            style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--c-orange),rgba(248,126,15,.15) 50%,transparent)"
+          >
+          </div>
+
+          <div style="margin-bottom:20px">
+            <p class="t-eyebrow-accent" style="margin-bottom:6px;display:block">
+              {t.formCardLabel}
+            </p>
+            <h3
+              style="font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:-.2px;color:var(--c-on-surface);line-height:1.05;margin-bottom:10px"
+            >
+              {t.formCardTitle}
+            </h3>
+            <p class="t-body-sm" style="color:var(--c-secondary);line-height:1.7">
+              {t.formCardDesc}
+            </p>
+          </div>
+
+          <div
+            style="height:1px;background:var(--b-default);margin-bottom:20px"
+            role="separator"
+            aria-hidden="true"
+          >
+          </div>
+
+          <ul class="careers-checklist">
+            {
+              t.checkItems.map((item) => (
+                <li class="careers-check-item">
+                  <span aria-hidden="true" class="careers-check-icon">
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--c-orange)"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px">
+            <a
+              href={formUrl}
+              target={formUrl !== "#" ? "_blank" : undefined}
+              rel={formUrl !== "#" ? "noopener noreferrer" : undefined}
+              class="btn-filled"
+              style="width:100%;justify-content:center;height:42px;font-size:13px"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              {t.formBtnLabel}
+            </a>
+            <a
+              href={mailtoUrl}
+              class="btn-outlined"
+              style="width:100%;justify-content:center;height:42px;font-size:13px"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              {t.emailBtnLabel}
+            </a>
+          </div>
+
+          <div
+            style="display:flex;align-items:center;gap:8px;margin-top:16px;padding:12px 14px;background:var(--s-3);border:1px solid var(--b-subtle);border-radius:var(--r-sm)"
+          >
+            <div
+              class="pulse"
+              style="width:7px;height:7px;border-radius:50%;background:var(--c-orange);flex-shrink:0"
+              aria-hidden="true"
+            >
+            </div>
+            <p class="t-body-sm" style="color:var(--c-tertiary)">{t.statusLabel}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .careers-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .careers-chips {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+
+  .careers-chip {
+    padding: 5px 13px;
+    border-radius: var(--r-full);
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--b-default);
+    color: var(--c-tertiary);
+  }
+
+  .careers-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .careers-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--c-secondary);
+    line-height: 1.5;
+  }
+
+  .careers-check-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c-orange-dim);
+    border: 1px solid var(--c-orange-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  @media (max-width: 860px) {
+    .careers-layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

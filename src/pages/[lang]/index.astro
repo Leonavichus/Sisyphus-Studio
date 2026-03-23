@@ -3,8 +3,10 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/sections/Hero.astro";
 import About from "../../components/sections/About.astro";
+import Partners from "../../components/sections/Partners.astro";
 import Contact from "../../components/sections/Contact.astro";
 import Donate from "../../components/sections/Donate.astro";
+import Careers from "../../components/sections/Careers.astro";
 import Navbar from "../../components/layout/Navbar";
 import ProjectsCarousel from "../../components/features/ProjectsCarousel";
 import NewsCarousel from "../../components/features/NewsCarousel";
@@ -56,12 +58,14 @@ const news: NewsItem[] = newsEntries
 
   <main>
     <Hero t={t.hero} projects={projects} titlesCount={titlesCount} />
-    <ProjectsCarousel t={t.projects} projects={projects} client:visible />
     <About t={t.about} lang={lang} titlesCount={titlesCount} />
+    <ProjectsCarousel t={t.projects} projects={projects} client:visible />
     <NewsCarousel news={news} t={t.news} lang={lang} client:visible />
-    <Donate t={t.footer.cta} />
+    <Partners t={t.partners} lang={lang} />
+    <Careers t={t.careers} />
     <Contact t={t.contact} />
+    <Donate t={t.footer.cta} />
   </main>
 
-  <Footer t={t.footer} year={currentYear} client:visible />
+  <Footer t={t.footer} year={currentYear} lang={lang} nav={t.nav} client:visible />
 </Layout>

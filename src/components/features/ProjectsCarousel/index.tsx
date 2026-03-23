@@ -11,15 +11,20 @@ interface ProjectsCarouselProps {
   t: TranslationStructure["projects"];
 }
 
+const MOBILE_BREAKPOINT = 768;
+
 const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayedIndex, setDisplayedIndex] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
-  const [isMobile, setIsMobile] = useState<boolean>(() =>
-    typeof window !== "undefined" ? window.innerWidth < 768 : false,
-  );
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resizeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+  }, []);
 
   const handleClick = useCallback(
     (i: number) => {
@@ -43,9 +48,17 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
   );
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => {
+      if (resizeTimerRef.current) clearTimeout(resizeTimerRef.current);
+      resizeTimerRef.current = setTimeout(() => {
+        setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+      }, 100);
+    };
     window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
+    return () => {
+      window.removeEventListener("resize", check);
+      if (resizeTimerRef.current) clearTimeout(resizeTimerRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -61,9 +74,12 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects, t }) => {
   useEffect(
     () => () => {
       if (timerRef.current) clearTimeout(timerRef.current);
+      if (resizeTimerRef.current) clearTimeout(resizeTimerRef.current);
     },
     [],
   );
+
+  if (isMobile === null) return <section id="projects" style={{ minHeight: 768 }} />;
 
   return (
     <section id="projects">

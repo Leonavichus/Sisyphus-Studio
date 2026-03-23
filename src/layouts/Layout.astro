@@ -199,14 +199,26 @@ const jsonLd = {
       document.addEventListener("astro:page-load", initPage);
 
       let savedScrollY = 0;
+
       document.addEventListener("astro:before-swap", () => {
         savedScrollY = window.scrollY;
       });
+
       document.addEventListener("astro:after-swap", () => {
         history.replaceState(null, "", window.location.pathname);
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, behavior: "instant" })),
-        );
+        if (savedScrollY > 0) {
+          window.scrollTo({ top: savedScrollY, behavior: "instant" });
+        }
+        requestAnimationFrame(() => {
+          document
+            .querySelectorAll<HTMLElement>(".reveal, .reveal-left, .reveal-right, .reveal-scale")
+            .forEach((el) => {
+              const rect = el.getBoundingClientRect();
+              if (rect.top < window.innerHeight * 1.1) {
+                el.classList.add("in");
+              }
+            });
+        });
       });
     </script>
   </body>

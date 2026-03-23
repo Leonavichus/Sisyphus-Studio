@@ -1,12 +1,13 @@
 # Sisyphus Studio
 
-Website for an independent game studio.
+Website for an independent game studio. Built with Astro 5, React 19, TypeScript, and Tailwind CSS. Supports English and Russian.
 
 ## Quick Start
 
 ```bash
 npm install
 cp .env.example .env
+# fill in .env values
 npm run dev
 ```
 
@@ -14,38 +15,54 @@ npm run dev
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start dev server |
+| `npm run dev` | Start dev server at `localhost:4321` |
 | `npm run build` | Build to `./dist` |
 | `npm run preview` | Preview production build |
+| `npm run typecheck` | Run `astro check` + `tsc --noEmit` |
+| `npm run lint` | ESLint |
+| `npm run format` | Prettier write |
 | `npm run ci` | Full check: typecheck + lint + format |
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in your values. All variables are prefixed `PUBLIC_` and available in both server and client code.
+Copy `.env.example` to `.env`. All variables are prefixed `PUBLIC_` and available in both server and client code.
+
+| Variable | Description |
+|---|---|
+| `PUBLIC_SITE_URL` | Canonical site URL (e.g. `https://sisyphus.studio`) |
+| `PUBLIC_FORMSPREE_ENDPOINT` | Formspree form URL for the contact form |
+| `PUBLIC_YOUTUBE_URL` | YouTube channel URL |
+| `PUBLIC_STEAM_URL` | Steam store page URL |
+| `PUBLIC_DONATE_URL` | Donation link |
+| `PUBLIC_CAREERS_FORM_URL` | Careers application form URL |
+| `PUBLIC_CONTACT_EMAIL` | Main contact / careers email |
+| `PUBLIC_CONTACT_SOCIAL_EMAIL` | Social / press contact email |
 
 ## Project Structure
 
 ```
 src/
-├── components/      # UI: common (primitives), features (islands), layout, sections (Astro)
-├── config/          # Single barrel: design tokens, URLs, i18n/runtime, news metadata, images
-├── content/         # Astro content collections (news, projects)
-├── hooks/           # React hooks for islands
-├── i18n/            # TRANSLATIONS (all UI copy, including contact form + RSS titles)
-├── layouts/         # Root HTML shell, global scripts, ClientRouter
-├── pages/           # Routes (localized index, RSS, 404)
-├── styles/          # Global CSS (imported from layouts)
+├── components/
+│   ├── common/      # Primitives: AnimatedBackground, DisciplineIcon, ErrorBoundary, SkeletonCard
+│   ├── features/    # Interactive islands: ContactForm, NewsCarousel, NewsModal, ProjectsCarousel
+│   ├── layout/      # Navbar, Footer
+│   └── sections/    # Static Astro sections: Hero, About, Projects, News, Partners, Careers, Contact, Donate
+├── config/          # Design tokens, URLs, constants — all re-exported from index.ts
+├── content/         # Astro content collections: news, projects (JSON)
+├── hooks/           # React hooks: useCarouselKeyboard, useLanguageSync, useReducedMotion
+├── i18n/            # translations.ts — all UI copy for EN and RU
+├── layouts/         # Layout.astro — root HTML shell
+├── pages/           # [lang]/index.astro, [lang]/rss.xml.ts, index.astro (redirect), 404.astro
+├── styles/          # global.css imports tokens, base, typography, buttons, components, animations, skeleton
 ├── types.ts         # Shared TypeScript types
-└── utils/           # Small shared helpers (e.g. image fallbacks)
+└── utils/           # images.ts — path helpers and broken-image fallbacks
 ```
-
-**Data flow:** `pages/[lang]/index.astro` loads collections, maps entries to typed `Project[]` / `NewsItem[]`, and passes slices into Astro sections and React islands. Interactive UI lives in components with `client:*`; static sections stay in `.astro` files.
 
 ## Adding Content
 
 ### News post
 
-Create a new JSON file in `src/content/news/`:
+Create `src/content/news/NN.json`:
 
 ```json
 {
@@ -56,9 +73,9 @@ Create a new JSON file in `src/content/news/`:
     "title": "Title",
     "date": "Jun 01, 2025",
     "summary": "Short preview text.",
-    "body": "Full article text.\n\nSeparate paragraphs with a blank line."
+    "body": "Full article.\n\nSeparate paragraphs with a blank line."
   },
-  "ru": { ... }
+  "ru": { "title": "...", "date": "...", "summary": "...", "body": "..." }
 }
 ```
 
@@ -66,56 +83,55 @@ Valid `type` values: `announcement` · `dev-diary` · `update`
 
 ### Project
 
-Create a new JSON file in `src/content/projects/`:
+Create `src/content/projects/NN.json`:
 
 ```json
 {
-  "id": 1,
+  "id": 3,
   "image": "/images/projects/filename.jpg",
-  "progress": 50,
-  "wishlistUrl": "https://...",
+  "progress": 10,
+  "wishlistUrl": "https://store.steampowered.com/app/...",
   "en": {
     "title": "Game Title",
     "description": "Short description.",
     "price": "In Development",
     "tags": ["Co-op", "Shooter"]
   },
-  "ru": { ... }
+  "ru": { "title": "...", "description": "...", "price": "...", "tags": ["..."] }
 }
 ```
 
-`progress` (0–100) and `wishlistUrl` are optional.
+`progress` (0–100) and `wishlistUrl` are optional. Projects are sorted by `id`.
 
 ## Configuration
 
-Everything is exported from `src/config/index.ts` (import as `../../config` or `@/config`).
+All config is exported from `src/config/index.ts`.
 
 | File | What it controls |
 |---|---|
-| `constants.ts` | Brand, carousels, swipe threshold, scroll/reveal + ripple behaviour, validation regex |
-| `design.ts` | Colors, layout, spacing, gradients, component sizes |
+| `constants.ts` | Brand info, carousel timings, swipe threshold, scroll/reveal, ripple, validation regex, small UI strings |
+| `design.ts` | Colors, layout dimensions, spacing, gradients, image filters, component sizes |
+| `donate.ts` | SVG icons for donation tier cards |
 | `fonts.ts` | Google Fonts stylesheet URL |
-| `i18n.ts` | Language `localStorage` key, supported locale list (used by layout + `useLanguageSync`) |
-| `images.ts` | Placeholder image dimensions for broken images, hero preload path |
-| `links.ts` | Public URLs, Formspree, social links, `isMailtoLink`, contact-page social row |
-| `news.ts` | News category order, labels per language, category colors |
-| `seo.ts` | Default meta, OG image, JSON-LD game list |
+| `i18n.ts` | `LANGUAGE_STORAGE_KEY`, `SUPPORTED_LANGUAGES` |
+| `images.ts` | Fallback image dimensions, hero preload path |
+| `links.ts` | Env-backed URLs, Formspree endpoint, social links, `isMailtoLink` |
+| `news.ts` | Category order, labels per language, category colors |
+| `partners.ts` | Partner data and types |
+| `seo.ts` | Default meta title/description, OG image dimensions, JSON-LD game list |
 
 ## Translations
 
-All UI strings are in `src/i18n/translations.ts`. Both `en` and `ru` objects must always have identical key shapes.
-
-- `meta.rssTitle` / `meta.rssDescription` feed the RSS feed and the RSS `<link>` title in the layout.
-- `contact.form` supplies every string for the `ContactForm` island (labels, placeholders, validation, submit states).
+All UI strings live in `src/i18n/translations.ts`. Both `en` and `ru` must always have identical key shapes — TypeScript enforces this via `TranslationStructure`.
 
 ## Styling
 
-CSS is split into focused files imported via `src/styles/global.css`. Prefer design tokens (for example `var(--c-orange)`) instead of raw hex values in new styles.
+CSS is split into focused files imported via `src/styles/global.css`. Always use design tokens instead of raw values:
 
 ```css
 color: var(--c-orange);
+background: var(--s-2);
+border: 1px solid var(--b-default);
 ```
-
-## Developer Guide
 
 See [DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md) for full architecture reference.

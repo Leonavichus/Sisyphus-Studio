@@ -56,7 +56,11 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
   return (
     <div
       aria-labelledby="projects-heading"
-      style={{ background: COLORS.surface.s2, padding: SPACING.sectionPadding }}
+      style={{
+        background: "transparent",
+        padding: SPACING.sectionPadding,
+        borderTop: `1px solid ${COLORS.border.default}`,
+      }}
     >
       <div
         aria-live="polite"
@@ -280,7 +284,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                     overflow: "hidden",
                     willChange: isActive || isDisplayed ? "flex-grow" : "auto",
                     transition: `flex-grow ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
-                    background: COLORS.surface.s4,
+                    background: "transparent",
                   }}
                 >
                   <img

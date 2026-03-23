@@ -29,6 +29,8 @@ export interface TranslationStructure {
     about: string;
     projects: string;
     news: string;
+    partners: string;
+    careers: string;
     contact: string;
     toggleNav: string;
     navMenu: string;
@@ -88,6 +90,43 @@ export interface TranslationStructure {
     missionQuote: string;
     statusLabel: string;
     statusSub: string;
+  };
+  careers: {
+    sectionLabel: string;
+    heading: string;
+    headingSuffix: string;
+    description: string;
+    chips: string[];
+    formCardLabel: string;
+    formCardTitle: string;
+    formCardDesc: string;
+    checkItems: [string, string, string, string];
+    formBtnLabel: string;
+    emailBtnLabel: string;
+    statusLabel: string;
+  };
+  partners: {
+    sectionLabel: string;
+    heading: string;
+    headingSuffix: string;
+    description: string;
+    activeCount: string;
+    categoryLabels: {
+      strategic: string;
+      audio: string;
+      tech: string;
+      media: string;
+    };
+    linkLabels: {
+      website: string;
+      steam: string;
+      twitter: string;
+      github: string;
+    };
+    becomeTitle: string;
+    becomeSub: string;
+    becomeBtnLabel: string;
+    becomeSecondaryLabel: string;
   };
   news: {
     heading: string;
