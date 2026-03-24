@@ -37,7 +37,7 @@ body {
 }
 
 ::selection {
-  background: rgba(248, 126, 15, 0.2);
+  background: var(--c-orange-border);
 }
 
 :focus-visible {

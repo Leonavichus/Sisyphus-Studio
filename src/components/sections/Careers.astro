@@ -35,17 +35,7 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
           {t.description}
         </p>
 
-        <div role="list" aria-label={t.sectionLabel} class="careers-chips">
-          {
-            t.chips.map((chip) => (
-              <span role="listitem" class="careers-chip">
-                {chip}
-              </span>
-            ))
-          }
-        </div>
-
-        <div style="margin-top:40px">
+        <div style="margin-bottom:32px">
           <p class="t-eyebrow-accent" style="margin-bottom:12px;display:block">
             {t.vacanciesTitle}
           </p>
@@ -59,6 +49,16 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
               ))
             }
           </ul>
+        </div>
+
+        <div role="list" aria-label={t.sectionLabel} class="careers-chips">
+          {
+            t.chips.map((chip) => (
+              <span role="listitem" class="careers-chip">
+                {chip}
+              </span>
+            ))
+          }
         </div>
       </div>
 
@@ -164,7 +164,7 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 64px;
-    align-items: start;
+    align-items: center;
   }
 
   .careers-chips {
@@ -194,7 +194,7 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
 
   .careers-check-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 9px;
     font-size: 13px;
     color: var(--c-secondary);
@@ -211,7 +211,6 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-top: 1px;
   }
 
   @media (max-width: 860px) {

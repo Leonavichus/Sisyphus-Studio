@@ -1,7 +1,6 @@
-import { type FC } from "react";
-import { Users, Crosshair, Swords, Shuffle, TreePine, Globe, BookOpen, Zap } from "lucide-react";
+import { Users, Crosshair, Swords, Shuffle, TreePine, Globe, BookOpen, Zap, type LucideIcon } from "lucide-react";
 
-type IconComponent = FC<{ size?: number; color?: string }>;
+type IconComponent = LucideIcon;
 
 const TAG_ICONS: Record<string, IconComponent> = {
   "co-op": Users,

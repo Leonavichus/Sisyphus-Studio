@@ -18,6 +18,7 @@
   --b-subtle: rgba(255, 255, 255, 0.06);
   --b-default: rgba(255, 255, 255, 0.07);
   --b-strong: rgba(255, 255, 255, 0.08);
+  --b-medium: rgba(255, 255, 255, 0.2);
   --b-accent: rgba(248, 126, 15, 0.22);
 
   --ease-em: cubic-bezier(0.2, 0, 0, 1);

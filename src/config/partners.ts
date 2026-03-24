@@ -12,9 +12,9 @@ export const PARTNER_LOGO_STYLES: Record<PartnerLogoStyle, string> = {
 export const PARTNER_CATEGORY_STYLES: Record<PartnerCategory, string> = {
   strategic:
     "background:var(--c-orange-dim);border-color:var(--c-orange-border);color:var(--c-orange-accent)",
-  audio: "",
-  tech: "",
-  media: "",
+  audio: "background:rgba(100,140,255,.10);border-color:rgba(100,140,255,.20);color:#7c9ef8",
+  tech: "background:rgba(100,200,100,.09);border-color:rgba(100,200,100,.20);color:#7ec87e",
+  media: "background:rgba(160,100,255,.09);border-color:rgba(160,100,255,.20);color:#b87ef8",
 } as const;
 
 export interface PartnerLink {

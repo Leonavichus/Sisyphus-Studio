@@ -88,6 +88,7 @@ export const OVERLAY = {
   modalCloseBg: "rgba(0,0,0,.45)",
   modalCloseBorder: "rgba(255,255,255,.15)",
   tagBg: "rgba(255,255,255,.04)",
+  inactivePanel: "rgba(0,0,0,.60)",
 } as const;
 
 export const TAG_STYLE = {
@@ -157,4 +158,5 @@ export const SIZES = {
 export const Z_INDEX = {
   nav: 50,
   modal: 200,
+  noscript: 1000,
 } as const;

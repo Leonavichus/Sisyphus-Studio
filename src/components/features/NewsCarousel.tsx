@@ -374,7 +374,7 @@ const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
                       <div
                         style={{
                           height: 1,
-                          background: "rgba(255,255,255,.08)",
+                          background: COLORS.border.strong,
                           marginBottom: "clamp(8px,1.5vw,12px)",
                         }}
                       />
@@ -510,7 +510,7 @@ const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
                             border: "none",
                             background: isActive ? COLORS.surface.s5 : "transparent",
                             outline: isActive
-                              ? "1px solid rgba(255,255,255,.08)"
+                              ? `1px solid ${COLORS.border.strong}`
                               : "1px solid transparent",
                             outlineOffset: -1,
                             transition: reducedMotion ? "none" : "all .25s cubic-bezier(0.2,0,0,1)",

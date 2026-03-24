@@ -115,7 +115,7 @@
   border: 1px solid var(--c-orange-border);
 }
 .md-badge-surface {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--b-subtle);
   color: var(--c-secondary);
   border: 1px solid var(--b-default);
   backdrop-filter: blur(8px);

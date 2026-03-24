@@ -179,7 +179,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
         >
           <img
             src="/favicon.png"
-            alt="Sisyphus Studio"
+            alt={`${BRAND.prefix} ${BRAND.suffix}`}
             width={56}
             height={56}
             style={{ borderRadius: 8, objectFit: "cover", flexShrink: 0 }}

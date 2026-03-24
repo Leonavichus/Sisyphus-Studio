@@ -1,7 +1,9 @@
+import { BRAND } from "./constants";
+
 export const SEO = {
-  defaultTitle: "Sisyphus Studio — Independent Game Developers",
+  defaultTitle: `${BRAND.prefix} ${BRAND.suffix} — Independent Game Developers`,
   defaultDescription:
-    "Sisyphus Studio is an independent game studio creating Frog Frag and Krivda. Small team, big ambitions.",
+    `${BRAND.prefix} ${BRAND.suffix} is an independent game studio creating Frog Frag and Krivda. Small team, big ambitions.`,
   themeColor: "#1a1a1a",
   ogImagePath: "/images/og-cover.jpg",
   ogImageWidth: 1200,

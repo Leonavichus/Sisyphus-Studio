@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { TRANSLATIONS } from "../i18n/translations";
+import { BRAND, FONTS } from "../config";
 import type { Language } from "../types";
 
 const urlPath = Astro.url.pathname;
@@ -15,15 +16,12 @@ const ctaHref = `/${lang}/`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{t.badge} — Sisyphus Studio</title>
+    <title>{t.badge} — {BRAND.prefix} {BRAND.suffix}</title>
     <meta name="robots" content="noindex" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link href={FONTS.googleCssHref} rel="stylesheet" />
   </head>
   <body
     style="background:var(--s-4);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px"
@@ -80,11 +78,11 @@ const ctaHref = `/${lang}/`;
         >
           <img
             src="/favicon.png"
-            alt="Sisyphus Studio"
+            alt={`${BRAND.prefix} ${BRAND.suffix}`}
             style="width:22px;height:22px;border-radius:5px;object-fit:cover"
           />
           <span style="font-size:15px;font-weight:700;color:var(--c-on-surface)">
-            Sisyphus<span style="color:var(--c-orange)">Studio</span>
+            {BRAND.prefix}<span style="color:var(--c-orange)">{BRAND.suffix}</span>
           </span>
         </div>
       </div>

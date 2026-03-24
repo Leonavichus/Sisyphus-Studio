@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { ArrowUp } from "lucide-react";
 import type { Language, TranslationStructure } from "../../types";
-import { BRAND, COLORS, LAYOUT, SOCIAL_LINKS, BACKDROP } from "../../config";
+import { BRAND, COLORS, LAYOUT, SOCIAL_LINKS, BACKDROP, SIZES, isMailtoLink } from "../../config";
 import { ErrorBoundary } from "../common/ErrorBoundary";
 
 interface FooterProps {
@@ -80,12 +80,12 @@ const Footer: FC<FooterProps> = ({ t, nav, year, lang }) => {
             >
               <img
                 src="/favicon.png"
-                alt="Sisyphus Studio"
+                alt={`${BRAND.prefix} ${BRAND.suffix}`}
                 width={28}
                 height={28}
                 style={{ borderRadius: 8, objectFit: "cover" }}
               />
-              <span className="t-brand-lg" style={{ fontSize: 15 }}>
+              <span className="t-brand-lg" style={{ fontSize: SIZES.nav.brandFontSize }}>
                 {BRAND.prefix}
                 <span style={{ color: COLORS.orange }}>{BRAND.suffix}</span>
               </span>
@@ -113,8 +113,8 @@ const Footer: FC<FooterProps> = ({ t, nav, year, lang }) => {
                 <a
                   key={link.label}
                   href={link.href}
-                  target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                  rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  target={isMailtoLink(link.href) ? undefined : "_blank"}
+                  rel={isMailtoLink(link.href) ? undefined : "noopener noreferrer"}
                   aria-label={link.label}
                   className="footer-social-icon state"
                 >

@@ -13,6 +13,7 @@ import {
   IMAGE_FILTERS,
   GRADIENTS,
   SIZES,
+  OVERLAY,
 } from "../../../config";
 import { getTagIcon } from "./tagIcons";
 
@@ -205,7 +206,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                       style={{
                         height: 4,
                         borderRadius: 2,
-                        background: "rgba(255,255,255,.07)",
+                        background: COLORS.border.default,
                         overflow: "hidden",
                       }}
                     >
@@ -327,7 +328,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background: "rgba(0,0,0,.60)",
+                      background: OVERLAY.inactivePanel,
                       opacity: isActive ? 0 : 1,
                       transition: `opacity ${PROJECTS_EXPAND_MS}ms ${EASING.standard}`,
                       pointerEvents: "none",
