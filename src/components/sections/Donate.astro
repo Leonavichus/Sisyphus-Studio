@@ -35,11 +35,6 @@ const TIER_RELS = [undefined, isMailto ? undefined : "noopener noreferrer", "noo
         </h2>
         <p class="t-body-lg donate-description">{t.description}</p>
       </div>
-
-      <div class="donate-badge">
-        <div class="pulse donate-badge-dot" aria-hidden="true"></div>
-        <span class="t-label-sm donate-badge-text">{t.badge}</span>
-      </div>
     </div>
 
     <div class="donate-tiers-grid">
@@ -107,28 +102,6 @@ const TIER_RELS = [undefined, isMailto ? undefined : "noopener noreferrer", "noo
     color: var(--c-secondary);
     line-height: 1.75;
     max-width: 480px;
-  }
-
-  .donate-badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 18px;
-    border-radius: var(--r-full);
-    background: var(--s-5);
-    border: 1px solid var(--b-subtle);
-  }
-  .donate-badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--c-orange);
-    flex-shrink: 0;
-  }
-  .donate-badge-text {
-    color: var(--c-secondary);
-    font-size: 12px;
-    letter-spacing: 0.5px;
   }
 
   .donate-tiers-grid {

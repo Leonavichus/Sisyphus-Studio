@@ -55,14 +55,7 @@ const progressPct = `${featured.progress ?? 0}%`;
           }
         </h1>
 
-        <p
-          class="t-body-lg anim d3"
-          style="color:var(--c-secondary);max-width:440px;line-height:1.75;margin-top:28px;margin-bottom:48px"
-        >
-          {t.subtitle}
-        </p>
-
-        <div class="flex flex-wrap gap-3 anim d4" style="margin-bottom:52px">
+        <div class="flex flex-wrap gap-3 anim d4" style="margin-top:48px;margin-bottom:52px">
           <a
             href="#projects"
             class="btn-filled"
@@ -148,7 +141,7 @@ const progressPct = `${featured.progress ?? 0}%`;
           target="_blank"
           rel="noopener noreferrer"
           class="card-game"
-          aria-label={`${featured.title} — ${t.featuredLabel}`}
+          aria-label={featured.title}
           style="display:block;text-decoration:none"
         >
           <img
@@ -188,9 +181,6 @@ const progressPct = `${featured.progress ?? 0}%`;
             </div>
           </div>
           <div style="padding:16px 20px 22px;position:relative">
-            <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:5px">
-              {t.featuredLabel}
-            </p>
             <h3
               class="t-card-title"
               style={`font-size:${SIZES.hero.featuredTitleSize}px;margin-bottom:6px`}
@@ -235,9 +225,6 @@ const progressPct = `${featured.progress ?? 0}%`;
                 onerror={nativeImageFallback(200, 200)}
               />
               <div style="flex:1;min-width:0">
-                <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:2px">
-                  {t.conceptLabel}
-                </p>
                 <p
                   class="t-card-title"
                   style={`font-size:${SIZES.hero.conceptTitleSize}px;margin-bottom:2px`}

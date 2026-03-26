@@ -44,15 +44,12 @@ export interface TranslationStructure {
   };
   hero: {
     title: string;
-    subtitle: string;
     cta: string;
     ctaSecondary: string;
     badge: string;
     stats: { titles: string; founded: string; independent: string };
-    featuredLabel: string;
     featuredSub: string;
     progressLabel: string;
-    conceptLabel: string;
     conceptSub: string;
     scroll: string;
     comingSoon: string;
@@ -60,6 +57,7 @@ export interface TranslationStructure {
   };
   projects: {
     heading: string;
+    headingSuffix: string;
     sectionLabel: string;
     of: string;
     wishlist: string;
@@ -70,22 +68,16 @@ export interface TranslationStructure {
   };
   about: {
     heading: string;
+    headingSuffix: string;
     sectionLabel: string;
     description: string;
     foundedLabel: string;
     indieLabel: string;
-    craftLabel: string;
-    disciplines: {
-      engineering: string;
-      art: string;
-      sound: string;
-      design: string;
-    };
     stats: {
       team: string;
       titles: string;
       founded: string;
-      independent: string;
+      enthusiasm: string;
     };
     missionLabel: string;
     missionQuote: string;
@@ -97,7 +89,6 @@ export interface TranslationStructure {
     heading: string;
     headingSuffix: string;
     description: string;
-    chips: string[];
     formCardLabel: string;
     formCardTitle: string;
     formCardDesc: string;
@@ -124,13 +115,10 @@ export interface TranslationStructure {
       twitter: string;
       github: string;
     };
-    becomeTitle: string;
-    becomeSub: string;
-    becomeBtnLabel: string;
-    becomeSecondaryLabel: string;
   };
   news: {
     heading: string;
+    headingSuffix: string;
     sectionLabel: string;
     readMore: string;
     of: string;
@@ -143,6 +131,7 @@ export interface TranslationStructure {
   };
   contact: {
     heading: string;
+    headingSuffix: string;
     sectionLabel: string;
     description: string;
     form: {
@@ -161,7 +150,6 @@ export interface TranslationStructure {
     };
   };
   footer: {
-    followUs: string;
     sectionLabel: string;
     copyright: string;
     cta: {
@@ -170,7 +158,6 @@ export interface TranslationStructure {
       description: string;
       sectionLabel: string;
       note: string;
-      badge: string;
       tiers: Array<{
         label: string;
         title: string;
@@ -178,7 +165,6 @@ export interface TranslationStructure {
         cta: string;
       }>;
     };
-    links: { about: string; games: string; news: string; contact: string };
     backToTop: string;
   };
   notFound: {

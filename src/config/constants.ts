@@ -69,15 +69,12 @@ export const UI = {
   },
   hero: {
     stats: {
-      independent: "100%",
+      independent: String(BRAND.teamSize),
     },
     badges: {
       inDev: { en: "In Development", ru: "В разработке" },
       comingSoon: { en: "Coming Soon", ru: "Скоро" },
     },
-  },
-  about: {
-    independent: { en: "Indie", ru: "Инди" },
   },
   errorBoundary: {
     title: { en: "Something went wrong", ru: "Что-то пошло не так" },

@@ -129,9 +129,6 @@ const Footer: FC<FooterProps> = ({ t, nav, year, lang }) => {
             <p className="t-body-sm" style={{ color: COLORS.text.muted }}>
               {copyright}
             </p>
-            <p className="t-body-sm" style={{ color: COLORS.text.muted }}>
-              {t.cta.badge}
-            </p>
           </div>
         </div>
       </footer>

@@ -168,5 +168,4 @@ export const SIZES = {
 export const Z_INDEX = {
   nav: 50,
   modal: 200,
-  noscript: 1000,
 } as const;

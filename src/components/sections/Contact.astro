@@ -25,6 +25,7 @@ const contactInfo = [{ icon: SOCIAL_ICONS.email, text: CONTACT.contactEmail }];
       </div>
       <h2 id="contact-heading" class="t-display-md" style="color: var(--c-on-surface)">
         {t.heading}
+        <span style="color: var(--c-orange)">{t.headingSuffix}</span>
       </h2>
     </div>
 
@@ -82,7 +83,7 @@ const contactInfo = [{ icon: SOCIAL_ICONS.email, text: CONTACT.contactEmail }];
           style="height: 1px; background: linear-gradient(90deg, var(--c-orange) 0%, rgba(248,126,15,.15) 40%, transparent 70%)"
         >
         </div>
-        <div style="padding: 32px">
+        <div style="padding: 20px 24px">
           <ContactForm t={t} client:load />
         </div>
       </div>

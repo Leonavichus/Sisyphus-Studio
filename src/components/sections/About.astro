@@ -1,8 +1,6 @@
 ---
-import DisciplineIcon from "../common/DisciplineIcon.astro";
-import type { IconName } from "../common/DisciplineIcon.astro";
 import type { Language, TranslationStructure } from "../../types";
-import { BRAND, UI, IMAGES, LAYOUT } from "../../config";
+import { BRAND, IMAGES, LAYOUT } from "../../config";
 import { nativeImageFallback } from "../../utils/images";
 
 interface Props {
@@ -17,17 +15,10 @@ const stats = [
   { value: String(BRAND.teamSize), label: t.stats.team },
   { value: String(titlesCount), label: t.stats.titles },
   { value: String(BRAND.foundedYear), label: t.stats.founded },
-  { value: UI.hero.stats.independent, label: t.stats.independent },
+  { value: "∞", label: t.stats.enthusiasm },
 ];
 
 const aboutImg = IMAGES.about;
-
-const disciplines: { label: string; icon: IconName }[] = [
-  { label: t.disciplines.engineering, icon: "engineering" },
-  { label: t.disciplines.art, icon: "art" },
-  { label: t.disciplines.sound, icon: "sound" },
-  { label: t.disciplines.design, icon: "design" },
-];
 ---
 
 <section
@@ -43,7 +34,9 @@ const disciplines: { label: string; icon: IconName }[] = [
         <div class="section-eyebrow-line"></div>
         <span class="section-eyebrow-label">{t.sectionLabel}</span>
       </div>
-      <h2 id="about-heading" class="t-display-md" style="color:var(--c-on-surface)">{t.heading}</h2>
+      <h2 id="about-heading" class="t-display-md" style="color:var(--c-on-surface)">
+        {t.heading}<span style="color:var(--c-orange)"> {t.headingSuffix}</span>
+      </h2>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -86,28 +79,6 @@ const disciplines: { label: string; icon: IconName }[] = [
         <p class="t-body-lg" style="color:var(--c-secondary);line-height:1.75;margin-bottom:28px">
           {t.description}
         </p>
-
-        <div>
-          <p class="t-label-sm" style="color:var(--c-tertiary);margin-bottom:10px">
-            {t.craftLabel}
-          </p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" role="list">
-            {
-              disciplines.map(({ icon, label }) => (
-                <div
-                  class="state"
-                  role="listitem"
-                  style="height:38px;padding:0 14px;display:flex;align-items:center;gap:10px;background:var(--s-5);border:1px solid var(--b-subtle);border-radius:8px;cursor:default;overflow:hidden"
-                >
-                  <DisciplineIcon icon={icon} />
-                  <span class="t-label-lg" style="color:var(--c-secondary);font-size:13px">
-                    {label}
-                  </span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
       </div>
 
       <div class="reveal-right" style="display:flex;flex-direction:column;gap:8px">

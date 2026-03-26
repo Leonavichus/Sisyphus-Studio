@@ -151,6 +151,7 @@ const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
             </div>
             <h2 id="news-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
               {t.heading}
+              <span style={{ color: COLORS.orange }}> {t.headingSuffix}</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -211,6 +212,7 @@ const NewsCarousel = ({ news, t, lang }: NewsCarouselProps) => {
               </div>
               <h2 id="news-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
                 {t.heading}
+                <span style={{ color: COLORS.orange }}> {t.headingSuffix}</span>
               </h2>
             </div>
             {filtered.length > 0 ? (

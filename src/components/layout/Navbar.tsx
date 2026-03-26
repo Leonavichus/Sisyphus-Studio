@@ -43,7 +43,6 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
       { id: "news", label: t.news, href: "#news" },
       { id: "careers", label: t.careers, href: "#careers" },
       { id: "donate", label: t.donate, href: "#donate" },
-      { id: "partners", label: t.partners, href: "#partners" },
       { id: "contact", label: t.contact, href: "#contact" },
     ],
     [t],
@@ -161,6 +160,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           display: "flex",
           alignItems: "center",
           gap: 4,
+          position: "relative",
         }}
       >
         <a
@@ -172,7 +172,6 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
             alignItems: "center",
             gap: 8,
             textDecoration: "none",
-            marginRight: 16,
             padding: "5px 10px 5px 5px",
             borderRadius: "var(--r-full)",
             flexShrink: 0,
@@ -192,7 +191,19 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
           </span>
         </a>
 
-        <div className="hidden md:flex" style={{ flex: 1, alignItems: "center", gap: 2 }}>
+        <div
+          className="hidden md:flex"
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 2,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            pointerEvents: "none",
+          }}
+        >
           {links.map(({ id, label, href }) => {
             const isActive = active === id;
             return (
@@ -201,7 +212,7 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
                 href={href}
                 onClick={() => handleNavClick(id)}
                 className={`nav-desktop-link state ${isActive ? "active" : ""}`}
-                style={{ fontSize: SIZES.nav.linkFontSize }}
+                style={{ fontSize: SIZES.nav.linkFontSize, pointerEvents: "auto" }}
               >
                 {label}
                 {isActive && (
@@ -225,7 +236,13 @@ const Navbar: FC<NavbarProps> = ({ lang, t }) => {
 
         <div
           className="hidden md:flex"
-          style={{ alignItems: "center", gap: 2, marginLeft: "auto" }}
+          style={{
+            alignItems: "center",
+            gap: 2,
+            marginLeft: "auto",
+            width: 160,
+            justifyContent: "flex-end",
+          }}
         >
           {SOCIAL_LINKS.map(({ iconSvg, href, label }) => (
             <a

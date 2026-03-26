@@ -78,6 +78,7 @@ const DesktopCarousel: FC<DesktopCarouselProps> = ({
           </div>
           <h2 id="projects-heading" className="t-display-md" style={{ color: COLORS.text.primary }}>
             {t.heading}
+            <span style={{ color: COLORS.orange }}> {t.headingSuffix}</span>
           </h2>
         </div>
 

@@ -96,8 +96,8 @@ export default function ContactForm({ t }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex-col gap-16">
-      <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
+    <form onSubmit={handleSubmit} noValidate className="flex-col gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 8 }}>
         <Field
           id="cf-name"
           name="name"
@@ -151,15 +151,12 @@ export default function ContactForm({ t }: Props) {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           marginTop: 4,
           gap: 12,
           flexWrap: "wrap",
         }}
       >
-        <p className="t-label-sm" style={{ color: COLORS.text.tertiary }}>
-          {CONTACT.contactEmail}
-        </p>
         <button
           type="submit"
           disabled={status === "submitting"}
@@ -328,7 +325,7 @@ function TextareaField({
       <textarea
         id={id}
         name={name}
-        rows={5}
+        rows={3}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

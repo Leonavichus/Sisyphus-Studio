@@ -2,9 +2,9 @@
 
 ## Architecture Overview
 
-Single-page site with two language routes (`/en/`, `/ru/`). Astro handles static generation and server-side data fetching; React components handle interactivity. All pages are prerendered at build time (`prerender = true`).
+Single-page site with language-prefixed routes (`/{lang}/`). Astro handles static generation and server-side data fetching; React components handle interactivity. All pages are prerendered at build time (`prerender = true`).
 
-The root `/` redirects to `/en/` with a 301. A 404 page detects language from the URL and renders the appropriate translation.
+The root `/` redirects to the default language route with a 301. A 404 page detects language from the URL and renders the appropriate translation.
 
 **Layers:**
 
@@ -20,12 +20,12 @@ The root `/` redirects to `/en/` with a 301. A 404 page detects language from th
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `pages/index.astro` | 301 redirect to `/en/` |
-| `/{lang}/` | `pages/[lang]/index.astro` | Main page, static paths for `en` and `ru` |
+| `/` | `pages/index.astro` | 301 redirect to the default language route |
+| `/{lang}/` | `pages/[lang]/index.astro` | Main page, static paths for the configured languages |
 | `/{lang}/rss.xml` | `pages/[lang]/rss.xml.ts` | RSS feed |
 | `/*` (404) | `pages/404.astro` | Detects lang from URL |
 
-`getStaticPaths` in both `[lang]` files returns `[{ params: { lang: "en" } }, { params: { lang: "ru" } }]`.
+`getStaticPaths` in both `[lang]` files returns a list of `[{ params: { lang } }]` for each supported language.
 
 ---
 
@@ -36,7 +36,7 @@ The root `/` redirects to `/en/` with a 301. A 404 page detects language from th
 - Full `<head>`: meta, Open Graph, Twitter Card, hreflang, canonical, RSS `<link>`
 - JSON-LD structured data (Organization + VideoGame entries from `SEO.games`)
 - Font loading (`FONTS.googleCssHref`) and hero image preload (`HERO_PRELOAD_IMAGE_SRC`)
-- Inline language redirect script (reads `LANGUAGE_STORAGE_KEY` from `localStorage`, redirects if URL lang doesn't match stored preference)
+- Inline language redirect script (reads `LANGUAGE_STORAGE_KEY` from `localStorage` (currently `ss_lang`), redirects if URL lang doesn't match stored preference)
 - Astro `<ClientRouter />` for view transitions
 - Skip-to-content link and `<noscript>` warning
 - Client script: scroll progress bar, ripple effect, scroll-reveal `IntersectionObserver`, view-transition scroll restoration
@@ -48,13 +48,13 @@ The root `/` redirects to `/en/` with a 301. A 404 page detects language from th
 Sections are rendered in this order in `pages/[lang]/index.astro`:
 
 1. **Hero** — title, stats, featured project cards
-2. **About** — team info, disciplines, mission statement
+2. **About** — team stats, mission statement
 3. **ProjectsCarousel** — desktop accordion / mobile swipe
 4. **NewsCarousel** — auto-advancing carousel with category filters and modal
-5. **Partners** — partner cards with links
-6. **Careers** — open application info and form link
-7. **Contact** — contact form (Formspree) and social links
-8. **Donate** — support tiers (sponsor, one-time, wishlist)
+5. **Careers** — open application info and form link
+6. **Donate** — support tiers (sponsor, one-time, wishlist)
+7. **Partners** — partner cards with links
+8. **Contact** — contact form (Formspree) and social links
 
 ---
 
@@ -65,7 +65,6 @@ Sections are rendered in this order in `pages/[lang]/index.astro`:
 | Component | Description |
 |---|---|
 | `AnimatedBackground` | Fixed full-screen animated grid. Two layers with `requestAnimationFrame`. Disabled on `prefers-reduced-motion`. |
-| `DisciplineIcon` | Renders an SVG icon by name (`engineering`, `art`, `sound`, `design`). |
 | `ErrorBoundary` | React class component. Catches errors in subtrees and renders a fallback UI. |
 | `SkeletonCard` | Shimmer loading placeholder. Used in `NewsCarousel` before hydration. |
 
@@ -82,8 +81,8 @@ Sections are rendered in this order in `pages/[lang]/index.astro`:
 
 | Component | Description |
 |---|---|
-| `Navbar` | Fixed top nav with scroll-based background, active section tracking via `IntersectionObserver`, mobile menu with focus trap, language switcher. |
-| `Footer` | Navigation links, copyright with dynamic year, back-to-top button. |
+| `Navbar` | Fixed top nav with scroll-based background, active section tracking, mobile menu with focus trap, language switcher. Centered links with symmetric logo/social spacing. |
+| `Footer` | Navigation links (from `nav` prop), social icons, copyright with dynamic year, back-to-top button. |
 
 ### sections/
 
@@ -91,12 +90,12 @@ All are `.astro` files. They receive translations and data as props and contain 
 
 | Section | Background | Notes |
 |---|---|---|
-| `Hero` | transparent | Animated glitch title, stats, project cards |
-| `About` | `var(--s-2)` | Team stats, disciplines grid, mission quote |
-| `Partners` | transparent | Partner cards with category badges and links |
-| `Careers` | `var(--s-2)` | Two-column layout: description + application card |
-| `Contact` | transparent | Two-column: info + `ContactForm` island |
-| `Donate` | `var(--s-2)` | Three-tier support cards |
+| `Hero` | transparent | Animated glitch title, stats (titles in dev, founded year, team size), featured project cards |
+| `About` | `var(--s-2)` | 4 stat cards (team, titles, founded, enthusiasm), mission quote, active development status |
+| `Careers` | transparent | Two-column: description + vacancies list + application card with checklist |
+| `Donate` | `var(--s-2)` | Three-tier support cards (sponsor, one-time, wishlist) |
+| `Partners` | transparent | Partner cards with category badges and social links |
+| `Contact` | `var(--s-2)` | Two-column: info + `ContactForm` island |
 
 ---
 
@@ -114,29 +113,32 @@ SCROLL_REVEAL  // IntersectionObserver options
 RIPPLE         // button selector + size multiplier
 EMAIL_REGEX    // validation
 FOCUSABLE_SELECTORS  // for focus trap in modals
-UI             // small strings used outside translations (skip link, noscript, badges)
+UI             // small strings: skipLink, noScript, hero stats/badges, errorBoundary
 ```
 
 ### design.ts
 
 ```ts
 COLORS         // orange palette, surfaces, text, borders, news category colors
-LAYOUT         // { maxWidth: 1280, padding: 20, navHeight: 76 }
-SPACING        // section padding, card padding, nav link margin
+LAYOUT         // { maxWidth: 1280, padding: 20, navHeight: 76, mobileBreakpoint: 768 }
+SPACING        // section padding, card padding
 EASING         // CSS easing strings
-GRADIENTS      // card overlays, orange tint
-IMAGE_FILTERS  // brightness/saturation for project/news images
-TAG_STYLE      // base + desktop/mobile tag styles
-SIZES          // news card, modal, hero card dimensions
+GRADIENTS      // card overlays, orange tint, news card gradient
+IMAGE_FILTERS  // brightness/saturation for project/news/hero images
+TAG_STYLE      // base + desktop/mobile tag styles for project tags
+SIZES          // news card, modal, hero, projects, form, nav, footer dimensions
+Z_INDEX        // { nav: 50, modal: 200 }
+BACKDROP       // blur/saturate strings for nav, panels, modals
+OVERLAY        // modal backgrounds, tag backgrounds
 ```
 
 ### links.ts
 
 ```ts
-URLS           // site, steam, youtube, donate (all env-backed)
-CONTACT        // email, contactEmail, careerEmail, formspreeEndpoint (env-backed)
+URLS           // site, steam, youtube, youtubeOrigin, donate (all env-backed)
+CONTACT        // email, contactEmail, formspreeEndpoint (env-backed)
 SOCIAL_ICONS   // inline SVG strings for YouTube, Steam, email
-SOCIAL_LINKS   // array used by Navbar and Footer — all SVG-based (no Lucide components)
+SOCIAL_LINKS   // array used by Navbar and Footer
 CONTACT_PAGE_SOCIAL  // array used by Contact section
 isMailtoLink   // (href: string) => boolean
 ```
@@ -153,7 +155,7 @@ isMailtoLink   // (href: string) => boolean
 | `NewsCategory` | `"announcement" \| "dev-diary" \| "update"` |
 | `Project` | Mapped from projects collection for a specific language |
 | `NewsItem` | Mapped from news collection for a specific language |
-| `TranslationStructure` | Full shape of the translations object — all `partners` fields are required |
+| `TranslationStructure` | Full shape of the translations object — TypeScript enforces EN/RU key parity |
 
 ---
 
@@ -186,9 +188,15 @@ en / ru     object  { title, description, price, tags? }
 
 `src/i18n/translations.ts` exports `TRANSLATIONS` typed against `TranslationStructure`. Covers all sections including `contact.form` (used by the `ContactForm` island) and `meta.rssTitle` / `meta.rssDescription` (used by the RSS feed and layout `<link>`).
 
-Language is persisted to `localStorage` under `LANGUAGE_STORAGE_KEY`. The inline script in `Layout.astro` redirects on page load if the URL language doesn't match the stored preference.
+Language is persisted to `localStorage` under `LANGUAGE_STORAGE_KEY` (currently `ss_lang`). The inline script in `Layout.astro` redirects on page load if the URL language doesn't match the stored preference.
 
 `SUPPORTED_LANGUAGES` in `src/config/i18n.ts` must stay in sync with `i18n.locales` in `astro.config.mjs`.
+
+### Translation key conventions
+
+- Section headings use `heading` + `headingSuffix` — the suffix is rendered in orange.
+- `sectionLabel` is the small eyebrow label above the heading.
+- `footer.cta` is passed directly to the `Donate` section as its translation prop.
 
 ---
 
@@ -227,7 +235,7 @@ All files imported in `src/styles/global.css`:
 | `typography.css` | `t-*` text utility classes |
 | `buttons.css` | `btn-filled`, `btn-tonal`, `btn-outlined`, `icon-btn`, `icon-btn-outlined` |
 | `components.css` | `state`, cards, `chip`, badges, progress bars, section eyebrow, skip link, footer/nav links, flex utilities |
-| `animations.css` | Keyframes, entrance animations (`anim`, `reveal`, `reveal-left`, `reveal-right`, `reveal-scale`), glitch effects, `reduced-motion` overrides |
+| `animations.css` | Keyframes, entrance animations (`anim`, `reveal`, `reveal-left`, `reveal-right`, `reveal-scale`), glitch effects, reduced-motion overrides |
 | `skeleton.css` | `skeleton-shimmer` shimmer animation |
 
 ### Key CSS variables (`tokens.css`)
@@ -273,11 +281,36 @@ The layout's `IntersectionObserver` adds `.in` when the element enters the viewp
 ## Pre-commit Checklist
 
 - [ ] `npm run ci` passes (typecheck + lint + format)
-- [ ] Translations added for both `en` and `ru` with identical key shapes
+- [ ] Translations added for all supported languages with identical key shapes
 - [ ] CSS variables used instead of raw hex values
 - [ ] Config constants used instead of magic numbers
 - [ ] `aria-label` on interactive elements without visible text
 - [ ] New content JSON validates against the collection schema
+
+---
+
+## Deploying to GitHub Pages
+
+Deployment is handled by `.github/workflows/deploy.yml`.
+
+The workflow:
+
+- Triggers on `push` to `main`
+- Runs `npm ci` and `npm run build`
+- Uploads the `./dist` artifact and deploys it to GitHub Pages
+
+It passes build-time environment variables (`import.meta.env.PUBLIC_*`) via GitHub repository secrets.
+
+Required secrets:
+
+- `PUBLIC_SITE_URL`
+- `PUBLIC_FORMSPREE_ENDPOINT`
+- `PUBLIC_YOUTUBE_URL`
+- `PUBLIC_STEAM_URL`
+- `PUBLIC_DONATE_URL`
+- `PUBLIC_CAREERS_FORM_URL`
+- `PUBLIC_CONTACT_EMAIL`
+- `PUBLIC_CONTACT_SOCIAL_EMAIL`
 
 ---
 

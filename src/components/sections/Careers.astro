@@ -50,16 +50,6 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
             }
           </ul>
         </div>
-
-        <div role="list" aria-label={t.sectionLabel} class="careers-chips">
-          {
-            t.chips.map((chip) => (
-              <span role="listitem" class="careers-chip">
-                {chip}
-              </span>
-            ))
-          }
-        </div>
       </div>
 
       <div class="reveal-right">
@@ -165,22 +155,6 @@ const formUrl = import.meta.env.PUBLIC_CAREERS_FORM_URL || "#";
     grid-template-columns: 1fr 1fr;
     gap: 64px;
     align-items: center;
-  }
-
-  .careers-chips {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-  }
-
-  .careers-chip {
-    padding: 5px 13px;
-    border-radius: var(--r-full);
-    font-size: 11px;
-    font-weight: 600;
-    background: var(--b-subtle);
-    border: 1px solid var(--b-default);
-    color: var(--c-tertiary);
   }
 
   .careers-checklist {
