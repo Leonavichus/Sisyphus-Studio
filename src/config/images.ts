@@ -7,5 +7,5 @@ export const IMAGE_FALLBACK = {
 export const HERO_PRELOAD_IMAGE_SRC = "/images/hero/hero-main.jpg";
 
 export const IMAGES = {
-  about: "/images/about/about.jpg",
+  about: "/images/about/about.png",
 } as const;

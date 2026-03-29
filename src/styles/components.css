@@ -155,7 +155,7 @@
 }
 .section-eyebrow-line {
   width: 18px;
-  height: 1.5px;
+  height: 1px;
   border-radius: var(--r-full);
   background: var(--c-orange);
   flex-shrink: 0;
